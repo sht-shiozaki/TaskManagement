@@ -19,6 +19,12 @@ public class HomeController {
     @Autowired
     private RegistryService registryService;
 
+    // 公開アプリ用マッピング
+    @GetMapping("/")
+    public String redirectToLogin() {
+        return "redirect:/login";
+    }
+
     @GetMapping("/login")
     public String showLoginForm() {
         return "login";
