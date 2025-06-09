@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>ヘッダー</title>
+</head>
+<body>
+    <!--フラグメント作成（他のhtmlで使えるようにする）-->
+    <div th:fragment="Header" th:switch="${currentPage}">
+        <!--ページで表示を変更する-->
+        <!--myPageの場合-->
+        <div th:case="'myPage'">
+            <form th:action="@{/logout}" method="get">
+                <input type="submit" value="ログアウト">
+            </form>
+            <form th:action="@{/dashboard}" method="get">
+                <input type="submit" value="戻る">
+            </form>
+        </div>
+
+        <!--dashboardの場合-->
+        <div th:case="'dashboard'">
+            <button type="submit" id="todo_button" onclick="toDoDialog(this)">ToDo</button> 
+            <form th:action="@{/list/logout}" method="post">
+                <input type="submit" value="ログアウト">
+            </form>
+            <form th:action="@{/myPage}" method="get">
+                <input type="submit" value="マイページ">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
