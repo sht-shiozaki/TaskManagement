@@ -7,6 +7,8 @@
     </head>
 
     <body>
+        <!-- headerのフラグメント作成⇒他のHTMLで使用できるようにする -->
+	    <div th:replace="header :: Header"></div>
         <h1>タスク管理アプリケーション</h1>
 
         <div class="task_form">

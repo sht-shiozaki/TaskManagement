@@ -28,6 +28,7 @@ public class TMController {
     public String showDashboard(HttpSession session, Model model) { // ここでsessionは既存のセッション or 新規セッションを取得
         String userId = (String) session.getAttribute("userId");
         model.addAttribute("taskList", TIService.getAllList(userId));
+        model.addAttribute("currentPage", "dashboard");// ヘッダーの条件分岐の為
         return "dashboard";
     }
 
@@ -55,5 +56,11 @@ public class TMController {
         String userId = (String) session.getAttribute("userId");
         taskItemRepository.updateTask(id, task, deadline, done, userId); // saveだとidかつuserIdが指定できないためカスタムクエリ使用
         return "redirect:/list/dashboard";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpSession session) { // ここでsessionは既存のセッション or 新規セッションを取得
+        session.invalidate();
+        return "redirect:/login";
     }
 }
