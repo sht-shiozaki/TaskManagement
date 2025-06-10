@@ -1,0 +1,94 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  padding: 20px;
+  color: #333;
+}
+
+h1 {
+  color: #4CAF50;
+  text-align: center;
+}
+
+.user-info {
+  margin: 20px auto;
+  text-align: center;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-info div {
+  margin: 8px 0;
+}
+
+#pop_button {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#pop_button:hover {
+  background-color: #45a049;
+}
+
+/* モーダル風の招待コード表示 - レスポンシブ対応 */
+#openInviteDialog {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px 30px;
+  border: 1px solid #888;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  width: 90%;
+  max-width: 400px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#openInviteDialog h2 {
+  margin-top: 0;
+}
+
+#openInviteDialog button {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background-color: #ccc;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#openInviteDialog button:hover {
+  background-color: #bbb;
+}
+
+#copyMessage {
+  margin-top: 10px;
+  color: green;
+  height: 1.2em; /* メッセージの高さを確保 */
+  line-height: 1.2em;
+  /* 空白で常にスペースを確保 */
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 500;
+}

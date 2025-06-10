@@ -14,7 +14,7 @@ import com.example.TaskManagement.service.TaskItemService;
 
 import jakarta.servlet.http.HttpSession;
 
-// リストコンローラー
+// リストコントローラー
 @Controller
 @RequestMapping("/list")
 public class TMController {
