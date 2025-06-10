@@ -1,5 +1,6 @@
 package com.example.TaskManagement.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,5 +34,10 @@ public class RegistryService {
         }
         registry.setUserId(userId); // userId登録
         registryRepository.save(registry); // 上記で細かい処理をしてから、Spring Data JPAの機能使用
+    }
+
+    // ユーザー情報取得
+    public Optional<Registry> getUserByUserId(String userId) {
+        return registryRepository.findByUserId(userId);
     }
 }
