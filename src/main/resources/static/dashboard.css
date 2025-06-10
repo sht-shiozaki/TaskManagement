@@ -3,6 +3,7 @@ body {
     margin: 30px;
     color: #283655;
 }
+
 input {
     border: 1px solid;
 }
@@ -13,15 +14,62 @@ input {
 
 /* タスク入力フォーム */
 .task_form {
-    padding: 0px 10px 10px 10px;
+    padding: 0 20px 20px;
     border: 1px solid #4D648D;
 }
+
 .task_form form {
     display: grid;
     grid-template-columns: 100px 1fr;
+    row-gap: 16px;
+    column-gap: 16px;
 }
-.task_form input[type="date"], select {
+
+.task_form input[type="date"],
+.task_form input[type="time"],
+.task_form select {
     width: 150px;
+}
+
+/* 期限＋時間の横並び */
+.deadline-inputs {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/*優先度＋状態：デバッグ用に赤枠を表示*/
+.task_form form > .priority-status {
+    grid-column: 1 / -1 !important;
+    display: flex !important;
+    align-items: center;
+    gap: 16px !important;
+    /* border: 1px dashed red;    ← 動いているか確認用 */
+}
+
+/* 優先度／状態 の各 field */
+.task_form form > .priority-status .field {
+    display: flex !important;
+    align-items: center;
+    gap: 8px !important;
+}
+
+/* 更新ボタン群 */
+.task_form form > .update-button {
+    grid-column: 1 / -1;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* 追加ボタン群 */
+.task_form form > .add-button {
+    grid-column: 1 / -1;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
 }
 
 /* タスク一覧 */
@@ -31,13 +79,33 @@ input {
     border-collapse: collapse;
 }
 
-/* タスク更新ダイアログ (第18章のサンプルで使用) */
+/* 更新ダイアログ */
 #updateDialog {
     display: none;
-    background-color: #FFFFFF;
-    border: 2px double;
-    width: 500px;
+    background-color: #FFF;
+    border: 2px double #4D648D;
+    width: 800px;
+    height: auto;
     position: fixed;
-    top: 120px;
+    top: 50%;                   /* 上から 50% の位置を基準に */
+    left: 50%;                  /* 左から 50% の位置を基準に */
+    transform: translate(-50%, -50%); /* 自要素幅・高さの半分だけずらして真ん中に */
+    padding: 30px;
     z-index: 9999;
+    box-shadow: 0 4px 4px rgba(0,0,0,0.1);
+}
+/* 追加ダイアログ */
+#TodoDialog {
+    display: none;
+    background-color: #FFF;
+    border: 2px double #4D648D;
+    width: 800px;
+    height: auto;
+    position: fixed;
+    top: 50%;                   /* 上から 50% の位置を基準に */
+    left: 50%;                  /* 左から 50% の位置を基準に */
+    transform: translate(-50%, -50%); /* 自要素幅・高さの半分だけずらして真ん中に */
+    padding: 30px;
+    z-index: 9999;
+    box-shadow: 0 4px 4px rgba(0,0,0,0.1);
 }
