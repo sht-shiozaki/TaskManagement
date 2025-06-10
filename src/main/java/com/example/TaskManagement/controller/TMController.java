@@ -14,7 +14,7 @@ import com.example.TaskManagement.service.TaskItemService;
 
 import jakarta.servlet.http.HttpSession;
 
-// リストコンローラー
+// リストコントローラー
 @Controller
 @RequestMapping("/list")
 public class TMController {
@@ -28,14 +28,16 @@ public class TMController {
     public String showDashboard(HttpSession session, Model model) { // ここでsessionは既存のセッション or 新規セッションを取得
         String userId = (String) session.getAttribute("userId");
         model.addAttribute("taskList", TIService.getAllList(userId));
+        model.addAttribute("currentPage", "dashboard");// ヘッダーの条件分岐の為
         return "dashboard";
     }
 
     @PostMapping("/add")
-    String addItem(@RequestParam("task") String task, @RequestParam("deadline") String deadline, HttpSession session) {
+    String addItem(@RequestParam("task") String detail, @RequestParam("deadline") String deadline,
+            HttpSession session) {
         String userId = (String) session.getAttribute("userId");
         TaskItem item = new TaskItem();
-        item.setTask(task);
+        item.setDetail(detail);
         item.setDeadline(deadline);
         item.setUserId(userId);
         taskItemRepository.save(item); // 細かい処理不要のため、Spring Data JPAの機能使用
@@ -50,10 +52,16 @@ public class TMController {
     }
 
     @PostMapping("/update")
-    String updateItem(@RequestParam("id") Long id, @RequestParam("task") String task,
+    String updateItem(@RequestParam("id") Long id, @RequestParam("task") String detail,
             @RequestParam("deadline") String deadline, @RequestParam("done") boolean done, HttpSession session) {
         String userId = (String) session.getAttribute("userId");
-        taskItemRepository.updateTask(id, task, deadline, done, userId); // saveだとidかつuserIdが指定できないためカスタムクエリ使用
+        taskItemRepository.updateTask(id, detail, deadline, done, userId); // saveだとidかつuserIdが指定できないためカスタムクエリ使用
         return "redirect:/list/dashboard";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpSession session) { // ここでsessionは既存のセッション or 新規セッションを取得
+        session.invalidate();
+        return "redirect:/login";
     }
 }

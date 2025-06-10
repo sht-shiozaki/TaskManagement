@@ -33,6 +33,13 @@
 		<maven.compiler.release>21</maven.compiler.release> <!-- これも入れると良い -->
 	</properties>
 	<dependencies>
+		<!-- Flyway(PostgreSQL自動更新) -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>9.22.0</version>
+		</dependency>
+
 		<!-- Spring Data JPA -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

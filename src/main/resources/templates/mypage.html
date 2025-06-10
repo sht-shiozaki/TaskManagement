@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>マイページ</title>
+  <link rel="stylesheet" href="mypage.css" />
+</head>
+<body>
+
+  <h1 th:text="${username} + 'さんのマイページ'">ユーザー名さんのマイページ</h1>
+
+  <div class="user-info">
+    <div>ユーザーID: <span th:text="${userId}">123</span></div>
+    <div>ユーザー名: <span th:text="${username}">山田太郎</span></div>
+    <div>メールアドレス: <span th:text="${mail}">example@example.com</span></div>
+    <!--招待コード作成のコントローラーへ-->
+    <form th:action="@{/makeinvitecode}" method="post">
+      <button id="pop_button" type="submit">招待コード発行</button>
+    </form>
+  </div>
+
+  <!-- オーバーレイ -->
+  <div id="overlay" class="overlay" onclick="closeInviteDialog()"></div>
+
+  <!-- モーダル -->
+  <div id="openInviteDialog">
+    <h2>招待コード</h2>
+    <!--招待コード表示-->
+    <h2 id="inviteCodeText" th:text="${invitecode}"></h2>
+
+    <h4>有効期限:24時間</h4>
+
+    <button onclick="copyInviteCode()">コピー</button>
+    <button onclick="closeInviteDialog()">閉じる</button>
+
+    <div id="copyMessage" style="margin-top:10px; color: green; height:1.2em;">&nbsp;</div>
+  </div>
+
+  <script>
+    function openInviteDialog() {
+      document.getElementById("openInviteDialog").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
+
+      const msgElem = document.getElementById("copyMessage");
+      msgElem.style.display = "block";
+      msgElem.innerText = "";
+    }
+
+    function closeInviteDialog() {
+      document.getElementById("openInviteDialog").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
+    }
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeInviteDialog();
+      }
+    });
+
+    function copyInviteCode() {
+      const codeText = document.getElementById("inviteCodeText").innerText;
+      navigator.clipboard.writeText(codeText).then(() => {
+        document.getElementById("copyMessage").innerText = "コピーしました！";
+      });
+    }
+
+    window.onload = function() {
+      var inviteCodeElem = document.getElementById("inviteCodeText");
+      if (inviteCodeElem && inviteCodeElem.innerText.trim() !== "") {
+        openInviteDialog();
+      }
+    }
+  </script>
+
+</body>
+</html>
