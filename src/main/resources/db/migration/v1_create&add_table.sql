@@ -11,7 +11,7 @@ ALTER TABLE "TaskItem"
 
 
 -- TaskItem　カラム名変更
- ALTER TABLE "TaskItem" RENAME COLUMN task TO detail;
+ALTER TABLE "TaskItem" RENAME COLUMN task TO detail;
 
 
 -- invitation　新規テーブル作成
