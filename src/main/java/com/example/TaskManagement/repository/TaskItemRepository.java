@@ -35,7 +35,7 @@ public interface TaskItemRepository extends JpaRepository<TaskItem, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE TaskItem t SET t.task = :task, t.deadline = :deadline, t.done = :done WHERE t.id = :id AND t.userId = :userId")
-    void updateTask(@Param("id") Long id, @Param("task") String task, @Param("deadline") String deadline,
+    @Query("UPDATE TaskItem t SET t.detail = :detail, t.deadline = :deadline, t.done = :done WHERE t.id = :id AND t.userId = :userId")
+    void updateTask(@Param("id") Long id, @Param("detail") String detail, @Param("deadline") String deadline,
             @Param("done") boolean done, @Param("userId") String userId);
 }
