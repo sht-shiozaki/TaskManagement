@@ -12,8 +12,8 @@ public class TaskItemService {
 
     @Autowired
     private TaskItemRepository taskItemRepository;
-    
-    public List<TaskItem> getAllList(String userId){
-        return taskItemRepository.findByUserId (userId);
+
+    public List<TaskItem> getAllList(String userId) {
+        return taskItemRepository.findByUserId(userId);
     }
 }
