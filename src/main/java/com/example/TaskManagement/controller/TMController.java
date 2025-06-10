@@ -36,7 +36,8 @@ public class TMController {
     }
 
     @PostMapping("/add")
-    String addItem(@RequestParam("task") String detail, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate deadline,
+    String addItem(@RequestParam("task") String detail,
+            @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam("deadline") LocalDate deadline,
             HttpSession session) {
         String userId = (String) session.getAttribute("userId");
         TaskItem item = new TaskItem();
