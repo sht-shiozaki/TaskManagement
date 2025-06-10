@@ -33,10 +33,11 @@ public class TMController {
     }
 
     @PostMapping("/add")
-    String addItem(@RequestParam("task") String task, @RequestParam("deadline") String deadline, HttpSession session) {
+    String addItem(@RequestParam("task") String detail, @RequestParam("deadline") String deadline,
+            HttpSession session) {
         String userId = (String) session.getAttribute("userId");
         TaskItem item = new TaskItem();
-        item.setDetail(task);
+        item.setDetail(detail);
         item.setDeadline(deadline);
         item.setUserId(userId);
         taskItemRepository.save(item); // 細かい処理不要のため、Spring Data JPAの機能使用
@@ -51,10 +52,10 @@ public class TMController {
     }
 
     @PostMapping("/update")
-    String updateItem(@RequestParam("id") Long id, @RequestParam("task") String task,
+    String updateItem(@RequestParam("id") Long id, @RequestParam("task") String detail,
             @RequestParam("deadline") String deadline, @RequestParam("done") boolean done, HttpSession session) {
         String userId = (String) session.getAttribute("userId");
-        taskItemRepository.updateTask(id, task, deadline, done, userId); // saveだとidかつuserIdが指定できないためカスタムクエリ使用
+        taskItemRepository.updateTask(id, detail, deadline, done, userId); // saveだとidかつuserIdが指定できないためカスタムクエリ使用
         return "redirect:/list/dashboard";
     }
 
