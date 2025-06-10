@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
 import com.example.TaskManagement.entity.Registry;
 import com.example.TaskManagement.service.RegistryService;
@@ -26,6 +24,8 @@ public class MyPageController {
             model.addAttribute("userId", user.get().getUserId());
             model.addAttribute("username", user.get().getUsername());
             model.addAttribute("mail", user.get().getEmail());
+            model.addAttribute("currentPage", "mypage");
+            // ↑ヘッダー表示用
             return "mypage";
         } else {
             session.invalidate();
@@ -43,7 +43,8 @@ public class MyPageController {
         model.addAttribute("username", user.get().getUsername());
         model.addAttribute("mail", user.get().getEmail());
         // ↑セッションを基に、DBからユーザー情報を取得してmypageに表示させるので残して下さい
-
+        model.addAttribute("currentPage", "mypage");
+        // ↑ヘッダー表示用
         // ↓ここに作成した招待コードを入力してください
         String inviteCode = "TEST123";
         model.addAttribute("invitecode", inviteCode);
