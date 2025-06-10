@@ -1,6 +1,9 @@
 package com.example.TaskManagement.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +36,7 @@ public class TMController {
     }
 
     @PostMapping("/add")
-    String addItem(@RequestParam("task") String detail, @RequestParam("deadline") String deadline,
+    String addItem(@RequestParam("task") String detail, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate deadline,
             HttpSession session) {
         String userId = (String) session.getAttribute("userId");
         TaskItem item = new TaskItem();
