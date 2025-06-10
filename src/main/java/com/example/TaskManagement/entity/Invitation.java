@@ -1,5 +1,7 @@
 package com.example.TaskManagement.entity;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -15,11 +17,11 @@ public class Invitation {
 
     // 発行日
     @Column(nullable = false)
-    private String issueDate;
+    private LocalDate issueDate;
 
     // 有効期限
     @Column(nullable = false)
-    private String expirationDate;
+    private LocalDate expirationDate;
 
     // 招待コード
     @Id
@@ -37,19 +39,19 @@ public class Invitation {
         this.userId = userId;
     }
 
-    public String getIssueDate() {
+    public LocalDate getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(String issueDate) {
+    public void setIssueDate(LocalDate issueDate) {
         this.issueDate = issueDate;
     }
 
-    public String getExpirationDate() {
+    public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(String expirationDate) {
+    public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
     }
 
