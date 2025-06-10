@@ -36,7 +36,7 @@ public class TMController {
     String addItem(@RequestParam("task") String task, @RequestParam("deadline") String deadline, HttpSession session) {
         String userId = (String) session.getAttribute("userId");
         TaskItem item = new TaskItem();
-        item.setTask(task);
+        item.setDetail(task);
         item.setDeadline(deadline);
         item.setUserId(userId);
         taskItemRepository.save(item); // 細かい処理不要のため、Spring Data JPAの機能使用
