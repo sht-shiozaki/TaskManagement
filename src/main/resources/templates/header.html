@@ -8,12 +8,12 @@
     <!--フラグメント作成（他のhtmlで使えるようにする）-->
     <div th:fragment="Header" th:switch="${currentPage}">
         <!--ページで表示を変更する-->
-        <!--myPageの場合-->
-        <div th:case="'myPage'">
-            <form th:action="@{/logout}" method="get">
+        <!--mypageの場合-->
+        <div th:case="'mypage'">
+            <form th:action="@{/list/logout}" method="post">
                 <input type="submit" value="ログアウト">
             </form>
-            <form th:action="@{/dashboard}" method="get">
+            <form th:action="@{/list/dashboard}" method="get">
                 <input type="submit" value="戻る">
             </form>
         </div>
@@ -24,7 +24,7 @@
             <form th:action="@{/list/logout}" method="post">
                 <input type="submit" value="ログアウト">
             </form>
-            <form th:action="@{/myPage}" method="get">
+            <form th:action="@{/mypage}" method="get">
                 <input type="submit" value="マイページ">
             </form>
         </div>

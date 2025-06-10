@@ -31,6 +31,8 @@ public class MyPageController {
             model.addAttribute("userId", user.get().getUserId());
             model.addAttribute("username", user.get().getUsername());
             model.addAttribute("mail", user.get().getEmail());
+            model.addAttribute("currentPage", "mypage");
+            // ↑ヘッダー表示用
             return "mypage";
         } else {
             session.invalidate();
@@ -49,6 +51,7 @@ public class MyPageController {
         model.addAttribute("userId", user.get().getUserId());
         model.addAttribute("username", user.get().getUsername());
         model.addAttribute("mail", user.get().getEmail());
+        model.addAttribute("currentPage", "mypage"); // ヘッダー表示用
         model.addAttribute("invitecode", inviteCode);
         return "mypage";
     }

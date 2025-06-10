@@ -5,6 +5,9 @@
 
 package com.example.TaskManagement.entity;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,11 +32,12 @@ public class TaskItem {
     private String detail;
 
     @Column(nullable = false)
-    private String deadline;
+    private LocalDate deadline;
 
     // 締め切り時間 追加
     @Column(nullable = false)
-    private String time;
+    private LocalTime time;
+
     // 優先度 追加
     @Column(nullable = false)
     private String priority;
@@ -53,7 +57,8 @@ public class TaskItem {
 
     // 以降はクライアントから立ってきたデータをオブジェクトに詰める役割(データバインディング)
     // 引数ありコンストラクタ
-    public TaskItem(Long id, String title, String detail, String deadline, String time, String priority, boolean done,
+    public TaskItem(Long id, String title, String detail, LocalDate deadline, LocalTime time, String priority,
+            boolean done,
             String userId) {
         this.id = id;
         this.title = title;
@@ -89,19 +94,19 @@ public class TaskItem {
         this.detail = detail;
     }
 
-    public String getDeadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(String deadline) {
+    public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
     }
 
-    public String getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
