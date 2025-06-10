@@ -1,3 +1,4 @@
+// タスク管理の一覧表示、追加、削除、更新を行うためのコントローラー
 package com.example.TaskManagement.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/list")
 public class TMController {
 
+    //
     @Autowired
     private TaskItemService TIService;
     @Autowired
@@ -33,12 +35,16 @@ public class TMController {
     }
 
     @PostMapping("/add")
-    String addItem(@RequestParam("task") String detail, @RequestParam("deadline") String deadline,
-            HttpSession session) {
+    String addItem(@RequestParam("title") String title, @RequestParam("detail") String detail,
+            @RequestParam("deadline") String deadline, @RequestParam("time") String time,
+            @RequestParam("priority") String priority, HttpSession session) {
         String userId = (String) session.getAttribute("userId");
         TaskItem item = new TaskItem();
+        item.setTitle(title);
         item.setDetail(detail);
         item.setDeadline(deadline);
+        item.setTime(time);
+        item.setPriority(priority);
         item.setUserId(userId);
         taskItemRepository.save(item); // 細かい処理不要のため、Spring Data JPAの機能使用
         return "redirect:/list/dashboard";
@@ -52,10 +58,12 @@ public class TMController {
     }
 
     @PostMapping("/update")
-    String updateItem(@RequestParam("id") Long id, @RequestParam("task") String detail,
-            @RequestParam("deadline") String deadline, @RequestParam("done") boolean done, HttpSession session) {
+    String updateItem(@RequestParam("id") Long id, @RequestParam("title") String title,
+            @RequestParam("detail") String detail, @RequestParam("deadline") String deadline,
+            @RequestParam("time") String time, @RequestParam("priority") String priority,
+            @RequestParam("done") boolean done, HttpSession session) {
         String userId = (String) session.getAttribute("userId");
-        taskItemRepository.updateTask(id, detail, deadline, done, userId); // saveだとidかつuserIdが指定できないためカスタムクエリ使用
+        taskItemRepository.updateTask(id, title, detail, deadline, time, priority, done, userId); // saveだとidかつuserIdが指定できないためカスタムクエリ使用
         return "redirect:/list/dashboard";
     }
 

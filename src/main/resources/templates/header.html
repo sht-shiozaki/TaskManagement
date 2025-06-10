@@ -20,7 +20,7 @@
 
         <!--dashboardの場合-->
         <div th:case="'dashboard'">
-            <button type="submit" id="todo_button" onclick="toDoDialog(this)">ToDo</button> 
+            <button type="submit" id="todo_button" onclick="openTodoDialog(this)">ToDo</button> 
             <form th:action="@{/list/logout}" method="post">
                 <input type="submit" value="ログアウト">
             </form>
