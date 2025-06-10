@@ -2,6 +2,7 @@ package com.example.TaskManagement.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +22,7 @@ public class Invitation {
     private String expirationDate;
 
     // 招待コード
+    @Id
     @Column(nullable = false)
     private String invitationCode;
 
