@@ -1,5 +1,8 @@
 -- v1_create&add_table.sql
 
+-- 一旦中身削除
+DELETE FROM "TaskItem";
+
 -- TaskItem　カラム追加 
 ALTER TABLE "TaskItem"
     ADD COLUMN title VARCHAR(255) NOT NULL,
