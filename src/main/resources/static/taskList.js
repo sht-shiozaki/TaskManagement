@@ -32,11 +32,11 @@ function openTodoDialog(button) {
 function openUpdateDialog(button) {
   // button.dataset なら data-* 属性がすべて取れる
   const id       = button.dataset.id;
-  const title    = button.dataset.title;
-  const detail   = button.dataset.detail;
-  const deadline = button.dataset.deadline;
-  const time     = button.dataset.time;
-  const priority = button.dataset.priority;
+  const title    = button.dataset.title ?? '';
+  const detail   = button.dataset.detail  ?? '';
+  const deadline = button.dataset.deadline ?? '';
+  const time     = button.dataset.time ?? '';
+  const priority = button.dataset.priority ?? '';
   const done     = button.dataset.done === 'true';
 
   document.getElementById('update_id').value       = id;
