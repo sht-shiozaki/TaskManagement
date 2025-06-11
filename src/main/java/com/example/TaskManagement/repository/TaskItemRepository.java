@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.TaskManagement.entity.TaskItem;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 // データベースの「TaskItem」エンティティ（テーブル）にアクセスするためのインターフェースです。
@@ -45,6 +49,7 @@ public interface TaskItemRepository extends JpaRepository<TaskItem, Long> {
     @Modifying // 実行するのはデータ変更クエリ
     @Query("UPDATE TaskItem t SET t.title = :title, t.detail = :detail, t.deadline = :deadline, t.time = :time, t.priority = :priority, t.done = :done WHERE t.id = :id AND t.userId = :userId")
     void updateTask(@Param("id") Long id, @Param("title") String title, @Param("detail") String detail,
-            @Param("deadline") String deadline, @Param("time") String time, @Param("priority") String priority,
+            @DateTimeFormat(pattern = "yyyy-MM-dd") @Param("deadline") LocalDate deadline,
+            @DateTimeFormat(pattern = "HH:mm") @Param("time") LocalTime time, @Param("priority") String priority,
             @Param("done") boolean done, @Param("userId") String userId);
 }

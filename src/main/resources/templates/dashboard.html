@@ -58,8 +58,18 @@
                         <td width="50px" th:text="${task.priority}"></td>
                         <td width="50px" th:text="${task.done} ? '完了': '未完了'"></td>
                         <td width="50px">
-                            <!-- thisはこのボタン要素を引数として.jsに渡している-->
-                            <button type="submit" id="update_button" onclick="openUpdateDialog(this)">更新</button> 
+                        <button
+                            type="button"
+                            class="update-button"
+                            th:data-id="${task.id}"
+                            th:data-title="${task.title}"
+                            th:data-detail="${task.detail}"
+                            th:data-deadline="${task.deadline}"
+                            th:data-time="${task.time}"
+                            th:data-priority="${task.priority}"
+                            th:data-done="${task.done}"
+                            onclick="openUpdateDialog(this)"
+                        >更新</button> 
                         </td>
                         <td width="50px">
                             <form action="#" th:action="@{/list/delete}" method="post">
@@ -77,13 +87,13 @@
                 <form action="#" th:action="@{/list/add}" method="post">
                     <input id="add_id" name="id" type="hidden" />
                     <label>タスク</label>
-                    <input id="add_title" name="title" type="text" />
+                    <input id="add_title" name="title" type="text" required />
                     <label>説明</label>
                     <textarea id="add_detail" name="detail" rows="4"></textarea>
                     <label>期限</label>
                     <div class="deadline-inputs">
                     <input id="add_deadline" name="deadline" type="date" />
-                    <input id="add_time" name="time" type="time" />
+                    <input id="add_time" name="time" type="time" value="09:00"/>
                     </div>
                     <div class="priority-status">
                         <div class="field">
@@ -97,7 +107,7 @@
                     </div>
                     <div class="add-button">
                         <button type="submit">登録</button>
-                        <button type="reset" onclick="getElementById('TodoDialog').style.display='none';">キャンセル</button>
+                       <button type="button"onclick="document.getElementById('TodoDialog').style.display='none';">キャンセル</button>
                     </div>
                 </form>
             </div>
@@ -110,9 +120,9 @@
                 <form action="#" th:action="@{/list/update}" method="post">
                     <input id="update_id" name="id" type="hidden" />
                     <label>タスク</label>
-                    <input id="update_title" name="title" type="text" />
+                    <input id="update_title" name="title" type="text" required />
                     <label>説明</label>
-                    <textarea id="update_detail" name="detail" rows="4"></textarea>
+                    <textarea id="update_detail" name="detail" rows="4" ></textarea>
                     <label>期限</label>
                     <div class="deadline-inputs">
                     <input id="update_deadline" name="deadline" type="date" />
@@ -137,7 +147,7 @@
                     </div>
                     <div class="update-button">
                         <button type="submit">更新</button>
-                        <button type="reset" onclick="getElementById('updateDialog').style.display='none';">キャンセル</button>
+                        <button type="reset"  onclick="document.getElementById('updateDialog').style.display='none';">キャンセル</button>
                     </div>
                 </form>
             </div>

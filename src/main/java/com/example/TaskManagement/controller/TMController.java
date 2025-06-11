@@ -20,8 +20,8 @@ import com.example.TaskManagement.service.TaskItemService;
 import jakarta.servlet.http.HttpSession;
 
 // リストコントローラー
-@Controller
-@RequestMapping("/list")
+@Controller // Spring MVCのコントローラーであることを示す
+@RequestMapping("/list") // URLの先頭部分を指定
 public class TMController {
 
     //
@@ -33,6 +33,7 @@ public class TMController {
     @GetMapping("/dashboard")
     public String showDashboard(HttpSession session, Model model) { // ここでsessionは既存のセッション or 新規セッションを取得
         String userId = (String) session.getAttribute("userId");
+        // TISevice.getAllList()でサービスクラスメソッドよび、リポジトリクラスのメソッドでDBから表データを取り出し
         model.addAttribute("taskList", TIService.getAllList(userId));
         model.addAttribute("currentPage", "dashboard");// ヘッダーの条件分岐の為
         return "dashboard";
@@ -64,8 +65,10 @@ public class TMController {
 
     @PostMapping("/update")
     String updateItem(@RequestParam("id") Long id, @RequestParam("title") String title,
-            @RequestParam("detail") String detail, @RequestParam("deadline") String deadline,
-            @RequestParam("time") String time, @RequestParam("priority") String priority,
+            @RequestParam("detail") String detail,
+            @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam("deadline") LocalDate deadline,
+            @DateTimeFormat(pattern = "HH:mm") @RequestParam("time") LocalTime time,
+            @RequestParam("priority") String priority,
             @RequestParam("done") boolean done, HttpSession session) {
         String userId = (String) session.getAttribute("userId");
         taskItemRepository.updateTask(id, title, detail, deadline, time, priority, done, userId); // saveだとidかつuserIdが指定できないためカスタムクエリ使用
