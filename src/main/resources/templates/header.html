@@ -6,27 +6,30 @@
 </head>
 <body>
     <!--フラグメント作成（他のhtmlで使えるようにする）-->
-    <div th:fragment="Header" th:switch="${currentPage}">
+    <div th:fragment="Header">
         <!--ページで表示を変更する-->
-        <!--mypageの場合-->
-        <div th:case="'mypage'">
-            <form th:action="@{/list/logout}" method="post">
-                <input type="submit" value="ログアウト">
-            </form>
-            <form th:action="@{/list/dashboard}" method="get">
-                <input type="submit" value="戻る">
-            </form>
-        </div>
+        <div th:switch="${currentPage}" class="header">
+            <div class="headerLeft"></div>
+            <!--mypageの場合-->
+            <div th:case="'mypage'" class="headerRight">
+                <form th:action="@{/list/logout}" method="post">
+                    <input type="submit" value="ログアウト" class="logoutButton">
+                </form>
+                <form th:action="@{/list/dashboard}" method="get">
+                    <input type="submit" value="戻る" class="headerButton">
+                </form>
+            </div>
 
-        <!--dashboardの場合-->
-        <div th:case="'dashboard'">
-            <button type="submit" id="todo_button" onclick="openTodoDialog(this)">ToDo</button> 
-            <form th:action="@{/list/logout}" method="post">
-                <input type="submit" value="ログアウト">
-            </form>
-            <form th:action="@{/mypage}" method="get">
-                <input type="submit" value="マイページ">
-            </form>
+            <!--dashboardの場合-->
+            <div th:case="'dashboard'" class="headerRight">
+                <button type="submit" class="headerButton" id="todo_button" onclick="openTodoDialog(this)">ToDo</button> 
+                <form th:action="@{/list/logout}" method="post">
+                    <input type="submit" value="ログアウト" class="logoutButton">
+                </form>
+                <form th:action="@{/mypage}" method="get">
+                    <input type="submit" value="マイページ" class="headerButton">
+                </form>
+            </div>
         </div>
     </div>
 </body>
