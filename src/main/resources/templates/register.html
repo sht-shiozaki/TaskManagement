@@ -7,9 +7,9 @@
 <body>
 	<h1>新規登録画面</h1>
 	<form action="#" th:action="@{/register}" th:object="${user}" method="post">
-	    <input type="text" th:field="*{username}" placeholder="ユーザー名" required /><br>
-	    <input type="password" th:field="*{password}" placeholder="パスワード" required /><br>
-	    <input type="email" th:field="*{email}" placeholder="メールアドレス" required /><br>
+	    <input type="text" th:field="*{username}" minlength="1" maxlength="20" placeholder="ユーザー名" required /><br>
+	    <input type="password" th:field="*{password}" minlength="1" maxlength="20" placeholder="パスワード" required /><br>
+	    <input type="email" th:field="*{email}" minlength="1" maxlength="50" placeholder="メールアドレス" required /><br>
 		<input type="text" name="inviteCode" placeholder="招待コード" required /><br>
 	    <button type="submit">登録</button><br>
 	</form>

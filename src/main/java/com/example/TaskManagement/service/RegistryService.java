@@ -51,4 +51,20 @@ public class RegistryService {
         return invitationRepository.findByInvitationCodeAndExpirationDateGreaterThanEqual(inviteCode, today)
                 .isPresent();
     }
+
+    public String checkUser(String username, String password, String email) {
+        String Msg = "";
+        if (username == null || username.length() == 0 || username.length() > 20) {
+            return Msg = "ユーザー名は1~20文字で入力してください";
+        }
+        if (password == null || password.length() == 0 || password.length() > 20) {
+            return Msg = "パスワードは1~20文字で入力してください";
+        }
+        if (email == null || email.length() == 0 || email.length() > 50) {
+            return Msg = "メールアドレスは1~50文字で入力してください";
+        } else {
+            return Msg = null;
+        }
+
+    }
 }

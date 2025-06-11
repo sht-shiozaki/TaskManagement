@@ -55,14 +55,22 @@ public class HomeController {
     public String registerUser(Registry registry, HttpSession session, Model model,
             @RequestParam("inviteCode") String inviteCode) {
 
+        // 文字数制限  
+        String Msg = registryService.checkUser(registry.getUsername(),registry.getPassword(),registry.getEmail()      
+        if(Msg != null){
+            model.addAttribute("error", Msg);
+            return "register";
+        }  
+
         // 招待コードが無効の場合
-        if (!registryService.isInviteCodeValid(inviteCode)) {
+        if(!registryService.isInviteCodeValid(inviteCode))
+        {
             model.addAttribute("error", "招待コードが無効です");
             model.addAttribute("user", registry);
             return "register"; // 再度登録画面へ
         }
+
         // ユーザーの登録
-        registryService.registerUser(registry);
-        return "redirect:/login"; // URL変更
+        registryService.registerUser(registry);return"redirect:/login"; // URL変更
     }
 }
