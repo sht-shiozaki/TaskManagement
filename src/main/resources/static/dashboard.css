@@ -14,7 +14,7 @@ input {
 
 /* タスク入力フォーム */
 .task_form {
-    padding: 0 20px 20px;
+    padding: 20px 20px 20px;
     border: 1px solid #4D648D;
 }
 
@@ -30,6 +30,28 @@ input {
 .task_form select {
     width: 150px;
 }
+
+/* 外枠を見やすく */
+#updateDialog input,
+#updateDialog select,
+#updateDialog textarea,
+#TodoDialog input,
+#TodoDialog select,
+#TodoDialog textarea {
+    border: 1px solid #4D648D;
+    padding: 4px;
+    font-family: inherit;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+#updateDialog textarea,
+#TodoDialog textarea {
+    width: 100% !important;
+    height: auto !important;
+    resize: vertical;
+}
+
 
 /* 期限＋時間の横並び */
 .deadline-inputs {
