@@ -20,8 +20,8 @@ import com.example.TaskManagement.service.TaskItemService;
 import jakarta.servlet.http.HttpSession;
 
 // リストコントローラー
-@Controller
-@RequestMapping("/list")
+@Controller // Spring MVCのコントローラーであることを示す
+@RequestMapping("/list") // URLの先頭部分を指定
 public class TMController {
 
     //
@@ -33,6 +33,7 @@ public class TMController {
     @GetMapping("/dashboard")
     public String showDashboard(HttpSession session, Model model) { // ここでsessionは既存のセッション or 新規セッションを取得
         String userId = (String) session.getAttribute("userId");
+        // TISevice.getAllList()でサービスクラスメソッドよび、リポジトリクラスのメソッドでDBから表データを取り出し
         model.addAttribute("taskList", TIService.getAllList(userId));
         model.addAttribute("currentPage", "dashboard");// ヘッダーの条件分岐の為
         return "dashboard";
