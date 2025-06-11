@@ -39,6 +39,13 @@ public interface TaskItemRepository extends JpaRepository<TaskItem, Long> {
     @Query("SELECT t FROM TaskItem t WHERE t.done = false AND t.userId = :userId")
     List<TaskItem> findByFalseList(@Param("userId") String userId);
 
+    // 本日のタスクリスト取得
+    @Query("SELECT t FROM TaskItem t WHERE t.done = false AND t.userId = :userId AND t.deadline = :deadline AND t.done = false "
+            +
+            "ORDER BY CASE t.priority WHEN '高' THEN 1 WHEN '中' THEN 2 WHEN '低' THEN 3 END ASC")
+    List<TaskItem> findByUserIdAndDeadline(@Param("userId") String userId,
+            @DateTimeFormat(pattern = "yyyy-MM-dd") @Param("deadline") LocalDate deadline);
+
     @Transactional
     @Modifying // DELETEクエリを使う場合は @Modifying アノテーションが必須
     @Query("DELETE FROM TaskItem t WHERE t.id = :id AND t.userId = :userId")
@@ -52,4 +59,5 @@ public interface TaskItemRepository extends JpaRepository<TaskItem, Long> {
             @DateTimeFormat(pattern = "yyyy-MM-dd") @Param("deadline") LocalDate deadline,
             @DateTimeFormat(pattern = "HH:mm") @Param("time") LocalTime time, @Param("priority") String priority,
             @Param("done") boolean done, @Param("userId") String userId);
+
 }

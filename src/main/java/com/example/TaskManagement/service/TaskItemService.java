@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.TaskManagement.entity.TaskItem;
 import com.example.TaskManagement.repository.TaskItemRepository;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -15,5 +17,10 @@ public class TaskItemService {
 
     public List<TaskItem> getAllList(String userId) {
         return taskItemRepository.findByUserId(userId);
+    }
+
+    public List<TaskItem> getTodayList(String userId) {
+        LocalDate today = LocalDate.now();
+        return taskItemRepository.findByUserIdAndDeadline(userId, today);
     }
 }
