@@ -1,6 +1,6 @@
 package com.example.TaskManagement.service;
 
-import java.util.List;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.TaskManagement.entity.Registry;
+import com.example.TaskManagement.repository.InvitationRepository;
 import com.example.TaskManagement.repository.RegistryRepository;
 
 @Service
@@ -17,6 +18,8 @@ public class RegistryService {
     // によって、インターフェイスであるRegistryRepositoryをSpringに注入し、自動生成された実装インスタンスが注入されたクラスが使えるようになります。
     @Autowired
     private RegistryRepository registryRepository; // importしたインターフェイス
+    @Autowired
+    private InvitationRepository invitationRepository;
 
     public Optional<Registry> login(String username, String password) {
         Optional<Registry> user = registryRepository.findByUsername(username);
@@ -39,5 +42,13 @@ public class RegistryService {
     // ユーザー情報取得
     public Optional<Registry> getUserByUserId(String userId) {
         return registryRepository.findByUserId(userId);
+    }
+
+    // 招待コード判定
+    public boolean isInviteCodeValid(String inviteCode) {
+        LocalDate today = LocalDate.now();// 今日の日付
+        // コードと有効期限が共に有効であれば「ture」でそれ以外は「false」
+        return invitationRepository.findByInvitationCodeAndExpirationDateGreaterThanEqual(inviteCode, today)
+                .isPresent();
     }
 }

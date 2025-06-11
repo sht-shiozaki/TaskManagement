@@ -4,9 +4,10 @@
         <meta charset="UTF-8">
         <title>タスク管理アプリケーション</title>
         <link th:href="@{/dashboard.css}" rel="stylesheet">
+        <link th:href="@{/header.css}" rel="stylesheet">
     </head>
 
-    <body>
+    <body class="mainHeader">
         <!-- headerのフラグメント作成⇒他のHTMLで使用できるようにする -->
 	    <div th:replace="header :: Header"></div>
         <!-- <h1>タスク管理アプリケーション</h1>

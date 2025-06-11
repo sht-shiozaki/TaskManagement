@@ -1,0 +1,85 @@
+body.mainHeader {
+  padding-top: 20px; /* ヘッダー分の余白 */
+}
+
+
+.header{
+	background-color: rgb(255, 255, 255);
+	color:rgb(0, 0, 0); /* 文字のカラー*/
+	font-size: 16px; 
+	padding: 10px; /* 上下左右の余白*/
+	display: flex; /* 中の要素を横並びにする*/
+	align-items: center; /* 中央ぞろえ*/
+	gap: 15px; /* 要素間との間のスペース*/
+	position: fixed;/*要素を決まった位置に固定する*/
+	top: 0;
+	left: 0;
+	width: 100%;/*横に広げる*/
+	z-index: 1000;/*他の要素の上に重ねる*/
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 影で浮かせる */
+	justify-content: space-between;/*左右に分けて配置する*/
+}
+
+/*ヘッダー左側*/
+.headerLeft {
+  /* 必要に応じて幅を指定 */
+  width: 100px; /* 例 */
+}
+
+/*ヘッダー右側*/
+.headerRight{
+	display: flex;/*要素の横並び*/
+	align-items: center;
+	gap: 15px;
+	margin-right: 25px;
+}
+
+
+
+/*formタグにつく余白をなくす*/
+.headerForm{
+	margin: 0;
+}
+
+
+/*ヘッダーボタン*/
+.headerButton{
+	background-color: rgb(255, 91, 91);
+	color: white;
+	border: none;
+	padding: 6px 12px;
+	border-radius: 5px;
+	cursor: pointer;/*カーソル合わすと手の形になる*/
+	font-size:14px;
+	transition: background-color 0.3s ease;
+}
+
+.headerButton:hover {
+	background-color: rgb(255, 0, 0);      /* ホバー時の視覚効果 */
+}
+
+.headerButton:focus {
+	outline: none;
+	box-shadow: 0 0 0 2px rgb(255, 0, 0); /* アクセシビリティ対応のフォーカス */
+}
+
+/*ログアウトボタン*/
+.logoutButton{
+	background-color: rgb(106, 125, 255);
+		color: white;
+		border: none;
+		padding: 6px 12px;
+		border-radius: 5px;
+		cursor: pointer;/*カーソル合わすと手の形になる*/
+		font-size:14px;
+		transition: background-color 0.3s ease;
+}
+
+.logoutButton:hover {
+	background-color: blue;      /* ホバー時の視覚効果 */
+}
+
+.logoutButton:focus {
+	outline: none;
+	box-shadow: 0 0 0 2px blue; /* アクセシビリティ対応のフォーカス */
+}

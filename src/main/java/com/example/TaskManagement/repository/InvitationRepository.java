@@ -1,5 +1,6 @@
 package com.example.TaskManagement.repository;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,6 @@ public interface InvitationRepository extends JpaRepository<Invitation, String> 
     @Query("SELECT COUNT(r) > 0 FROM Invitation r WHERE r.invitationCode = :invitationCode") // 変数として使う場合は:invitationCodeと
     boolean checkInvitationCode(@Param("invitationCode") String invitationCode); // @Param("invitationCode"):引数がある場合は左記が必要
 
+    // コードが存在し、かつ期限内のものを検索
+    Optional<Invitation> findByInvitationCodeAndExpirationDateGreaterThanEqual(String inviteCode, LocalDate date);
 }

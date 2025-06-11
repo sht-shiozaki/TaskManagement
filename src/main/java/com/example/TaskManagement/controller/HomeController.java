@@ -52,7 +52,16 @@ public class HomeController {
     }
 
     @PostMapping("/register")
-    public String registerUser(Registry registry, HttpSession session, Model model) {
+    public String registerUser(Registry registry, HttpSession session, Model model,
+            @RequestParam("inviteCode") String inviteCode) {
+
+        // 招待コードが無効の場合
+        if (!registryService.isInviteCodeValid(inviteCode)) {
+            model.addAttribute("error", "招待コードが無効です");
+            model.addAttribute("user", registry);
+            return "register"; // 再度登録画面へ
+        }
+        // ユーザーの登録
         registryService.registerUser(registry);
         return "redirect:/login"; // URL変更
     }
