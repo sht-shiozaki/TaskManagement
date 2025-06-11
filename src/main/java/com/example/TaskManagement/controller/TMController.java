@@ -65,8 +65,10 @@ public class TMController {
 
     @PostMapping("/update")
     String updateItem(@RequestParam("id") Long id, @RequestParam("title") String title,
-            @RequestParam("detail") String detail, @RequestParam("deadline") String deadline,
-            @RequestParam("time") String time, @RequestParam("priority") String priority,
+            @RequestParam("detail") String detail,
+            @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam("deadline") LocalDate deadline,
+            @DateTimeFormat(pattern = "HH:mm") @RequestParam("time") LocalTime time,
+            @RequestParam("priority") String priority,
             @RequestParam("done") boolean done, HttpSession session) {
         String userId = (String) session.getAttribute("userId");
         taskItemRepository.updateTask(id, title, detail, deadline, time, priority, done, userId); // saveだとidかつuserIdが指定できないためカスタムクエリ使用
