@@ -52,19 +52,26 @@ public class RegistryService {
                 .isPresent();
     }
 
-    public String checkUser(String username, String password, String email) {
+    public String checkUser(String username, String password, String email /* String inviteCode */) {
         String Msg = "";
-        if (username == null || username.length() == 0 || username.length() > 20) {
-            return Msg = "ユーザー名は1~20文字で入力してください";
+        if (username == null || username.length() == 0 || username.length() > 30
+                || !username.matches("[A-Za-z0-9\u3040-\u309F\u4E00-\u9FFF\u30A0-\u30FF]{1,30}")) {
+            return Msg = "ユーザー名は「英数字・ひらがな・漢字・カタカナ」の1~30文字で入力してください";
         }
-        if (password == null || password.length() == 0 || password.length() > 20) {
-            return Msg = "パスワードは1~20文字で入力してください";
+        if (password == null || password.length() == 0 || password.length() > 20
+                || !password.matches("[A-Za-z0-9_-]{1,20}")) {
+            return Msg = "パスワードは「英数字」と「 _（アンダーバー）と -（ハイフン）」のみ、1~20文字で入力してください";
         }
         if (email == null || email.length() == 0 || email.length() > 50) {
             return Msg = "メールアドレスは1~50文字で入力してください";
-        } else {
-            return Msg = null;
         }
+        /*
+         * if (inviteCode == null || inviteCode.length() == 0 || inviteCode.length() > 8
+         * || inviteCode.contains(" ")) {
+         * return Msg = "招待コードはスペースを含まない1～8文字で入力してください";
+         * }
+         */
+        return Msg = null;
 
     }
 }
