@@ -131,3 +131,63 @@ input {
     z-index: 9999;
     box-shadow: 0 4px 4px rgba(0,0,0,0.1);
 }
+
+#detailPopup {
+    width: 800px;
+    max-height: 400px; /* ポップアップの高さを固定 or 最大値 */
+    background: white;
+    border: 1px solid black;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    overflow: hidden; /* ポップアップ全体はスクロールしない */
+    display: none;
+}
+
+/* 詳細部分のコンテナだけスクロール */
+#detailContentContainer {
+    max-height: 200px;  /* 好きな高さに調整 */
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    background: #f9f9f9;
+    white-space: pre-wrap; /* 改行を反映 */
+}
+
+#detailTitle {
+    font-weight: bold;          /* 太字 */
+}
+
+ /* フィルターボタン */
+.col-btn {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  margin-left: 6px;
+  cursor: pointer;
+  background-color: #4D648D;
+  color: white;
+  border: none;
+  border-radius: 3px;
+}
+
+.col-btn:hover {
+  background-color: #283655;
+}
+
+/* 日付フィルター */
+#dateFilterForm input {
+  font-size: 0.8rem;
+  padding: 2px 4px;
+  margin-right: 4px;
+}
+#dateFilterForm button {
+  font-size: 0.8rem;
+  padding: 2px 6px;
+}
+

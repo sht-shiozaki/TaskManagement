@@ -1,27 +1,23 @@
-// function openUpdateDialog(button) {
-//     const row = button.closest('tr'); // 一番近い <tr> を取得。<tr>を繰り返しで表示している為
-//     const cells = row.cells; // row.cells：<tr>の要素を配列風に取得できる
+//詳細pop
+function openDetailDialogFromTitle(tdElem) {
+    const row = tdElem.parentElement;
+    const title = tdElem.textContent.trim();
+    const deadline = row.cells[3].textContent.trim();// 3番目のセルに期限が入っている
+    const detail = row.cells[2].textContent.trim(); // 2番目のセルに詳細が入っている
 
-//     const id = cells[0].textContent.trim(); // <tr>の1つ目の<td>
-//     const title = cells[1].textContent.trim(); // <tr>の2つ目の<td>
-//     const detail = cells[2].textContent.trim();
-//     const deadline = cells[3].textContent.trim();
-//     const time = cells[4].textContent.trim();
-//     const priority = cells[5].textContent.trim();
-//     const statusText = cells[6].textContent.trim();
+    const popup = document.getElementById('detailPopup');
+    document.getElementById('detailTitle').textContent = title;
+    document.getElementById('detailDeadline').textContent = deadline;
+    document.getElementById('detailContent').textContent = detail;
 
-//     document.getElementById('update_id').value = id;
-//     document.getElementById('update_title').value = title;
-//     document.getElementById('update_detail').value = detail
-//     document.getElementById('update_deadline').value = deadline;
-//     document.getElementById('update_time').value = time;
-//     document.getElementById('update_priority').value = priority;
-//     document.getElementById('update_status').selectedIndex = (statusText === '完了') ? 1 : 0; // statusText が文字列 '完了' ならインデックス1を選択、それ以外は0を選択
+    popup.style.display = 'block';
+}
 
-//     const dialog = document.getElementById('updateDialog');
-//     // dialog.style.left = ((window.innerWidth - 500) / 2) + 'px'; // window.innerWidth：ブラウザ画面の幅
-//     dialog.style.display = 'block';
-// }
+function closeDateFilterPopup() {
+  document.getElementById('dateFilterPopup').style.display = 'none';
+}
+
+
 function openTodoDialog(button) {
     const dialog = document.getElementById('TodoDialog');
     dialog.style.display = 'block';
@@ -59,3 +55,48 @@ window.onload = function(){
     var today = y + "-" + m.toString().padStart(2,'0') + "-" + d.toString().padStart(2,'0');
     document.getElementById("add_deadline").setAttribute("value",today);
 }
+
+// ↓期限フィルター
+document.getElementById('filterDateBtn').addEventListener('click', () => {// ボタン押下で表示切替
+    const popup = document.getElementById('dateFilterPopup');
+    popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'block' : 'none';
+});
+// 絞り込み実行
+document.getElementById('applyDateFilterBtn').addEventListener('click', () => {
+    const year = document.getElementById('filterYear').value;
+    let month = document.getElementById('filterMonth').value;
+    let day = document.getElementById('filterDay').value;
+
+    if(month) month = month.padStart(2, '0');
+    if(day) day = day.padStart(2, '0');
+
+  const rows = document.querySelectorAll('#taskTable tbody tr');
+  rows.forEach(row => {
+    const deadlineText = row.cells[3].textContent.trim(); // 期限は4番目のセル（index=3）
+
+    if (!deadlineText.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      row.style.display = 'none';
+      return;
+    }
+
+    const [dYear, dMonth, dDay] = deadlineText.split('-');
+
+    let show = true;
+    if (year && dYear !== year) show = false;
+    if (month && dMonth !== month) show = false;
+    if (day && dDay !== day) show = false;
+
+    row.style.display = show ? '' : 'none';
+  });
+});
+// フィルタークリア
+document.getElementById('clearDateFilterBtn').addEventListener('click', () => {
+  document.getElementById('filterYear').value = '';
+  document.getElementById('filterMonth').value = '';
+  document.getElementById('filterDay').value = '';
+
+  // 全行表示
+  const rows = document.querySelectorAll('#taskTable tbody tr');
+  rows.forEach(row => row.style.display = '');
+});
+// ↑期限フィルター

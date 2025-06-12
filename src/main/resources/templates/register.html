@@ -2,18 +2,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>タスク管理/新規登録</title>
+<link rel="stylesheet" href="register.css" />
 </head>
 <body>
-	<h1>新規登録画面</h1>
+	<h1>アカウント新規登録</h1>
 	<form action="#" th:action="@{/register}" th:object="${user}" method="post">
 	    <input type="text" th:field="*{username}" placeholder="ユーザー名" required /><br>
 	    <input type="password" th:field="*{password}" placeholder="パスワード" required /><br>
 	    <input type="email" th:field="*{email}" placeholder="メールアドレス" required /><br>
 		<input type="text" name="inviteCode" placeholder="招待コード" required /><br>
+		<p class="error" th:text="${error} ?: ' '"></p>
 	    <button type="submit">登録</button><br>
 	</form>
-	<p th:if="${error}" th:text="${error}"></p>
 	
 	<div class="nav-links">
         <a th:href="@{/login}">戻る</a>

@@ -35,16 +35,19 @@
         </div> -->
 
         <div class="tasklist">
-            <h2>現在のタスク一覧</h2>
-            <table border="1">
+            <h2>現在のタスク一覧</h2><button id="clearDateFilterBtn">クリア</button>
+            <table id="taskTable" border="1">
                 <thead>
                     <tr>
-                        <th class="hidden">ID</th>
-                        <th>タスク</th>
-                        <th width="150px">期限</th>
-                        <th width="150px">時間</th>
-                        <th width="100px">優先度</th>
-                        <th width="100px">状態</th>
+                        <th class="hidden">ID <button class="col-btn" data-col="0" title="操作">▼</button></th>
+                        <th>タスク <button class="col-btn" data-col="1" title="操作">▼</button></th>
+                        <th width="150px">
+                        期限
+                        <button class="col-btn" id="filterDateBtn" title="期限で絞り込み">▼</button>
+                        </th>
+                        <th width="150px">時間 <button class="col-btn" data-col="4" title="操作">▼</button></th>
+                        <th width="100px">優先度 <button class="col-btn" data-col="5" title="操作">▼</button></th>
+                        <th width="100px">状態 <button class="col-btn" data-col="6" title="操作">▼</button></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -52,7 +55,8 @@
                 <tbody>
                     <tr th:each="task : ${taskList}">
                         <td class="hidden" th:text="${task.id}"></td>
-                        <td th:text="${task.title}"></td>
+                        <td th:text="${task.title}" onclick="openDetailDialogFromTitle(this)" style="cursor: pointer;"></td>
+                        <td class="hidden" th:text="${task.detail}"></td>　<!--隠し詳細欄-->
                         <td width="100px" th:text="${task.deadline}"></td>
                         <td width="100px" th:text="${task.time}"></td>
                         <td width="50px" th:text="${task.priority}"></td>
@@ -151,6 +155,26 @@
                     </div>
                 </form>
             </div>
+        </div>
+        <!--詳細pop-->
+        <div id="detailPopup">
+            <h3>タスク詳細</h3>
+            <p><strong>タイトル：</strong><span id="detailTitle"></span></p>
+            <p><strong>期限：</strong><span id="detailDeadline"></span></p>
+            <div id="detailContentContainer">
+                <p id="detailContent"></p>
+            </div>
+            <button onclick="document.getElementById('detailPopup').style.display='none';">閉じる</button>
+        </div>
+        <!-- 日付フィルターポップアップ -->
+        <div id="dateFilterPopup" style="display:none; position: fixed; top: 20%; left: 50%; transform: translateX(-50%); background-color: #fff; border: 1px solid #aaa; padding: 20px; z-index: 1000; box-shadow: 0 0 10px rgba(0,0,0,0.3);">
+            <h3>日付で絞り込み</h3>
+            <input type="number" id="filterYear" placeholder="年" min="2000" max="2100" style="width:60px" />
+            <input type="number" id="filterMonth" placeholder="月" min="1" max="12" style="width:40px" />
+            <input type="number" id="filterDay" placeholder="日" min="1" max="31" style="width:40px" />
+            <br><br>
+            <button id="applyDateFilterBtn">絞り込み</button>
+            <button onclick="closeDateFilterPopup()">キャンセル</button>
         </div>
 
     <script th:src="@{/taskList.js}" defer></script>
