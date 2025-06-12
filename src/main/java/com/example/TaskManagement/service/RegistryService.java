@@ -55,11 +55,12 @@ public class RegistryService {
     public String checkUser(String username, String password, String email /* String inviteCode */) {
         String Msg = "";
         if (username == null || username.length() == 0 || username.length() > 30
-                || !username.matches("[A-Za-z0-9\u3040-\u309F\u4E00-\u9FFF\u30A0-\u30FF]{1,30}")) {
+                || !username.matches("[A-Za-z0-9\u3040-\u309F\u4E00-\u9FFF\u30A0-\u30FF]{1,30}")
+                || username.contains(" ")) {
             return Msg = "ユーザー名は「英数字・ひらがな・漢字・カタカナ」の1~30文字で入力してください";
         }
         if (password == null || password.length() == 0 || password.length() > 20
-                || !password.matches("[A-Za-z0-9_-]{1,20}")) {
+                || !password.matches("[A-Za-z0-9_-]{1,20}") || password.contains(" ")) {
             return Msg = "パスワードは「英数字」と「 _（アンダーバー）と -（ハイフン）」のみ、1~20文字で入力してください";
         }
         if (email == null || email.length() == 0 || email.length() > 50) {
