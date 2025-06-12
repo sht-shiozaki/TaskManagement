@@ -9,16 +9,16 @@
 	<form action="#" th:action="@{/register}" th:object="${user}" method="post">
 		<p>ユーザー名<br>
 	    <input type="text" th:field="*{username}" minlength="1" maxlength="30" pattern="[A-Za-z0-9\u3040-\u309F\u4E00-\u9FFF\u30A0-\u30FF]{1,30}" 
-			title="英数字・ひらがな・漢字・カタカナのみ使用できます（記号・スペース禁止）" placeholder="1~20文字で入力してください" required /></p>
+			title="英数字・ひらがな・漢字・カタカナのみ使用できます（記号・スペース禁止）" placeholder="1~30文字で入力" required /></p>
 		<p>パスワード<br>
 	    <input type="password" th:field="*{password}" minlength="1" maxlength="20"
-			pattern="[A-Za-z0-9_-]{1,20}" title="英数字と_ - のみ使用できます(スペース禁止)" placeholder="1~20文字で入力してください" required /></p>
+			pattern="[A-Za-z0-9_-]{1,20}" title="英数字と_ - のみ使用できます(スペース禁止)" placeholder="1~20文字で入力" required /></p>
 		<p>メールアドレス<br>
 	    <input type="email" th:field="*{email}" maxlength="50"
-			title="有効なメールアドレス形式で入力してください" placeholder="1~50文字で入力してください" required /></p>
+			title="有効なメールアドレス形式で入力してください" placeholder="1~50文字で入力" required /></p>
 		<p>招待コード<br>
 		<input type="text" name="inviteCode" minlength="1" maxlength="8" 
-			pattern="[^ ]{1,8}" title="スペースを含まない1～8文字で入力してください" placeholder="招待コードを入力してください" required /></p>
+			pattern="[^ ]{1,8}" title="スペースを含まない1～8文字で入力してください" placeholder="招待コードを入力" required /></p>
 	    <button type="submit">登録</button><br>
 	</form>
 	<p th:if="${error}" th:text="${error}"></p>
