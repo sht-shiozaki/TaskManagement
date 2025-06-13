@@ -11,42 +11,44 @@
         <!-- headerのフラグメント作成⇒他のHTMLで使用できるようにする -->
 	    <div th:replace="header :: Header"></div>
         
-        
-        
-        <div class="todaylist">
-            <!-- 現在時刻表示 -->
-            <div id="current-time" style="font-size:1rem; color:#2c3e50; margin-bottom:16px;" class="current-time">
+        <!-- 現在時刻表示 -->
+        <div id="current-time" style="font-size:1rem; color:#2c3e50; margin-bottom:16px;" class="current-time">
             <h2 class="task-date" id="taskDate">--月--日(-)のタスク</h2>
-           <h2 id="clock"> --時--分--秒</h2>
+            <h2 id="clock"> --時--分--秒</h2>
+        </div>
+        <div class="todaylist">
+            <ul class="today-list">
+                <li th:each="today : ${todayList}"
+                    th:if="${today != null}"
+                    th:class="|today-item priority-${today.priority.toLowerCase()}|"
+                    th:attr=" data-deadline-date=${today.deadline}, 
+                            data-deadline-time=${today.time != null ? today.time : '00:00'}">
+                    <div class="item-main">
+                    <!-- 時間も null 安全ガード -->
+                    <span class="item-time"
+                            th:text="${today.time != null   ? #temporals.format(today.time, 'H時mm分') : ''}">
+                        00時00分
+                    </span>
+                    <!-- タイトルも null 安全ガード -->
+                    <span class="item-title"
+                            th:text="${today.title != null ? today.title : ''}">
+                        タスク名
+                    </span>
+                    </div>
+                    <span class="item-priority"
+                        th:text="${today.priority != null ? today.priority : ''}">
+                        高
+                    </span>
+                </li>
+            </ul>
+            <div class="task-counts">
+                <!--未完了タスク件数-->
+                <h2>今日の未完了タスク件数</h2>
+                    <p><span th:text="${todayIncompleteTasks} + '件'">0件</span></p>
+                <h2>全未完了タスク件数</h2>
+                    <p><span th:text="${allIncompleteTasks} + '件'">0件</span></p>
             </div>
-                <ul class="today-list">
-                    <li th:each="today : ${todayList}"
-                        th:if="${today != null}"
-                        th:class="|today-item priority-${today.priority.toLowerCase()}|"
-                        th:attr=" data-deadline-date=${today.deadline}, 
-                                data-deadline-time=${today.time != null ? today.time : '00:00'}">
-                        <div class="item-main">
-                        <!-- 時間も null 安全ガード -->
-                        <span class="item-time"
-                                th:text="${today.time != null   ? #temporals.format(today.time, 'H時mm分') : ''}">
-                            00時00分
-                        </span>
-                        <!-- タイトルも null 安全ガード -->
-                        <span class="item-title"
-                                th:text="${today.title != null ? today.title : ''}">
-                            タスク名
-                        </span>
-                        </div>
-                        <span class="item-priority"
-                            th:text="${today.priority != null ? today.priority : ''}">
-                         高
-                        </span>
-                    </li>
-                </ul>
-
-
-     
-
+        </div>
         <div class="tasklist">
             <div class="table-wrapper">
                 <!-- 固定したい見出し -->

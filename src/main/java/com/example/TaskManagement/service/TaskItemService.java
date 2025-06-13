@@ -33,4 +33,13 @@ public class TaskItemService {
                 .filter(item -> item.getTitle() != null)
                 .collect(Collectors.toList());
     }
+
+    public Long countTodayTasks(String userId) {
+        LocalDate today = LocalDate.now();
+        return taskItemRepository.countByIncompleteTask(userId, today);
+    }
+
+    public Long countAllTasks(String userId) {
+        return taskItemRepository.countByIncompleteTasks(userId);
+    }
 }
