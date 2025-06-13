@@ -58,8 +58,8 @@ public interface TaskItemRepository extends JpaRepository<TaskItem, Long> {
                         @DateTimeFormat(pattern = "yyyy-MM-dd") @Param("deadline") LocalDate deadline);
 
         // 未完了タスク件数の取得
-        // 今日の未完了タスク件数
-        @Query("SELECT COUNT(t) FROM TaskItem t WHERE t.userId = :userId AND t.deadline = :deadline AND t.done = false")
+        // 今日以前の未完了タスク件数
+        @Query("SELECT COUNT(t) FROM TaskItem t WHERE t.userId = :userId AND t.deadline <= :deadline AND t.done = false")
         long countByIncompleteTask(@Param("userId") String userId,
                         @Param("deadline") LocalDate deadline);
 

@@ -34,7 +34,7 @@ public class TaskItemService {
                 .collect(Collectors.toList());
     }
 
-    public Long countTodayTasks(String userId) {
+    public Long countTodayOrBeforeTasks(String userId) {
         LocalDate today = LocalDate.now();
         return taskItemRepository.countByIncompleteTask(userId, today);
     }
