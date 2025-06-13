@@ -1,3 +1,18 @@
+//詳細pop
+function openDetailDialogFromTitle(tdElem) {
+    const row = tdElem.parentElement;
+    const title = tdElem.textContent.trim();
+    const deadline = row.cells[3].textContent.trim();// 3番目のセルに期限が入っている
+    const detail = row.cells[2].textContent.trim(); // 2番目のセルに詳細が入っている
+
+    const popup = document.getElementById('detailPopup');
+    document.getElementById('detailTitle').textContent = title;
+    document.getElementById('detailDeadline').textContent = deadline;
+    document.getElementById('detailContent').textContent = detail;
+
+    popup.style.display = 'block';
+}
+
 // ↓期限フィルター
 function getUniqueDates() {
   const rows = document.querySelectorAll('#taskTable tbody tr');

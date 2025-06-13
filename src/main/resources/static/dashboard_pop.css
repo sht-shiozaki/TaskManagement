@@ -1,3 +1,4 @@
+/* 詳細pop */
 #detailPopup {
     width: 800px;
     max-height: 400px; /* ポップアップの高さを固定 or 最大値 */
@@ -8,7 +9,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 9999;
+    z-index: 5000;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     border-radius: 4px;
     overflow: hidden; /* ポップアップ全体はスクロールしない */

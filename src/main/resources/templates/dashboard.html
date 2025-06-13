@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>タスク管理アプリケーション</title>
         <link th:href="@{/dashboard.css}" rel="stylesheet">
+        <link th:href="@{/dashboard_pop.css}" rel="stylesheet">
         <link th:href="@{/header.css}" rel="stylesheet">
     </head>
 
@@ -55,7 +56,7 @@
                 <h2 class="table-heading">現在のタスク一覧</h2>
                 <table id="taskTable" border="1">
                     <thead>
-                        <tr>
+                        <tr><!--↓フィルター機能追加-->
                             <th class="hidden">ID </th>
                             <th>タスク </th>
                             <th width="100px">
@@ -70,7 +71,7 @@
                             <th width="100px">
                             状態
                             <button class="col-btn" id="filterDoneBtn" title="状態で絞り込み">▼</button>
-                            </th>
+                            </th><!--↑フィルター機能追加-->
                             <th></th>
                             <th></th>
                         </tr>
@@ -78,7 +79,7 @@
                     </div>
                     <tbody>
                         <tr th:each="task : ${taskList}">
-                            <td class="hidden" th:text="${task.id}"></td>
+                            <td class="hidden" th:text="${task.id}"></td><!--↓詳細pop表示-->
                             <td th:text="${task.title}" onclick="openDetailDialogFromTitle(this)" style="cursor: pointer;"></td>
                             <td class="hidden" th:text="${task.detail}"></td>　<!--隠し詳細欄-->
                             <td width="100px" th:text="${task.deadline}"></td>
