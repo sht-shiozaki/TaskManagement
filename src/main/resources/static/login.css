@@ -71,6 +71,15 @@ p.error {
     text-align: center;
 }
 
+p.message {
+    min-height: 22px;
+    margin: -10px 0 12px;
+    line-height: 1.4;
+    color: #37e342; 
+    font-weight: bold;
+    text-align: center;
+}
+
 
 .nav-links {
     margin-top: 20px;
