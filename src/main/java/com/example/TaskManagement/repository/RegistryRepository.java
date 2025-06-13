@@ -20,4 +20,7 @@ public interface RegistryRepository extends JpaRepository<Registry, Long> {
     @Query("SELECT r FROM Registry r WHERE r.userId = :userId")
     Optional<Registry> findByUserId(@Param("userId") String userId);
 
+    // メールアドレスの重複を確認
+    boolean existsByEmail(String email);
+
 }

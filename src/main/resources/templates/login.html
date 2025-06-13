@@ -7,10 +7,11 @@
 <body>
 	<h1>ログイン画面</h1>
 	<form action="#" th:action="@{/login}" method="post">
-	    <input type="text" name="username" minlength="1" maxlength="20" placeholder="ユーザー名" required /><br>
+	    <input type="text" name="username" minlength="1" maxlength="30" placeholder="ユーザー名" required /><br>
 	    <input type="password" name="password" minlength="1" maxlength="20" placeholder="パスワード" required /><br>
 	    <button type="submit">ログイン</button>
 	    <p th:if="${error}" th:text="${error}"></p>
+		<p th:if="${msg}" th:text="${msg}"></p>
 	</form>
 	
 	<div class="nav-links">

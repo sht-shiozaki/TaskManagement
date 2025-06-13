@@ -81,15 +81,16 @@
                 </tbody>
             </table>
         </div>
-        <!-- pop -->
+
+        <!-- pop(Todo) -->
         <div id="TodoDialog">
             <div class="task_form">
                 <form action="#" th:action="@{/list/add}" method="post">
                     <input id="add_id" name="id" type="hidden" />
                     <label>タスク</label>
-                    <input id="add_title" name="title" type="text" required />
+                    <input id="add_title" name="title" type="text" minlength="1" maxlength="20" placeholder="1~20文字まで入力可能" required />
                     <label>説明</label>
-                    <textarea id="add_detail" name="detail" rows="4"></textarea>
+                    <textarea id="add_detail" name="detail" minlength="1" maxlength="400" placeholder="1~400文字まで入力可能" rows="4"></textarea>
                     <label>期限</label>
                     <div class="deadline-inputs">
                     <input id="add_deadline" name="deadline" type="date" />
@@ -114,15 +115,15 @@
         </div>
 
 
-        <!-- pop -->
+        <!-- pop(update) -->
         <div id="updateDialog">
             <div class="task_form">
                 <form action="#" th:action="@{/list/update}" method="post">
                     <input id="update_id" name="id" type="hidden" />
                     <label>タスク</label>
-                    <input id="update_title" name="title" type="text" required />
+                    <input id="update_title" name="title" type="text" minlength="1" maxlength="20" placeholder="1~20文字まで入力可能" required />
                     <label>説明</label>
-                    <textarea id="update_detail" name="detail" rows="4" ></textarea>
+                    <textarea id="update_detail" name="detail" minlength="1" maxlength="400" placeholder="1~400文字まで入力可能" rows="4" ></textarea>
                     <label>期限</label>
                     <div class="deadline-inputs">
                     <input id="update_deadline" name="deadline" type="date" />

@@ -7,7 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.example.TaskManagement.entity.Invitation;
 import com.example.TaskManagement.entity.Registry;
+import com.example.TaskManagement.repository.RegistryRepository;
+import com.example.TaskManagement.service.EmailService;
 import com.example.TaskManagement.service.RegistryService;
 
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +21,10 @@ import java.util.Optional;
 @Controller
 public class HomeController {
 
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private RegistryRepository registryRepository;
     @Autowired
     private RegistryService registryService;
 
@@ -52,13 +61,27 @@ public class HomeController {
     }
 
     @PostMapping("/register")
-    public String registerUser(Registry registry, HttpSession session, Model model,
+    public String registerUser(Registry registry, Invitation invitation, HttpSession session, Model model,
+            RedirectAttributes redirectAttributes,
             @RequestParam("inviteCode") String inviteCode) {
 
-        // 文字数制限
-        String Msg = registryService.checkUser(registry.getUsername(), registry.getPassword(), registry.getEmail());
+        // メールアドレスの変換
+        String unicodeEmail = emailService.emailToUnicode(registry.getEmail());
+        registry.setEmail(unicodeEmail);
+
+        // アカウント登録時の文字制限
+        String Msg = registryService.checkUser(registry.getUsername(), registry.getPassword(), registry.getEmail(),
+                inviteCode);
         if (Msg != null) {
             model.addAttribute("error", Msg);
+            model.addAttribute("user", registry);
+            return "register";
+        }
+
+        // メールアドレスの重複を確認
+        if (registryRepository.existsByEmail(registry.getEmail())) {
+            model.addAttribute("error", "このメールアドレスは既に登録されています");
+            model.addAttribute("user", registry);
             return "register";
         }
 
@@ -71,6 +94,7 @@ public class HomeController {
 
         // ユーザーの登録
         registryService.registerUser(registry);
+        redirectAttributes.addFlashAttribute("msg", "アカウント登録が完了しました");
         return "redirect:/login"; // URL変更
     }
 }
