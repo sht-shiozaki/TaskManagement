@@ -20,44 +20,47 @@ import java.util.List;
 // データベースの「TaskItem」エンティティ（テーブル）にアクセスするためのインターフェースです。
 // <TaskItem, Long>操作対象のエンティティクラス, エンティティの主キー
 public interface TaskItemRepository extends JpaRepository<TaskItem, Long> {
-    /*
-     * // 「メソッド名クエリ」と呼ばれるSpring Data JPAの機能
-     * // 「userId」フィールドを条件に検索するクエリとして自動的に解釈される
-     * // 戻り値は Optional<TaskItem>
-     * で、見つかった場合は中にUserRegistrationオブジェクトが入り、見つからない場合は空のOptionalになります。
-     */
+        /*
+         * // 「メソッド名クエリ」と呼ばれるSpring Data JPAの機能
+         * // 「userId」フィールドを条件に検索するクエリとして自動的に解釈される
+         * // 戻り値は Optional<TaskItem>
+         * で、見つかった場合は中にUserRegistrationオブジェクトが入り、見つからない場合は空のOptionalになります。
+         */
 
-    // 以下のDB操作の記述にはJPQL(Java Persistence Query Language)を使用
-    // JPQLはEntityクラス名やフィールド名を使ってクエリを記述する言語
-    // JPAが@を参考にテーブルやカラムを参照し、そのマッピング情報をもとに適切なSQLに変換してデータベースへ発行してくれる
-    // @Queryは実行するJPQLの指定
-    // ユーザのタスクリスト取得
-    @Query("SELECT t FROM TaskItem t WHERE t.userId = :userId")
-    List<TaskItem> findByUserId(@Param("userId") String userId);
+        // 以下のDB操作の記述にはJPQL(Java Persistence Query Language)を使用
+        // JPQLはEntityクラス名やフィールド名を使ってクエリを記述する言語
+        // JPAが@を参考にテーブルやカラムを参照し、そのマッピング情報をもとに適切なSQLに変換してデータベースへ発行してくれる
+        // @Queryは実行するJPQLの指定
+        // ユーザのタスクリスト取得
+        @Query("SELECT t FROM TaskItem t WHERE t.userId = :userId")
+        List<TaskItem> findByUserId(@Param("userId") String userId);
 
-    // 未完了のタスクリスト取得
-    @Query("SELECT t FROM TaskItem t WHERE t.done = false AND t.userId = :userId")
-    List<TaskItem> findByFalseList(@Param("userId") String userId);
+        // 未完了のタスクリスト取得
+        @Query("SELECT t FROM TaskItem t WHERE t.done = false AND t.userId = :userId")
+        List<TaskItem> findByFalseList(@Param("userId") String userId);
 
-    // 本日のタスクリスト取得
-    @Query("SELECT t FROM TaskItem t WHERE t.done = false AND t.userId = :userId AND t.deadline = :deadline AND t.done = false "
-            +
-            "ORDER BY CASE t.priority WHEN '高' THEN 1 WHEN '中' THEN 2 WHEN '低' THEN 3 END ASC")
-    List<TaskItem> findByUserIdAndDeadline(@Param("userId") String userId,
-            @DateTimeFormat(pattern = "yyyy-MM-dd") @Param("deadline") LocalDate deadline);
+        // 本日のタスクリスト取得
+        @Query("SELECT t FROM TaskItem t WHERE t.done = false AND t.userId = :userId AND t.deadline <= :deadline  "
+                        +
+                        "ORDER BY  t.deadline ASC, CASE  t.priority WHEN '高' THEN 1 WHEN '中' THEN 2 WHEN '低' THEN 3 END ASC , "
+                        +
+                        " t.time ASC")
+        List<TaskItem> findByUserIdAndDeadline(@Param("userId") String userId,
+                        @DateTimeFormat(pattern = "yyyy-MM-dd") @Param("deadline") LocalDate deadline);
 
-    @Transactional
-    @Modifying // DELETEクエリを使う場合は @Modifying アノテーションが必須
-    @Query("DELETE FROM TaskItem t WHERE t.id = :id AND t.userId = :userId")
-    // このメソッドの名前は自由 Spring Data JPAが勝手に↑のJPQLに@Paramで指定したものを埋め込んでくれる
-    void deleteTask(@Param("id") Long id, @Param("userId") String userId);
+        @Transactional
+        @Modifying // DELETEクエリを使う場合は @Modifying アノテーションが必須
+        @Query("DELETE FROM TaskItem t WHERE t.id = :id AND t.userId = :userId")
+        // このメソッドの名前は自由 Spring Data JPAが勝手に↑のJPQLに@Paramで指定したものを埋め込んでくれる
+        void deleteTask(@Param("id") Long id, @Param("userId") String userId);
 
-    @Transactional // トランザクション領域で実行
-    @Modifying // 実行するのはデータ変更クエリ
-    @Query("UPDATE TaskItem t SET t.title = :title, t.detail = :detail, t.deadline = :deadline, t.time = :time, t.priority = :priority, t.done = :done WHERE t.id = :id AND t.userId = :userId")
-    void updateTask(@Param("id") Long id, @Param("title") String title, @Param("detail") String detail,
-            @DateTimeFormat(pattern = "yyyy-MM-dd") @Param("deadline") LocalDate deadline,
-            @DateTimeFormat(pattern = "HH:mm") @Param("time") LocalTime time, @Param("priority") String priority,
-            @Param("done") boolean done, @Param("userId") String userId);
+        @Transactional // トランザクション領域で実行
+        @Modifying // 実行するのはデータ変更クエリ
+        @Query("UPDATE TaskItem t SET t.title = :title, t.detail = :detail, t.deadline = :deadline, t.time = :time, t.priority = :priority, t.done = :done WHERE t.id = :id AND t.userId = :userId")
+        void updateTask(@Param("id") Long id, @Param("title") String title, @Param("detail") String detail,
+                        @DateTimeFormat(pattern = "yyyy-MM-dd") @Param("deadline") LocalDate deadline,
+                        @DateTimeFormat(pattern = "HH:mm") @Param("time") LocalTime time,
+                        @Param("priority") String priority,
+                        @Param("done") boolean done, @Param("userId") String userId);
 
 }
