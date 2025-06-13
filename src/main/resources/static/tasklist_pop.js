@@ -1,4 +1,4 @@
-// 詳細ポップアップを開く関数
+// 詳細ポップアップを開く
 function openDetailDialogFromTitle(tdElement) {
   const row = tdElement.closest('tr');
 
@@ -24,21 +24,7 @@ let currentPriorityFilter = [];
 
 let currentStatusFilter = []; // '完了' or '未完了'
 
-// フィルター適用関数（列番号統一：期限=3、優先度=5、状態=6）
-function openDetailDialogFromTitle(tdElement) {
-  const row = tdElement.closest('tr');
-
-  const title = row.cells[2].textContent.trim();   // タイトルは3列目
-  const detail = row.cells[3].textContent.trim();  // 詳細は4列目
-  const deadline = row.cells[4].textContent.trim(); // 期限は5列目
-
-  document.getElementById('detailTitle').textContent = title;
-  document.getElementById('detailDeadline').textContent = deadline;
-  document.getElementById('detailContent').textContent = detail;
-
-  document.getElementById('detailPopup').style.display = 'block';
-}
-
+//フィルター
 function applyFilters() {
   const rows = document.querySelectorAll('#taskTable tbody tr');
 
