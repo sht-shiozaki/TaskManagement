@@ -3,6 +3,7 @@ package com.example.TaskManagement.controller;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,6 +34,9 @@ public class TMController {
     @GetMapping("/dashboard")
     public String showDashboard(HttpSession session, Model model) { // ここでsessionは既存のセッション or 新規セッションを取得
         String userId = (String) session.getAttribute("userId");
+        // 本日のタスクだけ取得
+        List<TaskItem> todayList = TIService.getTodayList(userId);
+        model.addAttribute("todayList", todayList);
         // TISevice.getAllList()でサービスクラスメソッドよび、リポジトリクラスのメソッドでDBから表データを取り出し
         model.addAttribute("taskList", TIService.getAllList(userId));
         model.addAttribute("currentPage", "dashboard");// ヘッダーの条件分岐の為

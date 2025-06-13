@@ -10,76 +10,95 @@
     <body class="mainHeader">
         <!-- headerのフラグメント作成⇒他のHTMLで使用できるようにする -->
 	    <div th:replace="header :: Header"></div>
-        <!-- <h1>タスク管理アプリケーション</h1>
+        
+        
+        
+        <div class="todaylist">
+            <!-- 現在時刻表示 -->
+            <div id="current-time" style="font-size:1rem; color:#2c3e50; margin-bottom:16px;" class="current-time">
+            <h2 class="task-date" id="taskDate">--月--日(-)のタスク</h2>
+           <h2 id="clock"> --時--分--秒</h2>
+            </div>
+                <ul class="today-list">
+                    <li th:each="today : ${todayList}"
+                        th:if="${today != null}"
+                        th:class="|today-item priority-${today.priority.toLowerCase()}|"
+                        th:attr=" data-deadline-date=${today.deadline}, 
+                                data-deadline-time=${today.time != null ? today.time : '00:00'}">
+                        <div class="item-main">
+                        <!-- 時間も null 安全ガード -->
+                        <span class="item-time"
+                                th:text="${today.time != null   ? #temporals.format(today.time, 'H時mm分') : ''}">
+                            00時00分
+                        </span>
+                        <!-- タイトルも null 安全ガード -->
+                        <span class="item-title"
+                                th:text="${today.title != null ? today.title : ''}">
+                            タスク名
+                        </span>
+                        </div>
+                        <span class="item-priority"
+                            th:text="${today.priority != null ? today.priority : ''}">
+                         高
+                        </span>
+                    </li>
+                </ul>
 
-        <div class="task_form">
-            <h2>タスクの管理</h2>
-            <form action="#" th:action="@{/list/add}" method="post">
-                <label>タスク</label>
-                <input name="title" type="text" required/>
-                <label>詳細</label>
-                <input name="title" type="text" required/>
-                <label>期限</label>
-                <span>
-                <input name="deadline" type="date" required/>
-                <input name="time" type="time" required/>
-                </span>
-                <label>優先度</label>
-                    <select id="update_priority" name="priority">
-                    <option value="高">高</option>
-                    <option value="中" selected>中</option>
-                    <option value="低">低</option>
-                    </select>
-                <input type="submit" value="登録" />
-            </form>
-        </div> -->
+
+     
 
         <div class="tasklist">
-            <h2>現在のタスク一覧</h2>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th class="hidden">ID</th>
-                        <th>タスク</th>
-                        <th width="150px">期限</th>
-                        <th width="150px">時間</th>
-                        <th width="100px">優先度</th>
-                        <th width="100px">状態</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="task : ${taskList}">
-                        <td class="hidden" th:text="${task.id}"></td>
-                        <td th:text="${task.title}"></td>
-                        <td width="100px" th:text="${task.deadline}"></td>
-                        <td width="100px" th:text="${task.time}"></td>
-                        <td width="50px" th:text="${task.priority}"></td>
-                        <td width="50px" th:text="${task.done} ? '完了': '未完了'"></td>
-                        <td width="50px">
-                        <button
-                            type="button"
-                            class="update-button"
-                            th:data-id="${task.id}"
-                            th:data-title="${task.title}"
-                            th:data-detail="${task.detail}"
-                            th:data-deadline="${task.deadline}"
-                            th:data-time="${task.time}"
-                            th:data-priority="${task.priority}"
-                            th:data-done="${task.done}"
-                            onclick="openUpdateDialog(this)"
-                        >更新</button> 
-                        </td>
-                        <td width="50px">
-                            <form action="#" th:action="@{/list/delete}" method="post">
-                                <button type="submit" id="delete_button">削除</button>
-                                <input type="hidden" name="id" th:value="${task.id}" />
-                            </form>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-wrapper">
+                <!-- 固定したい見出し -->
+                <div class="table-header">
+                <h2 class="table-heading">現在のタスク一覧</h2>
+                <table border="1">
+                    <thead>
+
+                        <tr>
+                            <th class="hidden">ID</th>
+                            <th>タスク</th>
+                            <th width="150px">期限</th>
+                            <th width="150px">時間</th>
+                            <th width="100px">優先度</th>
+                            <th width="100px">状態</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    </div>
+                    <tbody>
+                        <tr th:each="task : ${taskList}">
+                            <td class="hidden" th:text="${task.id}"></td>
+                            <td th:text="${task.title}"></td>
+                            <td width="100px" th:text="${task.deadline}"></td>
+                            <td width="100px" th:text="${task.time}"></td>
+                            <td width="50px" th:text="${task.priority}"></td>
+                            <td width="50px" th:text="${task.done} ? '完了': '未完了'"></td>
+                            <td width="50px">
+                            <button
+                                type="button"
+                                class="update-button"
+                                th:data-id="${task.id}"
+                                th:data-title="${task.title}"
+                                th:data-detail="${task.detail}"
+                                th:data-deadline="${task.deadline}"
+                                th:data-time="${task.time}"
+                                th:data-priority="${task.priority}"
+                                th:data-done="${task.done}"
+                                onclick="openUpdateDialog(this)"
+                            >編集</button> 
+                            </td>
+                            <td width="50px">
+                                <form action="#" th:action="@{/list/delete}" method="post">
+                                    <button type="submit" id="delete_button">削除</button>
+                                    <input type="hidden" name="id" th:value="${task.id}" />
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!-- pop -->
         <div id="TodoDialog">
@@ -146,7 +165,7 @@
                         </div>
                     </div>
                     <div class="update-button">
-                        <button type="submit">更新</button>
+                        <button type="submit">編集</button>
                         <button type="reset"  onclick="document.getElementById('updateDialog').style.display='none';">キャンセル</button>
                     </div>
                 </form>

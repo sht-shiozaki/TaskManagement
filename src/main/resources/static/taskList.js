@@ -1,27 +1,3 @@
-// function openUpdateDialog(button) {
-//     const row = button.closest('tr'); // 一番近い <tr> を取得。<tr>を繰り返しで表示している為
-//     const cells = row.cells; // row.cells：<tr>の要素を配列風に取得できる
-
-//     const id = cells[0].textContent.trim(); // <tr>の1つ目の<td>
-//     const title = cells[1].textContent.trim(); // <tr>の2つ目の<td>
-//     const detail = cells[2].textContent.trim();
-//     const deadline = cells[3].textContent.trim();
-//     const time = cells[4].textContent.trim();
-//     const priority = cells[5].textContent.trim();
-//     const statusText = cells[6].textContent.trim();
-
-//     document.getElementById('update_id').value = id;
-//     document.getElementById('update_title').value = title;
-//     document.getElementById('update_detail').value = detail
-//     document.getElementById('update_deadline').value = deadline;
-//     document.getElementById('update_time').value = time;
-//     document.getElementById('update_priority').value = priority;
-//     document.getElementById('update_status').selectedIndex = (statusText === '完了') ? 1 : 0; // statusText が文字列 '完了' ならインデックス1を選択、それ以外は0を選択
-
-//     const dialog = document.getElementById('updateDialog');
-//     // dialog.style.left = ((window.innerWidth - 500) / 2) + 'px'; // window.innerWidth：ブラウザ画面の幅
-//     dialog.style.display = 'block';
-// }
 function openTodoDialog(button) {
     const dialog = document.getElementById('TodoDialog');
     dialog.style.display = 'block';
@@ -50,7 +26,7 @@ function openUpdateDialog(button) {
   document.getElementById('updateDialog').style.display = 'block';
 }
 
-// 現在時刻の初期値設定
+// 今日の日付を初期値設定
 window.onload = function(){
     var getToday = new Date();
     var y = getToday.getFullYear();
@@ -59,3 +35,64 @@ window.onload = function(){
     var today = y + "-" + m.toString().padStart(2,'0') + "-" + d.toString().padStart(2,'0');
     document.getElementById("add_deadline").setAttribute("value",today);
 }
+
+// 既存の openTodoDialog／openUpdateDialog はそのまま
+
+// ページ読み込み後に実行
+window.addEventListener('DOMContentLoaded', () => {
+  // 今日の日付を add_deadline にセット（既存コード）
+  const getToday = new Date();
+  const y = getToday.getFullYear();
+  const m = String(getToday.getMonth() + 1).padStart(2, '0');
+  const d = String(getToday.getDate()).padStart(2, '0');
+  document.getElementById("add_deadline").value = `${y}-${m}-${d}`;
+
+  // タスク要素に色付け
+  document.querySelectorAll('.today-item, .tasklist tr[data-deadline-date]').forEach(item => {
+    const dateStr = item.dataset.deadlineDate;
+    const timeStr = item.dataset.deadlineTime || '00:00';
+    const deadline = new Date(`${dateStr}T${timeStr}`);
+    const now = new Date();
+    const diffMinutes = (deadline - now) / 1000 / 60;
+
+    if (diffMinutes < 0) {
+      item.classList.add('expired');
+    } else if (diffMinutes <= 60) {
+      item.classList.add('soon');
+    }
+  });
+});
+
+// 1秒ごとに時計を更新する
+function startClock() {
+  const clockEl = document.getElementById('clock');
+  if (!clockEl) return;
+
+  function update() {
+
+    const now = new Date();
+    // ── 月日部分を作成
+    const month = now.getMonth() + 1;
+    const day   = now.getDate();
+    const days  = ['日', '月', '火', '水', '木', '金', '土'];
+    const weekday = days[now.getDay()];
+    document.getElementById('taskDate').textContent = `${month}月${day}日(${weekday})のタスク`;
+
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    clockEl.textContent = `${h}時${m}分${s}秒`;
+  }
+
+  update();                             // 初回呼び出し
+  setInterval(update, 1000);            // 以降1秒ごと
+}
+
+// 他の onload ハンドラと衝突しないように
+window.addEventListener('DOMContentLoaded', () => {
+  // 既存の初期化処理
+  // ...（add_deadline 設定や色付け処理など）
+
+  // 時計スタート
+  startClock();
+});
