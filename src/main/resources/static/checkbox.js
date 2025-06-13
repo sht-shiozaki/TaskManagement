@@ -5,9 +5,9 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 //色付けのメソッド
 function applyRowColor(row) {
-    const statusText = row.cells[6].textContent.trim();
-    const deadline = row.cells[3].textContent.trim();
-    const time = row.cells[4].textContent.trim();
+    const statusText = row.cells[7].textContent.trim();
+    const deadline = row.cells[4].textContent.trim();
+    const time = row.cells[5].textContent.trim();
 
         //完了したタスクのみをグレーアウトする
     if(statusText === '完了') {
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded',function() {
                     })
                     .then(response => { 
                         if(response.ok) {
-                            const td = this.closest('tr').querySelector('td:nth-child(7)'); // 状態のセル
+                            const td = this.closest('tr').querySelector('td:nth-child(8)'); // 状態のセル
                             td.textContent = '完了';
                             this.closest('tr').setAttribute('data-done', 'true');
                             //window.location.href = response.url;
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded',function() {
                     })
                     .then(response => { 
                         if(response.ok) {
-                            const td = this.closest('tr').querySelector('td:nth-child(7)'); // 状態のセル
+                            const td = this.closest('tr').querySelector('td:nth-child(8)'); // 状態のセル
                             td.textContent = '未完了';
                             this.closest('tr').setAttribute('data-done', 'false');
                             //window.location.href = response.url;
