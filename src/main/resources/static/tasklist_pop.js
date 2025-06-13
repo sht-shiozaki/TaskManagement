@@ -1,19 +1,19 @@
-//詳細pop
-function openDetailDialogFromTitle(tdElem) {
-    const row = tdElem.parentElement;
-    const title = tdElem.textContent.trim();
-    const deadline = row.cells[3].textContent.trim();// 3番目のセルに期限が入っている
-    const detail = row.cells[2].textContent.trim(); // 2番目のセルに詳細が入っている
+// 詳細ポップアップを開く関数
+function openDetailDialogFromTitle(tdElement) {
+  const row = tdElement.closest('tr');
 
-    const popup = document.getElementById('detailPopup');
-    document.getElementById('detailTitle').textContent = title;
-    document.getElementById('detailDeadline').textContent = deadline;
-    document.getElementById('detailContent').textContent = detail;
+  const title = row.cells[2].textContent.trim();
+  const detail = row.cells[3].textContent.trim();
+  const deadline = row.cells[4].textContent.trim();
 
-    popup.style.display = 'block';
+  document.getElementById('detailTitle').textContent = title;
+  document.getElementById('detailDeadline').textContent = deadline;
+  document.getElementById('detailContent').textContent = detail;
+
+  document.getElementById('detailPopup').style.display = 'block';
 }
 
-//値の保持
+// 値の保持
 let currentDateFilter = {
   years: [],
   months: [],
@@ -22,16 +22,33 @@ let currentDateFilter = {
 
 let currentPriorityFilter = [];
 
+let currentStatusFilter = []; // '完了' or '未完了'
+
+// フィルター適用関数（列番号統一：期限=3、優先度=5、状態=6）
+function openDetailDialogFromTitle(tdElement) {
+  const row = tdElement.closest('tr');
+
+  const title = row.cells[2].textContent.trim();   // タイトルは3列目
+  const detail = row.cells[3].textContent.trim();  // 詳細は4列目
+  const deadline = row.cells[4].textContent.trim(); // 期限は5列目
+
+  document.getElementById('detailTitle').textContent = title;
+  document.getElementById('detailDeadline').textContent = deadline;
+  document.getElementById('detailContent').textContent = detail;
+
+  document.getElementById('detailPopup').style.display = 'block';
+}
+
 function applyFilters() {
   const rows = document.querySelectorAll('#taskTable tbody tr');
 
   rows.forEach(row => {
-    // 期限判定
-    const deadline = row.cells[3].textContent.trim();
+    const deadline = row.cells[4].textContent.trim(); // 期限は5列目(index=4)
+    const priority = row.cells[6].textContent.trim(); // 優先度は7列目(index=6)
+    const status = row.cells[7].textContent.trim();   // 状態は8列目(index=7)
+
     let dateMatch = false;
-    if (!deadline.match(/^\d{4}-\d{2}-\d{2}$/)) {
-      dateMatch = false;
-    } else {
+    if (deadline.match(/^\d{4}-\d{2}-\d{2}$/)) {
       const [y, m, d] = deadline.split('-');
       const yearOk = currentDateFilter.years.length === 0 || currentDateFilter.years.includes(y);
       const monthOk = currentDateFilter.months.length === 0 || currentDateFilter.months.includes(m);
@@ -39,20 +56,14 @@ function applyFilters() {
       dateMatch = yearOk && monthOk && dayOk;
     }
 
-    // 優先度判定
-    const priority = row.cells[5].textContent.trim();
     const priorityMatch = currentPriorityFilter.length === 0 || currentPriorityFilter.includes(priority);
+    const statusMatch = currentStatusFilter.length === 0 || currentStatusFilter.includes(status);
 
-    // 両方を満たす場合に表示
-    if (dateMatch && priorityMatch) {
-      row.style.display = '';
-    } else {
-      row.style.display = 'none';
-    }
+    row.style.display = (dateMatch && priorityMatch && statusMatch) ? '' : 'none';
   });
 }
 
-// ↓期限フィルター
+// 期限フィルター用ユニーク日付取得
 function getUniqueDates() {
   const rows = document.querySelectorAll('#taskTable tbody tr');
   const years = new Set();
@@ -60,7 +71,7 @@ function getUniqueDates() {
   const days = new Set();
 
   rows.forEach(row => {
-    const deadline = row.cells[3].textContent.trim();
+    const deadline = row.cells[4].textContent.trim();  // 期限は5列目（index=4）
     if (!deadline.match(/^\d{4}-\d{2}-\d{2}$/)) return;
     const [y, m, d] = deadline.split('-');
     years.add(y);
@@ -99,7 +110,7 @@ function createCheckboxList(containerId, values, namePrefix) {
   });
 }
 
-// ポップアップ開く時にチェックボックスを生成する（ボタンのイベントに追加）
+// 期限フィルター用ポップアップ表示切替
 document.getElementById('filterDateBtn').addEventListener('click', () => {
   const popup = document.getElementById('dateFilterPopup');
   const btn = document.getElementById('filterDateBtn');
@@ -121,77 +132,57 @@ document.getElementById('filterDateBtn').addEventListener('click', () => {
   }
 });
 
-// 絞り込み実行（チェックボックス版）
+// 期限フィルター適用
 document.getElementById('applyCheckboxFilterBtn').addEventListener('click', () => {
   currentDateFilter.years = Array.from(document.querySelectorAll('input[name=year]:checked')).map(cb => cb.value);
   currentDateFilter.months = Array.from(document.querySelectorAll('input[name=month]:checked')).map(cb => cb.value);
   currentDateFilter.days = Array.from(document.querySelectorAll('input[name=day]:checked')).map(cb => cb.value);
 
   applyFilters();
-
-  //closeDateFilterPopup(); //必要なら有効化
+  //closeDateFilterPopup();
 });
 
-// クリアボタン（チェック外して全表示）
+// 期限フィルタークリア
 document.getElementById('clearCheckboxFilterBtn').addEventListener('click', () => {
   ['year', 'month', 'day'].forEach(name => {
     document.querySelectorAll(`input[name=${name}]`).forEach(cb => cb.checked = false);
   });
 
   currentDateFilter = { years: [], months: [], days: [] };
-
   applyFilters();
-
-  //closeDateFilterPopup(); //必要なら有効化
+  //closeDateFilterPopup();
 });
 
-// ポップアップ閉じる関数
 function closeDateFilterPopup() {
   document.getElementById('dateFilterPopup').style.display = 'none';
 }
 
+// ドラッグ対応関数（共通）
 function makeDraggable(el) {
   let isDragging = false;
   let offsetX = 0;
   let offsetY = 0;
 
-  // マウス押した時
   el.addEventListener('mousedown', (e) => {
-  isDragging = true;
+    isDragging = true;
 
-  // transformを外す
-  //el.style.transform = 'none';
+    const rect = el.getBoundingClientRect();
 
-  // 現在のポップアップの中央表示のleftは50%なので、
-  // transform分の横幅の半分を足してピクセル位置に直す
-  const rect = el.getBoundingClientRect();
+    el.style.left = rect.left + 'px';
+    el.style.top = rect.top + 'px';
+    el.style.position = 'fixed';
 
-  // 親要素のビューポート左端からの距離にtransform補正分を加算
-  const computedStyle = window.getComputedStyle(el);
-  const width = parseFloat(computedStyle.width);
-  const leftPx = rect.left;
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
 
-  // ここで transform: translateX(-50%) は横幅の半分ずらしてるので、
-  // 左端のピクセル位置は rect.left + (width / 2)
-  // だけどrect.leftはすでにビューポート左からの位置なので、そのままでOK
+    document.body.style.userSelect = 'none';
+  });
 
-  el.style.left = leftPx + 'px';
-  el.style.top = rect.top + 'px';
-  el.style.position = 'fixed';
-
-  offsetX = e.clientX - leftPx;
-  offsetY = e.clientY - rect.top;
-
-  document.body.style.userSelect = 'none';
-});
-
-  // マウス動いた時
   document.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
     let x = e.clientX - offsetX;
     let y = e.clientY - offsetY;
 
-    // ウィンドウの外にはみ出ないよう制限（必要に応じて調整）
     const maxX = window.innerWidth - el.offsetWidth;
     const maxY = window.innerHeight - el.offsetHeight;
     if (x < 0) x = 0;
@@ -201,41 +192,38 @@ function makeDraggable(el) {
 
     el.style.left = x + 'px';
     el.style.top = y + 'px';
-    el.style.position = 'fixed'; // 必ず固定表示
+    el.style.position = 'fixed';
   });
 
-  // マウス離した時
   document.addEventListener('mouseup', () => {
     if (isDragging) {
       isDragging = false;
-      document.body.style.userSelect = ''; // 選択禁止解除
+      document.body.style.userSelect = '';
     }
   });
 }
 
-// ポップアップのドラッグ有効化（ページ読み込み時などに呼ぶ）
+// ページロード時にドラッグ有効化
 window.addEventListener('load', () => {
-  const popup = document.getElementById('dateFilterPopup');
-  makeDraggable(popup);
+  ['dateFilterPopup', 'priorityFilterPopup', 'statusFilterPopup'].forEach(id => {
+    const popup = document.getElementById(id);
+    if (popup) makeDraggable(popup);
+  });
 });
-// ↑期限フィルター
-//↓優先度フィルター
-// 優先度一覧
+
+// 優先度フィルター設定
 const priorities = ['高', '中', '低'];
 
 function closePriorityFilterPopup() {
   document.getElementById('priorityFilterPopup').style.display = 'none';
 }
 
-// 優先度フィルターのポップアップを開く処理
 document.getElementById('filterPriorityBtn').addEventListener('click', () => {
   const popup = document.getElementById('priorityFilterPopup');
 
   if (popup.style.display === 'none' || popup.style.display === '') {
-    // チェックボックス生成
     createCheckboxList('priorityFilterContainer', priorities, 'priority');
 
-    // ポップアップ位置調整（ボタンのすぐ下に表示）
     const btn = document.getElementById('filterPriorityBtn');
     const rect = btn.getBoundingClientRect();
     popup.style.position = 'absolute';
@@ -248,45 +236,32 @@ document.getElementById('filterPriorityBtn').addEventListener('click', () => {
   }
 });
 
-// 絞り込み実行ボタン
 document.getElementById('applyPriorityFilterBtn').addEventListener('click', () => {
   currentPriorityFilter = Array.from(document.querySelectorAll('input[name=priority]:checked')).map(cb => cb.value);
-
   applyFilters();
-
-  //closePriorityFilterPopup(); //必要なら有効化
+  //closePriorityFilterPopup();
 });
 
-// クリアボタン
 document.getElementById('clearPriorityFilterBtn').addEventListener('click', () => {
   document.querySelectorAll('input[name=priority]').forEach(cb => cb.checked = false);
-
   currentPriorityFilter = [];
-
   applyFilters();
-
-  //closePriorityFilterPopup(); //必要なら有効化
+  //closePriorityFilterPopup();
 });
 
-
-window.addEventListener('load', () => {
-  const priorityPopup = document.getElementById('priorityFilterPopup');
-  makeDraggable(priorityPopup);
-});
-// 完了未完了フィルター
-let currentStatusFilter = []; // '完了' or '未完了'
-
-// チェックボックス自動生成（createCheckboxListは共通のを使う）
+// 状態フィルター設定
 const statuses = ['完了', '未完了'];
 
-// ポップアップ開く
+function closeStatusFilterPopup() {
+  document.getElementById('statusFilterPopup').style.display = 'none';
+}
+
 document.getElementById('filterDoneBtn').addEventListener('click', () => {
   const popup = document.getElementById('statusFilterPopup');
 
   if (popup.style.display === 'none' || popup.style.display === '') {
     createCheckboxList('statusFilterContainer', statuses, 'status');
 
-    // ボタン位置にポップアップ表示
     const btn = document.getElementById('filterDoneBtn');
     const rect = btn.getBoundingClientRect();
     popup.style.position = 'absolute';
@@ -299,64 +274,13 @@ document.getElementById('filterDoneBtn').addEventListener('click', () => {
   }
 });
 
-// 絞り込み実行
 document.getElementById('applyStatusFilterBtn').addEventListener('click', () => {
   currentStatusFilter = Array.from(document.querySelectorAll('input[name=status]:checked')).map(cb => cb.value);
   applyFilters();
 });
 
-// クリアボタン
 document.getElementById('clearStatusFilterBtn').addEventListener('click', () => {
   document.querySelectorAll('input[name=status]').forEach(cb => cb.checked = false);
   currentStatusFilter = [];
   applyFilters();
 });
-
-function closeStatusFilterPopup() {
-  document.getElementById('statusFilterPopup').style.display = 'none';
-}
-
-// ドラッグ対応
-window.addEventListener('load', () => {
-  const popup = document.getElementById('statusFilterPopup');
-  makeDraggable(popup);
-});
-
-function applyFilters() {
-  const rows = document.querySelectorAll('#taskTable tbody tr');
-
-  rows.forEach(row => {
-    const deadline = row.cells[3].textContent.trim();
-    const priority = row.cells[5].textContent.trim();
-    const status = row.cells[6].textContent.trim(); // 完了 or 未完了
-
-    // 期限判定
-    let dateMatch = false;
-    if (deadline.match(/^\d{4}-\d{2}-\d{2}$/)) {
-      const [y, m, d] = deadline.split('-');
-      const yearOk = currentDateFilter.years.length === 0 || currentDateFilter.years.includes(y);
-      const monthOk = currentDateFilter.months.length === 0 || currentDateFilter.months.includes(m);
-      const dayOk = currentDateFilter.days.length === 0 || currentDateFilter.days.includes(d);
-      dateMatch = yearOk && monthOk && dayOk;
-    }
-
-    const priorityMatch = currentPriorityFilter.length === 0 || currentPriorityFilter.includes(priority);
-    const statusMatch = currentStatusFilter.length === 0 || currentStatusFilter.includes(status);
-
-    row.style.display = (dateMatch && priorityMatch && statusMatch) ? '' : 'none';
-  });
-}
-
-function openDetailDialogFromTitle(tdElement) {
-  const row = tdElement.closest('tr');
-
-  const title = row.cells[1].textContent.trim();  // タスク名（2列目）
-  const detail = row.cells[2].textContent.trim(); // 詳細（3列目）
-  const deadline = row.cells[3].textContent.trim(); // 期限（4列目）
-
-  document.getElementById('detailTitle').textContent = title;
-  document.getElementById('detailDeadline').textContent = deadline;
-  document.getElementById('detailContent').textContent = detail;
-
-  document.getElementById('detailPopup').style.display = 'block';
-}

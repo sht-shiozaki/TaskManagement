@@ -18,33 +18,34 @@
         <div class="todaylist">
             <!-- 現在時刻表示 -->
             <div id="current-time" style="font-size:1rem; color:#2c3e50; margin-bottom:16px;" class="current-time">
-            <h2 class="task-date" id="taskDate">--月--日(-)のタスク</h2>
-           <h2 id="clock"> --時--分--秒</h2>
+                <h2 class="task-date" id="taskDate">--月--日(-)のタスク</h2>
+                <h2 id="clock"> --時--分--秒</h2>
             </div>
-                <ul class="today-list">
-                    <li th:each="today : ${todayList}"
-                        th:if="${today != null}"
-                        th:class="|today-item priority-${today.priority.toLowerCase()}|"
-                        th:attr=" data-deadline-date=${today.deadline}, 
-                                data-deadline-time=${today.time != null ? today.time : '00:00'}">
-                        <div class="item-main">
-                        <!-- 時間も null 安全ガード -->
-                        <span class="item-time"
-                                th:text="${today.time != null   ? #temporals.format(today.time, 'H時mm分') : ''}">
-                            00時00分
-                        </span>
-                        <!-- タイトルも null 安全ガード -->
-                        <span class="item-title"
-                                th:text="${today.title != null ? today.title : ''}">
-                            タスク名
-                        </span>
-                        </div>
-                        <span class="item-priority"
+            <ul class="today-list">
+                <li th:each="today : ${todayList}"
+                    th:if="${today != null}"
+                    th:class="|today-item priority-${today.priority.toLowerCase()}|"
+                    th:attr=" data-deadline-date=${today.deadline}, 
+                            data-deadline-time=${today.time != null ? today.time : '00:00'}">
+                    <div class="item-main">
+                    <!-- 時間も null 安全ガード -->
+                    <span class="item-time"
+                            th:text="${today.time != null   ? #temporals.format(today.time, 'H時mm分') : ''}">
+                        00時00分
+                    </span>
+                    <!-- タイトルも null 安全ガード -->
+                    <span class="item-title"
+                            th:text="${today.title != null ? today.title : ''}">
+                        タスク名
+                    </span>
+                    </div>
+                    <span class="item-priority"
                             th:text="${today.priority != null ? today.priority : ''}">
-                         高
-                        </span>
-                    </li>
-                </ul>
+                        高
+                    </span>
+                </li>
+            </ul>
+        </div>
 
 
      
@@ -54,31 +55,29 @@
                 <!-- 固定したい見出し -->
                 <div class="table-header">
                 <h2 class="table-heading">現在のタスク一覧</h2>
+                <button id="selectList">一括選択モード</button>
+                <button id="completeSelectedButton">完了</button>
+                <button id="deleteTasks">削除</button>
                 <table id="taskTable" border="1">
                     <thead>
-                        <tr><!--↓フィルター機能追加-->
-                            <th class="hidden">ID </th>
-                            <th>タスク </th>
-                            <th width="100px">
-                            期限
-                            <button class="col-btn" id="filterDateBtn" title="期限で絞り込み">▼</button>
-                            </th>
-                            <th width="100px">時間 </th>
-                            <th width="100px">
-                            優先度
-                            <button class="col-btn" id="filterPriorityBtn" title="優先度で絞り込み">▼</button>
-                            </th>
-                            <th width="100px">
-                            状態
-                            <button class="col-btn" id="filterDoneBtn" title="状態で絞り込み">▼</button>
-                            </th><!--↑フィルター機能追加-->
-                            <th></th>
-                            <th></th>
+                        <tr>
+                            <th><button id="checkAllButton">全選択</button></th>
+                            <th class="hidden">ID</th>
+                            <th>タスク</th>
+                            <th>期限 <button id="filterDateBtn" class="col-btn">▼</button></th>
+                            <th>時間</th>
+                            <th>優先度 <button id="filterPriorityBtn" class="col-btn">▼</button></th>
+                            <th>状態 <button id="filterDoneBtn" class="col-btn">▼</button></th>
+                            <th></th><th></th>
                         </tr>
                     </thead>
-                    </div>
                     <tbody>
-                        <tr th:each="task : ${taskList}">
+                        <tr th:each="task : ${taskList}" th:attr="data-done=${task.done}">
+                        <td>
+                            <label style="display: block; cursor: pointer;">
+                                <input type="checkbox" name="taskCheckbox" th:value="${task.id}" />
+                            </label>
+                        </td>
                             <td class="hidden" th:text="${task.id}"></td><!--↓詳細pop表示-->
                             <td th:text="${task.title}" onclick="openDetailDialogFromTitle(this)" style="cursor: pointer;"></td>
                             <td class="hidden" th:text="${task.detail}"></td>　<!--隠し詳細欄-->
@@ -111,15 +110,16 @@
                 </table>
             </div>
         </div>
-        <!-- pop -->
+
+        <!-- pop(Todo) -->
         <div id="TodoDialog">
             <div class="task_form">
                 <form action="#" th:action="@{/list/add}" method="post">
                     <input id="add_id" name="id" type="hidden" />
                     <label>タスク</label>
-                    <input id="add_title" name="title" type="text" required />
+                    <input id="add_title" name="title" type="text" minlength="1" maxlength="20" placeholder="1~20文字まで入力可能" required />
                     <label>説明</label>
-                    <textarea id="add_detail" name="detail" rows="4"></textarea>
+                    <textarea id="add_detail" name="detail" minlength="1" maxlength="400" placeholder="1~400文字まで入力可能" rows="4"></textarea>
                     <label>期限</label>
                     <div class="deadline-inputs">
                     <input id="add_deadline" name="deadline" type="date" />
@@ -144,15 +144,15 @@
         </div>
 
 
-        <!-- pop -->
+        <!-- pop(update) -->
         <div id="updateDialog">
             <div class="task_form">
                 <form action="#" th:action="@{/list/update}" method="post">
                     <input id="update_id" name="id" type="hidden" />
                     <label>タスク</label>
-                    <input id="update_title" name="title" type="text" required />
+                    <input id="update_title" name="title" type="text" minlength="1" maxlength="20" placeholder="1~20文字まで入力可能" required />
                     <label>説明</label>
-                    <textarea id="update_detail" name="detail" rows="4" ></textarea>
+                    <textarea id="update_detail" name="detail" minlength="1" maxlength="400" placeholder="1~400文字まで入力可能" rows="4" ></textarea>
                     <label>期限</label>
                     <div class="deadline-inputs">
                     <input id="update_deadline" name="deadline" type="date" />
@@ -232,5 +232,6 @@
         </div>
         <script th:src="@{/taskList.js}" defer></script>
         <script th:src="@{/tasklist_pop.js}" defer></script>
+        <script th:src="@{/checkbox.js}" defer></script>
     </body>
 </html>

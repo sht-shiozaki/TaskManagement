@@ -1,9 +1,6 @@
 package com.example.TaskManagement.repository;
 
 import com.example.TaskManagement.entity.Registry;
-import com.example.TaskManagement.entity.TaskItem;
-
-import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,5 +19,8 @@ public interface RegistryRepository extends JpaRepository<Registry, Long> {
     // ユーザ情報取得
     @Query("SELECT r FROM Registry r WHERE r.userId = :userId")
     Optional<Registry> findByUserId(@Param("userId") String userId);
+
+    // メールアドレスの重複を確認
+    boolean existsByEmail(String email);
 
 }

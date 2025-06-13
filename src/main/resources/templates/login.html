@@ -8,9 +8,10 @@
 <body>
 	<h1>タスク管理</h1>
 	<form action="#" th:action="@{/login}" method="post">
-	    <input type="text" name="username" placeholder="ユーザー名" required /><br>
-	    <input type="password" name="password" placeholder="パスワード" required /><br>
-	    <p class="error" th:text="${error} ?: ' '"></p>
+	    <input type="text" name="username" minlength="1" maxlength="30" placeholder="ユーザー名" required /><br>
+	    <input type="password" name="password" minlength="1" maxlength="20" placeholder="パスワード" required /><br>
+	    <p th:if="${error}" th:text="${error}"></p>
+		<p th:if="${msg}" th:text="${msg}"></p>
 		<button type="submit">ログイン</button>
 	</form>
 	
