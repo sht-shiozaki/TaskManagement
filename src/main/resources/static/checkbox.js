@@ -173,7 +173,7 @@ document.querySelectorAll('input[name="taskCheckbox"]').forEach(cb => {
                 })
                 .then(response => { 
                     if(response.ok) {
-                        const td = this.closest('tr').querySelector('td:nth-child(7)'); // 状態のセル
+                        const td = this.closest('tr').querySelector('td:nth-child(8)'); // 状態のセル
                         td.textContent = '完了';
                         this.closest('tr').setAttribute('data-done', 'true');
                         this.closest('tr').style.backgroundColor = 'rgb(136, 136, 136)';
@@ -188,7 +188,7 @@ document.querySelectorAll('input[name="taskCheckbox"]').forEach(cb => {
                 })
                 .then(response => { 
                     if(response.ok) {
-                        const td = this.closest('tr').querySelector('td:nth-child(7)'); // 状態のセル
+                        const td = this.closest('tr').querySelector('td:nth-child(8)'); // 状態のセル
                         td.textContent = '未完了';
                         this.closest('tr').setAttribute('data-done', 'false');
                         const row = this.closest('tr');
