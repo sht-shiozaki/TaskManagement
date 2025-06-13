@@ -7,6 +7,7 @@
         <link th:href="@{/header.css}" rel="stylesheet">
     </head>
 
+    
     <body class="mainHeader">
         <!-- headerのフラグメント作成⇒他のHTMLで使用できるようにする -->
 	    <div th:replace="header :: Header"></div>
@@ -51,20 +52,25 @@
             <div class="table-wrapper">
                 <!-- 固定したい見出し -->
                 <div class="table-header">
-                <h2 class="table-heading">現在のタスク一覧</h2><button id="clearDateFilterBtn">クリア</button>
+                <h2 class="table-heading">現在のタスク一覧</h2>
                 <table id="taskTable" border="1">
                     <thead>
-
                         <tr>
-                            <th class="hidden">ID <button class="col-btn" data-col="0" title="操作">▼</button></th>
-                            <th>タスク <button class="col-btn" data-col="1" title="操作">▼</button></th>
-                            <th width="150px">
-                        期限
-                        <button class="col-btn" id="filterDateBtn" title="期限で絞り込み">▼</button>
-                        </th>
-                            <th width="150px">時間 <button class="col-btn" data-col="4" title="操作">▼</button></th>
-                            <th width="100px">優先度 <button class="col-btn" data-col="5" title="操作">▼</button></th>
-                            <th width="100px">状態 <button class="col-btn" data-col="6" title="操作">▼</button></th>
+                            <th class="hidden">ID </th>
+                            <th>タスク </th>
+                            <th width="100px">
+                            期限
+                            <button class="col-btn" id="filterDateBtn" title="期限で絞り込み">▼</button>
+                            </th>
+                            <th width="100px">時間 </th>
+                            <th width="100px">
+                            優先度
+                            <button class="col-btn" id="filterPriorityBtn" title="優先度で絞り込み">▼</button>
+                            </th>
+                            <th width="100px">
+                            状態
+                            <button class="col-btn" id="filterDoneBtn" title="状態で絞り込み">▼</button>
+                            </th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -75,7 +81,7 @@
                             <td class="hidden" th:text="${task.id}"></td>
                             <td th:text="${task.title}" onclick="openDetailDialogFromTitle(this)" style="cursor: pointer;"></td>
                             <td class="hidden" th:text="${task.detail}"></td>　<!--隠し詳細欄-->
-                        <td width="100px" th:text="${task.deadline}"></td>
+                            <td width="100px" th:text="${task.deadline}"></td>
                             <td width="100px" th:text="${task.time}"></td>
                             <td width="50px" th:text="${task.priority}"></td>
                             <td width="50px" th:text="${task.done} ? '完了': '未完了'"></td>
@@ -185,17 +191,44 @@
             </div>
             <button onclick="document.getElementById('detailPopup').style.display='none';">閉じる</button>
         </div>
-        <!-- 日付フィルターポップアップ -->
-        <div id="dateFilterPopup" style="display:none; position: fixed; top: 20%; left: 50%; transform: translateX(-50%); background-color: #fff; border: 1px solid #aaa; padding: 20px; z-index: 1000; box-shadow: 0 0 10px rgba(0,0,0,0.3);">
-            <h3>日付で絞り込み</h3>
-            <input type="number" id="filterYear" placeholder="年" min="2000" max="2100" style="width:60px" />
-            <input type="number" id="filterMonth" placeholder="月" min="1" max="12" style="width:40px" />
-            <input type="number" id="filterDay" placeholder="日" min="1" max="31" style="width:40px" />
-            <br><br>
-            <button id="applyDateFilterBtn">絞り込み</button>
-            <button onclick="closeDateFilterPopup()">キャンセル</button>
+        <!-- 期限フィルターポップアップ -->
+        <div id="dateFilterPopup" class="date-filter-popup" >
+            <h3>期限で絞り込み</h3>
+            <div>
+                <strong>年</strong>
+                <div id="yearFilterContainer" class="filter-container"></div>
+            </div>
+            <div>
+                <strong>月</strong>
+                <div id="monthFilterContainer" class="filter-container"></div>
+            </div>
+            <div>
+                <strong>日</strong>
+                <div id="dayFilterContainer" class="filter-container"></div>
+            </div>
+            <br>
+            <button id="applyCheckboxFilterBtn">絞り込み</button>
+            <button id="clearCheckboxFilterBtn">クリア</button>
+            <button onclick="closeDateFilterPopup()">閉じる</button>
         </div>
-
-    <script th:src="@{/taskList.js}" defer></script>
+        <!-- 優先度フィルターポップアップ -->
+         <div id="priorityFilterPopup" class="priority-filter-popup" >
+            <h3>優先度で絞り込み</h3>
+            <div id="priorityFilterContainer"></div>
+            <br>
+            <button id="applyPriorityFilterBtn">絞り込み</button>
+            <button id="clearPriorityFilterBtn">クリア</button>
+            <button onclick="closePriorityFilterPopup()">閉じる</button>
+        </div>
+        <!-- 状態フィルターポップアップ -->
+        <div id="statusFilterPopup" class="status-filter-popup" >
+            <h3>状態で絞り込み</h3>
+            <div id="statusFilterContainer"></div>
+            <br>
+            <button id="applyStatusFilterBtn">絞り込み</button>
+            <button id="clearStatusFilterBtn">クリア</button>
+            <button onclick="closeStatusFilterPopup()">閉じる</button>
+        </div>
+        <script th:src="@{/taskList.js}" defer></script>
     </body>
 </html>
