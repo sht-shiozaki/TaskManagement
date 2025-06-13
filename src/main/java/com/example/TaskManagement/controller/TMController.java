@@ -19,6 +19,7 @@ import com.example.TaskManagement.repository.TaskItemRepository;
 import com.example.TaskManagement.service.TaskItemService;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestBody;
 
 // リストコントローラー
 @Controller // Spring MVCのコントローラーであることを示す
@@ -84,4 +85,33 @@ public class TMController {
         session.invalidate();
         return "redirect:/login";
     }
+
+    // 一括選択モード中の完了ボタン押下処理
+    @PostMapping("/complete-selected")
+    public String completeSelectedCheckedbox(@RequestParam("ids") List<Long> ids) {
+        taskItemRepository.selectedTasksCompleted(ids);
+        return "redirect:/list/dashboard";
+    }
+
+    // 一括選択モード中の削除ボタン押下処理
+    @PostMapping("/delete-selected")
+    public String deleteSelectTasks(@RequestParam("ids") List<Long> ids) {
+        taskItemRepository.deleteSelectTasks(ids);
+        return "redirect:/list/dashboard";
+    }
+
+    // チェックボックス押下後タスク完了
+    @PostMapping("/complete")
+    public String completeCheckedbox(@RequestParam("id") Long id) {
+        taskItemRepository.markTaskAsCompleted(id);
+        return "redirect:/list/dashboard";
+    }
+
+    // チェックボックス押下後タスク未完了
+    @PostMapping("/uncomplete")
+    public String markTaskAsUncompleted(@RequestParam("id") Long id) {
+        taskItemRepository.markTaskAsUncompleted(id);
+        return "redirect:/list/dashboard";
+    }
+
 }
