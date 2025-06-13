@@ -78,7 +78,7 @@ public class HomeController {
             return "register";
         }
 
-        // メールアドレスの重複を確認
+        // メールアドレスの重複確認
         if (registryRepository.existsByEmail(registry.getEmail())) {
             model.addAttribute("error", "このメールアドレスは既に登録されています");
             model.addAttribute("user", registry);
