@@ -41,6 +41,14 @@ public class TMController {
         // TISevice.getAllList()でサービスクラスメソッドよび、リポジトリクラスのメソッドでDBから表データを取り出し
         model.addAttribute("taskList", TIService.getAllList(userId));
         model.addAttribute("currentPage", "dashboard");// ヘッダーの条件分岐の為
+
+        // 今日の未完了タスク件数を取得
+        Long todayIncompleteTasks = TIService.countTodayOrBeforeTasks(userId);
+        model.addAttribute("todayIncompleteTasks", todayIncompleteTasks);
+        // 全未完了タスク件数を取得
+        Long allIncompleteTasks = TIService.countAllTasks(userId);
+        model.addAttribute("allIncompleteTasks", allIncompleteTasks);
+
         return "dashboard";
     }
 

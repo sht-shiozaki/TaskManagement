@@ -15,12 +15,12 @@
         <!-- headerのフラグメント作成⇒他のHTMLで使用できるようにする -->
 	    <div th:replace="header :: Header"></div>
         
+        <!-- 現在時刻表示 -->
+        <div id="current-time" style="font-size:1rem; color:#2c3e50; margin-bottom:16px;" class="current-time">
+            <h2 class="task-date" id="taskDate">--月--日(-)のタスク</h2>
+            <h2 id="clock"> --時--分--秒</h2>
+        </div>
         <div class="todaylist">
-            <!-- 現在時刻表示 -->
-            <div id="current-time" style="font-size:1rem; color:#2c3e50; margin-bottom:16px;" class="current-time">
-                <h2 class="task-date" id="taskDate">--月--日(-)のタスク</h2>
-                <h2 id="clock"> --時--分--秒</h2>
-            </div>
             <ul class="today-list">
                 <li th:each="today : ${todayList}"
                     th:if="${today != null}"
@@ -40,16 +40,19 @@
                     </span>
                     </div>
                     <span class="item-priority"
-                            th:text="${today.priority != null ? today.priority : ''}">
+                        th:text="${today.priority != null ? today.priority : ''}">
                         高
                     </span>
                 </li>
             </ul>
+            <div class="task-counts">
+                <!--未完了タスク件数-->
+                <h2>今日以前の未完了タスク件数</h2>
+                    <p><span th:text="${todayIncompleteTasks} + '件'">0件</span></p>
+                <h2>全未完了タスク件数</h2>
+                    <p><span th:text="${allIncompleteTasks} + '件'">0件</span></p>
+            </div>
         </div>
-
-
-     
-
         <div class="tasklist">
             <div class="table-wrapper">
                 <!-- 固定したい見出し -->
