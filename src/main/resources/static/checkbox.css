@@ -1,0 +1,33 @@
+/*チェックボックスを非表示*/
+.circle-checkbox input[type="checkbox"]{
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/*チェックボックスを丸くする*/
+.circle-checkbox .checkmark{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #666;
+    border-radius: 50%;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+/*チェック時の塗りつぶし*/
+.circle-checkbox input[type="checkbox"]:checked + .checkmark {
+    background-color: #000;
+    border-color: #000;
+}
+
+/* label で囲んだときにちゃんと反応させるためにカーソルを設定 */
+label.circle-checkbox {
+    display: block;
+    cursor: pointer;
+    position: relative;
+}

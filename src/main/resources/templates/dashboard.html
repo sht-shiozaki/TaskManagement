@@ -5,15 +5,15 @@
         <title>タスク管理アプリケーション</title>
         <link th:href="@{/dashboard.css}" rel="stylesheet">
         <link th:href="@{/dashboard_pop.css}" rel="stylesheet">
+        <link th:href="@{/checkbox.css}" rel="stylesheet">
         <link th:href="@{/header.css}" rel="stylesheet">
+
     </head>
 
     
     <body class="mainHeader">
         <!-- headerのフラグメント作成⇒他のHTMLで使用できるようにする -->
 	    <div th:replace="header :: Header"></div>
-        
-        
         
         <div class="todaylist">
             <!-- 現在時刻表示 -->
@@ -61,7 +61,9 @@
                 <table id="taskTable" border="1">
                     <thead>
                         <tr>
-                            <th><button id="checkAllButton">全選択</button></th>
+                            <th>
+                                <button id="checkAllButton">全選択</button>
+                            </th>
                             <th class="hidden">ID</th>
                             <th>タスク</th>
                             <th>期限 <button id="filterDateBtn" class="col-btn">▼</button></th>
@@ -74,8 +76,9 @@
                     <tbody>
                         <tr th:each="task : ${taskList}" th:attr="data-done=${task.done}">
                         <td>
-                            <label style="display: block; cursor: pointer;">
+                            <label class="circle-checkbox">
                                 <input type="checkbox" name="taskCheckbox" th:value="${task.id}" />
+                                <span class="checkmark"></span>
                             </label>
                         </td>
                             <td class="hidden" th:text="${task.id}"></td><!--↓詳細pop表示-->
