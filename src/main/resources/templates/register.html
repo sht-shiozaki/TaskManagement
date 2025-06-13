@@ -2,10 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>タスク管理/新規登録</title>
+<link rel="stylesheet" href="register.css" />
 </head>
 <body>
-	<h1>新規登録画面</h1>
+	<h1>アカウント新規登録</h1>
 	<form action="#" th:action="@{/register}" th:object="${user}" method="post">
 		<p>ユーザー名<br>
 	    	<input type="text" th:field="*{username}" minlength="1" maxlength="30" pattern="[A-Za-z0-9\u3040-\u309F\u4E00-\u9FFF\u30A0-\u30FF]{1,30}" 
@@ -19,9 +20,9 @@
 		<p>招待コード<br>
 			<input type="text" name="inviteCode" minlength="1" maxlength="8" 
 				pattern="[^ ]{1,8}" title="スペースを含まない1～8文字で入力してください" placeholder="招待コードを入力" required /></p>
+			<p class="error" th:text="${error} ?: ' '"></p>
 	    <button type="submit">登録</button><br>
 	</form>
-	<p th:if="${error}" th:text="${error}"></p>
 	
 	<div class="nav-links">
         <a th:href="@{/login}">戻る</a>
