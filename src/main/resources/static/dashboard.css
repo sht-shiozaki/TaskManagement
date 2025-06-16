@@ -66,8 +66,6 @@ input, select, textarea {
     box-shadow: 0 4px 12px var(--shadow-heavy);
 }
 
-
-
 .today-tasklist{
     margin-top: 5vh;
     display: flex;
@@ -76,7 +74,6 @@ input, select, textarea {
 }
 
 /*"今日のタスク"と時間を横並び*/
-
 .current-time{
     display: flex;
     gap: 1vh;
@@ -93,7 +90,7 @@ input, select, textarea {
     flex-direction: column;
     align-items: center; /* 横方向中央 */
     max-height: 25vh;
-    max-width: 50vw;
+    width: 90vw;
     align-items: stretch;  /* ← これで子要素の width: auto が親幅に伸びる */
     padding: 0.5vh;
     background: #fff;
@@ -101,9 +98,17 @@ input, select, textarea {
     box-shadow: 0 2px 8px var(--shadow-light);
     list-style: none;
 }
+
+/*今日のタスクと未完了タスク件数*/
+.list-counts{
+     display: flex;
+     gap: 60px;
+    align-items: flex-start;
+}
+
 .today-list{
     max-height: 15vh;
-    max-width: 50vw;
+    width: 55vw;
     overflow-y: auto;
 }
 
@@ -158,7 +163,8 @@ input, select, textarea {
     border-radius: 16px; /* 丸みを強調 */
     box-shadow: 0 3px 8px rgba(0,0,0,0.07);
     padding: 24px;
-    width: 250px;
+    margin-right: 40px;
+    width: 30vw;
     flex-shrink: 0;
     border: 2px solid #726a95;
     font-family: 'Arial Rounded MT Bold', 'Segoe UI', sans-serif; /* 丸みのあるフォント */
