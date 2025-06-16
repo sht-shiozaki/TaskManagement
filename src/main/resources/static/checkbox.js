@@ -177,7 +177,8 @@ document.querySelectorAll('input[name="taskCheckbox"]').forEach(cb => {
                         td.textContent = '完了';
                         this.closest('tr').setAttribute('data-done', 'true');
                         this.closest('tr').style.backgroundColor = 'rgb(136, 136, 136)';
-                        updateTaskCounts();
+                        updateTodayTaskCounts();
+                        updateAllTaskCounts();
                     }
                 });
                 //未完了の時
@@ -194,7 +195,8 @@ document.querySelectorAll('input[name="taskCheckbox"]').forEach(cb => {
                         this.closest('tr').setAttribute('data-done', 'false');
                         const row = this.closest('tr');
                         applyRowColor(row);
-                        updateTaskCounts();
+                        updateTodayTaskCounts();
+                        updateAllTaskCounts();
                     }
                 });
             }
@@ -203,12 +205,36 @@ document.querySelectorAll('input[name="taskCheckbox"]').forEach(cb => {
 });
 });
 
-function updateTaskCounts(){
-    fetch('/api/task-counts')
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById('todayIncompleteTasks').textContent = data.today + '件';
-            document.getElementById('allIncompleteTasks').textContent = data.all + '件';
-        })
-        .catch(err => console.error('件数取得失敗',err));
+function updateTodayTaskCounts(){
+    const incompleteTodayTasks = document.querySelectorAll('tbody tr[data-deadline]');
+    const countDisplay = document.getElementById("todayIncompleteTasks");
+
+    if(!countDisplay) return;
+
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    
+    let count = 0;
+
+    incompleteTodayTasks.forEach(row=>{
+        const deadlineStr = row.getAttribute('data-deadline');  // 例: '2025-06-16'
+        if (!deadlineStr) return;
+
+        const deadlineDate = new Date(deadlineStr);
+        deadlineDate.setHours(0, 0, 0, 0);
+
+        if (deadlineDate <= today && row.getAttribute('data-done') === 'false') {
+            count++;
+        }
+    });
+        countDisplay.textContent = count + '件';
+    
+}
+//全未完了タスク件数の表示（チェックボックスを押下した時）
+function updateAllTaskCounts(){
+    const incompleteTasks = document.querySelectorAll('tbody tr[data-done="false"]');
+    const countDisplay = document.getElementById("allIncompleteTasks");
+    if(countDisplay){
+        countDisplay.textContent = incompleteTasks.length + '件';
+    }
 }

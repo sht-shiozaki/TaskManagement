@@ -172,14 +172,16 @@ input, select, textarea {
     font-family: 'Arial Rounded MT Bold', 'Segoe UI', sans-serif; /* 丸みのあるフォント */
 }
 .task-counts h2 {
-    font-size: 1.3rem;
+    font-size: 10px;
+    /*font-size: 1.3rem;*/
     color: #5a5f7a;
     margin-top: 0;
     margin-bottom: 10px;
     font-weight: 600;
 }
 .task-counts p {
-    font-size: 1.6rem;
+    font-size: 10px;
+    /*font-size: 1.6rem;*/
     color: #3c4961;
     text-align: right;
     margin-left: auto;
