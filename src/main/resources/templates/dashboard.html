@@ -13,62 +13,69 @@
     
     <body class="mainHeader">
         <!-- headerのフラグメント作成⇒他のHTMLで使用できるようにする -->
-	    <div th:replace="header :: Header"></div>
+	    <!-- 新：-->
+        <div th:insert="~{header :: Header}"></div>
         
-        <!-- 現在時刻表示 -->
-        <div id="current-time" style="font-size:1rem; color:#2c3e50; margin-bottom:16px;" class="current-time">
-            <h2 class="task-date" id="taskDate">--月--日(-)のタスク</h2>
-            <h2 id="clock"> --時--分--秒</h2>
-        </div>
-        <div class="todaylist">
-            <ul class="today-list">
-                <li th:each="today : ${todayList}"
-                    th:if="${today != null}"
-                    th:class="|today-item priority-${today.priority.toLowerCase()}|"
-                    th:attr=" data-deadline-date=${today.deadline}, 
-                            data-deadline-time=${today.time != null ? today.time : '00:00'}">
-                    <div class="item-main">
-                    <!-- 時間も null 安全ガード -->
-                    <span class="item-time"
-                            th:text="${today.time != null   ? #temporals.format(today.time, 'H時mm分') : ''}">
-                        00時00分
-                    </span>
-                    <!-- タイトルも null 安全ガード -->
-                    <span class="item-title"
-                            th:text="${today.title != null ? today.title : ''}">
-                        タスク名
-                    </span>
+     <div class="list-items">
+        <div class="today-tasklist">  
+                <div class="today">
+                    <!-- 現在時刻表示 -->
+                    <div id="current-time"  class="current-time">
+                    <h3 class="task-date" id="taskDate">--月--日(-)のタスク</h3>
+                    <h3 id="clock"> --時--分--秒</h3>
                     </div>
-                    <span class="item-priority"
-                        th:text="${today.priority != null ? today.priority : ''}">
-                        高
-                    </span>
-                </li>
-            </ul>
-            <div class="task-counts">
-                <!--未完了タスク件数-->
-                <h2>今日以前の未完了タスク件数</h2>
-                    <p><span id="todayIncompleteTasks" th:text="${todayIncompleteTasks} + '件'">0件</span></p>
-                <h2>全未完了タスク件数</h2>
-                    <p><span id="allIncompleteTasks" th:text="${allIncompleteTasks} + '件'">0件</span></p>
-            </div>
-        </div>
-        <div class="tasklist">
-            <div class="table-wrapper">
-                <!-- 固定したい見出し -->
-                <div class="table-header">
-                <h2 class="table-heading">現在のタスク一覧</h2>
-                <button id="selectList">一括選択モード</button>
-                <button id="completeSelectedButton">完了</button>
-                <button id="deleteTasks">削除</button>
-                <table id="taskTable" border="1">
-                    <thead>
-                        <tr>
-                            <th>
-                                <button id="checkAllButton">全選択</button>
-                            </th>
-                            <th class="hidden">ID</th>
-                            <th>タスク</th>
+                    <div class="list-counts">
+                        <ul class="today-list">
+                            <li th:each="today : ${todayList}"
+                                th:if="${today != null}"
+                                th:class="|today-item priority-${today.priority.toLowerCase()}|"
+                                th:attr=" data-deadline-date=${today.deadline}, 
+                                        data-deadline-time=${today.time != null ? today.time : '00:00'}">
+                                <div class="item-main">
+                                    <!-- 時間も null 安全ガード -->
+                                    <span class="item-time"
+                                            th:text="${today.time != null   ? #temporals.format(today.time, 'H時mm分') : ''}">
+                                        00時00分
+                                    </span>
+                                    <!-- タイトルも null 安全ガード -->
+                                    <span class="item-title"
+                                            th:text="${today.title != null ? today.title : ''}">
+                                        タスク名
+                                    </span>
+                                </div>
+                                <span class="item-priority"
+                                    th:text="${today.priority != null ? today.priority : ''}">
+                                高
+                                </span>
+                            </li>
+                        </ul>
+                        <div class="task-counts">
+                            <!-- 未完了タスク件数 -->
+                            <h2>今日以前の未完了タスク件数</h2>
+                                <p><span th:text="${todayIncompleteTasks} + '件'">0件</span></p>
+                            <h2>全未完了タスク件数</h2>
+                                <p><span th:text="${allIncompleteTasks} + '件'">0件</span></p>
+                        </div>
+                    </div>
+                </div>
+
+            
+
+                <div class="tasklist">
+                    <h2 class="table-title">現在のタスク一覧</h2>
+                    <!-- 固定したい見出し -->
+                    <div class="table-wrapper">
+                        <button id="selectList">一括選択モード</button>
+                        <button id="completeSelectedButton">完了</button>
+                        <button id="deleteTasks">削除</button>
+                        <table border="1" class="task-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <button id="checkAllButton">全選択</button>
+                                    </th>
+                                    <th class="hidden">ID</th>
+                                   <th>タスク</th>
                             <th>期限 <button id="filterDateBtn" class="col-btn">▼</button></th>
                             <th>時間</th>
                             <th>優先度 <button id="filterPriorityBtn" class="col-btn">▼</button></th>
@@ -86,7 +93,7 @@
                         </td>
                             <td class="hidden" th:text="${task.id}"></td><!--↓詳細pop表示-->
                             <td th:text="${task.title}" onclick="openDetailDialogFromTitle(this)" style="cursor: pointer;"></td>
-                            <td class="hidden" th:text="${task.detail}"></td>　<!--隠し詳細欄-->
+                            <td class="hidden" th:text="${task.detail}"></td><!--隠し詳細欄-->
                             <td width="100px" th:text="${task.deadline}"></td>
                             <td width="100px" th:text="${task.time}"></td>
                             <td width="50px" th:text="${task.priority}"></td>
@@ -131,23 +138,23 @@
                     <input id="add_deadline" name="deadline" type="date" />
                     <input id="add_time" name="time" type="time" value="09:00"/>
                     </div>
-                    <div class="priority-status">
-                        <div class="field">
-                        <label>優先度</label>
-                            <select id="add_priority" name="priority">
-                            <option value="高">高</option>
-                            <option value="中" selected>中</option>
-                            <option value="低">低</option>
-                            </select>
+                        <div class="priority-status">
+                            <div class="field">
+                            <label>優先度</label>
+                                <select id="add_priority" name="priority">
+                                <option value="高">高</option>
+                                <option value="中" selected>中</option>
+                                <option value="低">低</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="add-button">
-                        <button type="submit">登録</button>
-                       <button type="button"onclick="document.getElementById('TodoDialog').style.display='none';">キャンセル</button>
-                    </div>
-                </form>
+                        <div class="add-button">
+                            <button type="submit">登録</button>
+                        <button type="button"onclick="document.getElementById('TodoDialog').style.display='none';">キャンセル</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
 
 
         <!-- pop(update) -->
@@ -164,28 +171,29 @@
                     <input id="update_deadline" name="deadline" type="date" />
                     <input id="update_time" name="time" type="time" />
                     </div>
-                    <div class="priority-status">
-                        <div class="field">
-                        <label>優先度</label>
-                            <select id="update_priority" name="priority">
-                            <option value="高">高</option>
-                            <option value="中" selected>中</option>
-                            <option value="低">低</option>
-                            </select>
+                        <div class="priority-status">
+                            <div class="field">
+                            <label>優先度</label>
+                                <select id="update_priority" name="priority">
+                                <option value="高">高</option>
+                                <option value="中" selected>中</option>
+                                <option value="低">低</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                            <label>状態</label>
+                                <select id="update_status" name="done">
+                                <option value="false">未完了</option>
+                                <option value="true">完了</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="field">
-                        <label>状態</label>
-                            <select id="update_status" name="done">
-                            <option value="false">未完了</option>
-                            <option value="true">完了</option>
-                            </select>
+                        <div class="update-button">
+                            <button type="submit">編集</button>
+                            <button type="reset"  onclick="document.getElementById('updateDialog').style.display='none';">キャンセル</button>
                         </div>
-                    </div>
-                    <div class="update-button">
-                        <button type="submit">編集</button>
-                        <button type="reset"  onclick="document.getElementById('updateDialog').style.display='none';">キャンセル</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
         <!--詳細pop-->
