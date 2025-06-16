@@ -177,6 +177,7 @@ document.querySelectorAll('input[name="taskCheckbox"]').forEach(cb => {
                         td.textContent = '完了';
                         this.closest('tr').setAttribute('data-done', 'true');
                         this.closest('tr').style.backgroundColor = 'rgb(136, 136, 136)';
+                        updateTaskCounts();
                     }
                 });
                 //未完了の時
@@ -193,6 +194,7 @@ document.querySelectorAll('input[name="taskCheckbox"]').forEach(cb => {
                         this.closest('tr').setAttribute('data-done', 'false');
                         const row = this.closest('tr');
                         applyRowColor(row);
+                        updateTaskCounts();
                     }
                 });
             }
@@ -200,3 +202,13 @@ document.querySelectorAll('input[name="taskCheckbox"]').forEach(cb => {
     });
 });
 });
+
+function updateTaskCounts(){
+    fetch('/api/task-counts')
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('todayIncompleteTasks').textContent = data.today + '件';
+            document.getElementById('allIncompleteTasks').textContent = data.all + '件';
+        })
+        .catch(err => console.error('件数取得失敗',err));
+}

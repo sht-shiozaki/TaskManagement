@@ -1,0 +1,19 @@
+@RestController
+@RequestMapping("/api")
+public class DashboardApiController {
+
+    @Autowired
+    private TaskItemService TIService;
+
+    @GetMapping("/task-counts")
+    public Map<String, Long> getTaskCounts(HttpSession session) {
+        String userId = (String) session.getAttribute("userId");
+        Long today = TIService.countTodayOrBeforeTasks(userId);
+        Long all = TIService.countAllTasks(userId);
+
+        Map<String, Long> result = new HashMap<>();
+        result.put("today", today);
+        result.put("all", all);
+        return result;
+    }
+}
