@@ -23,6 +23,7 @@
                     <div id="current-time"  class="current-time">
                     <h3 class="task-date" id="taskDate">--月--日(-)のタスク</h3>
                     <h3 id="clock"> --時--分--秒</h3>
+                    <h3 id="IncompleteTasksTitle"> 未完了タスク件数</h3>
                     </div>
                     <div class="list-counts">
                         <ul class="today-list">
@@ -49,12 +50,15 @@
                                 </span>
                             </li>
                         </ul>
-                        <div class="task-counts">
-                            <!-- 未完了タスク件数 -->
-                            <h2>今日以前の未完了タスク件数</h2>
-                                <p><span th:text="${todayIncompleteTasks} + '件'">0件</span></p>
-                            <h2>全未完了タスク件数</h2>
-                                <p><span th:text="${allIncompleteTasks} + '件'">0件</span></p>
+                        <div class="task-counts"><!--未完了件数-->
+                            <div class="task-counts-row expired">
+                                <h2>今日以前</h2>
+                                <span th:text="${todayIncompleteTasks} + '件'">0件</span>
+                            </div>
+                            <div class="task-counts-row all-incomplete">
+                                <h2>全件　　</h2>
+                                <span th:text="${allIncompleteTasks} + '件'">0件</span>
+                            </div>
                         </div>
                     </div>
                 </div>

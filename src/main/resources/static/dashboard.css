@@ -113,6 +113,10 @@ input, select, textarea {
 }
 
 .today li { margin-bottom: 0.5vh; position: relative; }
+/* 詳細欄が伸びないように */
+textarea {
+    resize: none;
+}
 
 .today-item {
     display: flex;
@@ -159,6 +163,7 @@ input, select, textarea {
 
 /*未完了タスク件数*/
 .task-counts {
+    height: 40px; 
     background: #f5f7fa;
     border-radius: 16px; /* 丸みを強調 */
     box-shadow: 0 3px 8px rgba(0,0,0,0.07);
@@ -169,6 +174,15 @@ input, select, textarea {
     border: 2px solid #726a95;
     font-family: 'Arial Rounded MT Bold', 'Segoe UI', sans-serif; /* 丸みのあるフォント */
 }
+
+.task-counts p {
+    margin: 0;
+    font-size: 1.6rem;
+    color: #3c4961;
+    text-align: right;
+    font-weight: 700;
+}
+
 .task-counts h2 {
     font-size: 1.3rem;
     color: #5a5f7a;
@@ -176,19 +190,56 @@ input, select, textarea {
     margin-bottom: 10px;
     font-weight: 600;
 }
-.task-counts p {
-    font-size: 1.6rem;
-    color: #3c4961;
-    text-align: right;
-    margin-left: auto;
-    font-weight: 700;
-}
+
 .task-counts span {
     font-weight: 700;
     color: #563d7c;
-    background: #d8d4e7;
+    background: #e5deff;
     padding: 6px 12px;
     border-radius: 10px;
+}
+
+.task-counts-row {
+    display: flex;
+    justify-content: flex-start;
+    gap: 90px;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    position: relative;
+    top: -7px;
+}
+.task-counts-row h2 {
+  font-size: 1.1rem;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.task-counts-row span {
+  font-size: 1.2rem;
+  padding: 4px 10px;
+  line-height: 1;
+  display: inline-block;
+}
+/* デフォルトのテキスト色 */
+.task-counts-row h2,
+.task-counts-row span {
+  color: #2c3e50; 
+}
+
+/* 今日以前のタスク件数*/
+.task-counts-row.expired h2,
+.task-counts-row.expired span {
+  color: #005acd;
+}
+
+/* 全件*/
+.task-counts-row.all-incomplete h2,
+.task-counts-row.all-incomplete span {
+    color: #00991b;
+}
+
+#IncompleteTasksTitle {
+  margin-left: 20px; /* 右に20pxずらす */
 }
 
 /* 現在のタスク一覧 */
