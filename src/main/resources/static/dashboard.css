@@ -1,5 +1,6 @@
 /* 共通項目 */
 body {
+    /* 親のhtml要素 依存の相対的な文字サイズ */
     font-size: 1rem; 
     color: #2c3e50;
     font-family: "Helvetica Neue", Arial, sans-serif;
