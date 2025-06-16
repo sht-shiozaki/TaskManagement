@@ -39,7 +39,6 @@ input, select, textarea {
     border-radius: var(--border-radius);
     background: var(--bg-normal);
     box-shadow: 0 2px 6px var(--shadow-light);
-    margin-bottom: 24px;
 }
 .task_form form { display: grid; grid-template-columns: 100px 1fr; gap: 16px; }
 .task_form input[type="date"], .task_form input[type="time"], .task_form select { width: 150px; }
@@ -80,7 +79,8 @@ input, select, textarea {
 .current-time{
     display: flex;
     gap: 1vh;
-    justify-content: center;
+    justify-content: flex-start;
+    margin-left: 78px;
     font-size:1rem; 
     color:#2c3e50;
     margin-bottom:16px;
@@ -103,12 +103,12 @@ input, select, textarea {
 }
 .list-counts{
     display: flex;
-    gap: 60px;
+    gap: 4px;
     align-items: flex-start;
 }
 .today-list{
     max-height: 15vh;
-    width: 55vw;
+    width: 30vw;
     overflow-y: auto;
 }
 
@@ -169,7 +169,6 @@ textarea {
     box-shadow: 0 3px 8px rgba(0,0,0,0.07);
     margin-right: 40px;
     padding: 24px;
-    width: 30vw;
     flex-shrink: 0;
     border: 2px solid #726a95;
     font-family: 'Arial Rounded MT Bold', 'Segoe UI', sans-serif; /* 丸みのあるフォント */
@@ -202,7 +201,7 @@ textarea {
 .task-counts-row {
     display: flex;
     justify-content: flex-start;
-    gap: 90px;
+    gap: 10px;
     align-items: flex-start;
     margin-bottom: 8px;
     position: relative;
@@ -239,7 +238,7 @@ textarea {
 }
 
 #IncompleteTasksTitle {
-  margin-left: 20px; /* 右に20pxずらす */
+  margin-left: 72px;
 }
 
 /* 現在のタスク一覧 */
