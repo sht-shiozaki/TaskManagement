@@ -52,9 +52,9 @@
                         <div class="task-counts">
                             <!-- 未完了タスク件数 -->
                             <h2>今日以前の未完了タスク件数</h2>
-                                <p><span th:text="${todayIncompleteTasks} + '件'">0件</span></p>
+                                <p><span id="todayIncompleteTasks" th:text="${todayIncompleteTasks} + '件'">0件</span></p>
                             <h2>全未完了タスク件数</h2>
-                                <p><span th:text="${allIncompleteTasks} + '件'">0件</span></p>
+                                <p><span id="allIncompleteTasks" th:text="${allIncompleteTasks} + '件'">0件</span></p>
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="task : ${taskList}" th:attr="data-done=${task.done}">
+                        <tr th:each="task : ${taskList}" th:attr="data-done=${task.done},data-deadline=${task.deadline}">
                         <td>
                             <label class="circle-checkbox">
                                 <input type="checkbox" name="taskCheckbox" th:value="${task.id}" />
