@@ -90,7 +90,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="task : ${taskList}" th:attr="data-done=${task.done}">
+                        <tr th:each="task : ${taskList}" th:attr="data-done=${task.done},data-deadline=${task.deadline}">
                         <td>
                             <label class="circle-checkbox">
                                 <input type="checkbox" name="taskCheckbox" th:value="${task.id}" />
