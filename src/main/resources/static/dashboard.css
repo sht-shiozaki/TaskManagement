@@ -72,7 +72,7 @@ input, select, textarea {
     margin-top: 5vh;
     display: flex;
     flex-direction: column; /* 縦に並べる */
-    gap: 3vh;  
+    gap: 2vh;  
 }
 
 /*"今日のタスク"と時間を横並び*/
@@ -93,7 +93,7 @@ input, select, textarea {
     flex-direction: column;
     align-items: center; /* 横方向中央 */
     max-height: 25vh;
-    max-width: 50vw;
+    max-width: 90vw;
     align-items: stretch;  /* ← これで子要素の width: auto が親幅に伸びる */
     padding: 0.5vh;
     background: #fff;
@@ -101,9 +101,14 @@ input, select, textarea {
     box-shadow: 0 2px 8px var(--shadow-light);
     list-style: none;
 }
+.list-counts{
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
 .today-list{
     max-height: 15vh;
-    max-width: 50vw;
+    width: 55vw;
     overflow-y: auto;
 }
 
@@ -157,8 +162,9 @@ input, select, textarea {
     background: #f5f7fa;
     border-radius: 16px; /* 丸みを強調 */
     box-shadow: 0 3px 8px rgba(0,0,0,0.07);
+    margin-right: 40px;
     padding: 24px;
-    width: 250px;
+    width: 30vw;
     flex-shrink: 0;
     border: 2px solid #726a95;
     font-family: 'Arial Rounded MT Bold', 'Segoe UI', sans-serif; /* 丸みのあるフォント */
@@ -192,7 +198,7 @@ input, select, textarea {
     margin: 0 auto;
     align-items: center; /* 横方向中央 */
     width: 90vw;
-    padding: 0.5vh;
+    padding: 0vh;
     box-sizing: boder-box;
     border-radius: var(--border-radius);
     background: #fff;
@@ -201,9 +207,17 @@ input, select, textarea {
 }
 .table-title{
     position: sticky;
-    padding: auto;
+    margin-top: 1vh;
     background: #fff;
     
+}
+
+.selectbutton{
+    position: sticky;
+    background: #fff;
+    margin-left: 6vw;
+    margin-top:0;
+    align-self: flex-start;
 }
 
 .table-wrapper {

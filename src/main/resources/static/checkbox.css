@@ -1,6 +1,6 @@
 /*チェックボックスを非表示*/
 .circle-checkbox input[type="checkbox"]{
-    position: absolute;
+    /* position: absolute; */
     opacity: 0;
     width: 0;
     height: 0;
@@ -16,7 +16,7 @@
     vertical-align: middle;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    position: relative;
+    /* position: relative; */
 }
 
 /*チェック時の塗りつぶし*/
@@ -29,5 +29,9 @@
 label.circle-checkbox {
     display: block;
     cursor: pointer;
-    position: relative;
+    /* position: relative; */
+}
+/* チェックボックスの幅調整 */
+tbody > tr:first-child td{
+    width: 50px;
 }
