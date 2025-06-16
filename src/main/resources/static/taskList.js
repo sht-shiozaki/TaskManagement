@@ -3,8 +3,6 @@ function openTodoDialog(button) {
     dialog.style.display = 'block';
 }
 
-
-
 function openUpdateDialog(button) {
   // button.dataset なら data-* 属性がすべて取れる
   const id       = button.dataset.id;

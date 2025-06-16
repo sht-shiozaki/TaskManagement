@@ -1,0 +1,41 @@
+[33mcd1d4d2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32m0612SUGAWARA[m[33m, [m[1;31morigin/0610SUGAWARA[m[33m, [m[1;32m0610SUGAWARA[m[33m)[m HEAD@{0}: reset: moving to HEAD
+[33mcd1d4d2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32m0612SUGAWARA[m[33m, [m[1;31morigin/0610SUGAWARA[m[33m, [m[1;32m0610SUGAWARA[m[33m)[m HEAD@{1}: checkout: moving from 0610SUGAWARA to 0612SUGAWARA
+[33mcd1d4d2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32m0612SUGAWARA[m[33m, [m[1;31morigin/0610SUGAWARA[m[33m, [m[1;32m0610SUGAWARA[m[33m)[m HEAD@{2}: checkout: moving from 0612SUGAWARA to 0610SUGAWARA
+[33mcd1d4d2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32m0612SUGAWARA[m[33m, [m[1;31morigin/0610SUGAWARA[m[33m, [m[1;32m0610SUGAWARA[m[33m)[m HEAD@{3}: reset: moving to HEAD
+[33mcd1d4d2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32m0612SUGAWARA[m[33m, [m[1;31morigin/0610SUGAWARA[m[33m, [m[1;32m0610SUGAWARA[m[33m)[m HEAD@{4}: checkout: moving from 0610SUGAWARA to 0612SUGAWARA
+[33mcd1d4d2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32m0612SUGAWARA[m[33m, [m[1;31morigin/0610SUGAWARA[m[33m, [m[1;32m0610SUGAWARA[m[33m)[m HEAD@{5}: reset: moving to HEAD
+[33mcd1d4d2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32m0612SUGAWARA[m[33m, [m[1;31morigin/0610SUGAWARA[m[33m, [m[1;32m0610SUGAWARA[m[33m)[m HEAD@{6}: commit: 詳細欄の修正
+[33m977dbe7[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{7}: merge main: Fast-forward
+[33m0be5cb6[m HEAD@{8}: checkout: moving from main to 0610SUGAWARA
+[33m977dbe7[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{9}: pull origin main: Fast-forward
+[33m15b1fed[m HEAD@{10}: checkout: moving from 0610SUGAWARA to main
+[33m0be5cb6[m HEAD@{11}: commit (merge): Merge branch 'main' into 0610SUGAWARA
+[33m9e6c8df[m HEAD@{12}: checkout: moving from main to 0610SUGAWARA
+[33m15b1fed[m HEAD@{13}: pull origin main: Fast-forward
+[33mc6dc0a2[m HEAD@{14}: checkout: moving from 0610SUGAWARA to main
+[33m9e6c8df[m HEAD@{15}: checkout: moving from main to 0610SUGAWARA
+[33mc6dc0a2[m HEAD@{16}: reset: moving to HEAD^
+[33m5f25258[m HEAD@{17}: checkout: moving from 0610SUGAWARA to main
+[33m9e6c8df[m HEAD@{18}: reset: moving to origin/0610SUGAWARA
+[33m9e6c8df[m HEAD@{19}: checkout: moving from main to 0610SUGAWARA
+[33m5f25258[m HEAD@{20}: pull origin main: Fast-forward
+[33mc6dc0a2[m HEAD@{21}: checkout: moving from 0610SUGAWARA to main
+[33m9e6c8df[m HEAD@{22}: commit: ヘッダーとマイページ接続
+[33m17c12d6[m HEAD@{23}: checkout: moving from main to 0610SUGAWARA
+[33mc6dc0a2[m HEAD@{24}: reset: moving to HEAD
+[33mc6dc0a2[m HEAD@{25}: pull origin main: Fast-forward
+[33mb9e6312[m HEAD@{26}: checkout: moving from 0610sugawara to main
+[33m17c12d6[m HEAD@{27}: reset: moving to HEAD
+[33m17c12d6[m HEAD@{28}: commit: 0610SUGAWARA
+[33mb9e6312[m HEAD@{29}: merge main: Fast-forward
+[33me88fd72[m[33m ([m[1;32mbranchsugawara[m[33m, [m[1;32m0608sugawara[m[33m)[m HEAD@{30}: checkout: moving from main to 0610sugawara
+[33mb9e6312[m HEAD@{31}: pull origin main: Fast-forward
+[33me88fd72[m[33m ([m[1;32mbranchsugawara[m[33m, [m[1;32m0608sugawara[m[33m)[m HEAD@{32}: checkout: moving from 0610sugawara to main
+[33me88fd72[m[33m ([m[1;32mbranchsugawara[m[33m, [m[1;32m0608sugawara[m[33m)[m HEAD@{33}: reset: moving to HEAD
+[33me88fd72[m[33m ([m[1;32mbranchsugawara[m[33m, [m[1;32m0608sugawara[m[33m)[m HEAD@{34}: checkout: moving from main to 0610sugawara
+[33me88fd72[m[33m ([m[1;32mbranchsugawara[m[33m, [m[1;32m0608sugawara[m[33m)[m HEAD@{35}: checkout: moving from 0608sugawara to main
+[33me88fd72[m[33m ([m[1;32mbranchsugawara[m[33m, [m[1;32m0608sugawara[m[33m)[m HEAD@{36}: checkout: moving from main to 0608sugawara
+[33me88fd72[m[33m ([m[1;32mbranchsugawara[m[33m, [m[1;32m0608sugawara[m[33m)[m HEAD@{37}: checkout: moving from branchsugawara to main
+[33me88fd72[m[33m ([m[1;32mbranchsugawara[m[33m, [m[1;32m0608sugawara[m[33m)[m HEAD@{38}: checkout: moving from main to branchsugawara
+[33me88fd72[m[33m ([m[1;32mbranchsugawara[m[33m, [m[1;32m0608sugawara[m[33m)[m HEAD@{39}: checkout: moving from main to main
+[33me88fd72[m[33m ([m[1;32mbranchsugawara[m[33m, [m[1;32m0608sugawara[m[33m)[m HEAD@{40}: clone: from https://github.com/sht-shiozaki/TaskManagement.git

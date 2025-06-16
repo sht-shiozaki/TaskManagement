@@ -31,13 +31,22 @@ public interface TaskItemRepository extends JpaRepository<TaskItem, Long> {
         // JPQLはEntityクラス名やフィールド名を使ってクエリを記述する言語
         // JPAが@を参考にテーブルやカラムを参照し、そのマッピング情報をもとに適切なSQLに変換してデータベースへ発行してくれる
         // @Queryは実行するJPQLの指定
-        // ユーザのタスクリスト取得
-        @Query("SELECT t FROM TaskItem t WHERE t.userId = :userId")
-        List<TaskItem> findByUserId(@Param("userId") String userId);
+
+        /*
+         * // ユーザのタスクリスト取得
+         * 
+         * @Query("SELECT t FROM TaskItem t WHERE t.userId = :userId")
+         * List<TaskItem> findByUserId(@Param("userId") String userId);
+         */
 
         // 未完了のタスクリスト取得
         @Query("SELECT t FROM TaskItem t WHERE t.done = false AND t.userId = :userId")
         List<TaskItem> findByFalseList(@Param("userId") String userId);
+
+        // タスクの時間順かつ優先度順
+        @Query("SELECT t FROM TaskItem t WHERE t.userId = :userId order by t.deadline, t.time, "
+                        + "CASE priority WHEN'高'THEN 3 WHEN'中'THEN 2 WHEN'低'THEN 1 ELSE 0 END DESC")
+        List<TaskItem> findByUserId(@Param("userId") String userId);
 
         // 本日のタスクリスト取得
         @Query("SELECT t FROM TaskItem t WHERE t.done = false AND t.userId = :userId AND t.deadline <= :deadline  "
@@ -47,6 +56,16 @@ public interface TaskItemRepository extends JpaRepository<TaskItem, Long> {
                         " t.time ASC")
         List<TaskItem> findByUserIdAndDeadline(@Param("userId") String userId,
                         @DateTimeFormat(pattern = "yyyy-MM-dd") @Param("deadline") LocalDate deadline);
+
+        // 未完了タスク件数の取得
+        // 今日以前の未完了タスク件数
+        @Query("SELECT COUNT(t) FROM TaskItem t WHERE t.userId = :userId AND t.deadline <= :deadline AND t.done = false")
+        long countByIncompleteTask(@Param("userId") String userId,
+                        @Param("deadline") LocalDate deadline);
+
+        // 全未完了タスク件数
+        @Query("SELECT COUNT(t) FROM TaskItem t WHERE t.userId = :userId AND t.done = false")
+        long countByIncompleteTasks(@Param("userId") String userId);
 
         @Transactional
         @Modifying // DELETEクエリを使う場合は @Modifying アノテーションが必須
@@ -62,5 +81,29 @@ public interface TaskItemRepository extends JpaRepository<TaskItem, Long> {
                         @DateTimeFormat(pattern = "HH:mm") @Param("time") LocalTime time,
                         @Param("priority") String priority,
                         @Param("done") boolean done, @Param("userId") String userId);
+
+        // チェックボタン一括選択での完了処理
+        @Transactional
+        @Modifying
+        @Query("UPDATE TaskItem t SET t.done = true WHERE t.id IN :ids")
+        void selectedTasksCompleted(@Param("ids") List<Long> ids);
+
+        // チェックボタン一括選択での削除処理
+        @Transactional
+        @Modifying
+        @Query("DELETE FROM TaskItem t WHERE t.id IN :ids")
+        void deleteSelectTasks(@Param("ids") List<Long> ids);
+
+        // チェックボタン押下後即完了処理
+        @Transactional
+        @Modifying
+        @Query("UPDATE TaskItem t SET t.done = true WHERE t.id = :id")
+        void markTaskAsCompleted(@Param("id") Long id);
+
+        // チェックボタン押下後即未完了処理
+        @Transactional
+        @Modifying
+        @Query("UPDATE TaskItem t SET t.done = false WHERE t.id = :id")
+        void markTaskAsUncompleted(@Param("id") Long id);
 
 }

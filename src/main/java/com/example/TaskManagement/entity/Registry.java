@@ -9,9 +9,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "registry")
-public class Registry  {
+public class Registry {
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -25,9 +25,10 @@ public class Registry  {
 
     @Column(nullable = false, unique = true)
     private String userId;
-    
+
     // デフォルトコンストラクタ
-    public Registry() {}
+    public Registry() {
+    }
 
     // ゲッターとセッター
     public Long getId() {
@@ -62,7 +63,7 @@ public class Registry  {
         this.email = email;
     }
 
-        public String getUserId() {
+    public String getUserId() {
         return userId;
     }
 
