@@ -32,6 +32,11 @@ form {
     box-sizing: border-box;
 }
 
+.input-label {
+  color: #1A237E;
+  font-weight: bold;
+}
+
 input[type="text"],
 input[type="password"] {
     padding: 10px 12px;
@@ -64,7 +69,7 @@ button:hover {
 
 p.error {
     min-height: 22px;
-    margin: -10px 0 12px;
+    margin: -18px 0 -10px;
     line-height: 1.4;
     color: red;
     font-weight: bold;

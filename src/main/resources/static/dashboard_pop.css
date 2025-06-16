@@ -27,6 +27,11 @@
   white-space: pre-wrap;
   overflow-wrap: break-word;
   word-break: break-word;
+  /* 左寄せ項目 */
+  text-align: left;
+  display: flex; 
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 #detailTitle {

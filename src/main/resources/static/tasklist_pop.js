@@ -1,32 +1,32 @@
-// 詳細ポップアップを開く
-function openDetailDialogFromTitle(tdElement) {
-  const row = tdElement.closest('tr');
+// 詳細ポップアップを開く処理
+function openDetailDialogFromTitle(tdElement) {//tdElementはクリックされたセル（<td>）要素を表す
+  const row = tdElement.closest('tr');//セルが属している行全体を取得
 
-  const title = row.cells[2].textContent.trim();
-  const detail = row.cells[3].textContent.trim();
-  const deadline = row.cells[4].textContent.trim();
+  const title = row.cells[2].textContent.trim();// タイトルを取得
+  const detail = row.cells[3].textContent.trim();// 詳細を取得
+  const deadline = row.cells[4].textContent.trim();// 期日を取得
 
-  document.getElementById('detailTitle').textContent = title;
+  document.getElementById('detailTitle').textContent = title;// htmlのid名(()の中身)にセット
   document.getElementById('detailDeadline').textContent = deadline;
   document.getElementById('detailContent').textContent = detail;
 
-  document.getElementById('detailPopup').style.display = 'block';
+  document.getElementById('detailPopup').style.display = 'block';// popで表示
 }
 
-// 値の保持
-let currentDateFilter = {
+// フィルターの選択された値を保持の処理
+let currentDateFilter = {//年月日
   years: [],
   months: [],
   days: []
 };
 
-let currentPriorityFilter = [];
+let currentPriorityFilter = [];// 高中低
 
 let currentStatusFilter = []; // '完了' or '未完了'
 
-//フィルター
+//フィルターの一致で表示、不一致で非表示の処理
 function applyFilters() {
-  const rows = document.querySelectorAll('#taskTable tbody tr');
+  const rows = document.querySelectorAll('#taskTable tbody tr');// #taskTableの中のすべての行（<tr>）を取得。これがフィルターの対象。
 
   rows.forEach(row => {
     const deadline = row.cells[4].textContent.trim(); // 期限は5列目(index=4)
@@ -34,69 +34,69 @@ function applyFilters() {
     const status = row.cells[7].textContent.trim();   // 状態は8列目(index=7)
 
     let dateMatch = false;
-    if (deadline.match(/^\d{4}-\d{2}-\d{2}$/)) {
-      const [y, m, d] = deadline.split('-');
+    if (deadline.match(/^\d{4}-\d{2}-\d{2}$/)) {// deadlineを 年・月・日 に分割
+      const [y, m, d] = deadline.split('-');// ↓一致するかチェック。条件が何も選ばれていない（length === 0）場合は「すべて通す」
       const yearOk = currentDateFilter.years.length === 0 || currentDateFilter.years.includes(y);
       const monthOk = currentDateFilter.months.length === 0 || currentDateFilter.months.includes(m);
       const dayOk = currentDateFilter.days.length === 0 || currentDateFilter.days.includes(d);
       dateMatch = yearOk && monthOk && dayOk;
     }
-
+    // 優先度、状態の一致チェック
     const priorityMatch = currentPriorityFilter.length === 0 || currentPriorityFilter.includes(priority);
     const statusMatch = currentStatusFilter.length === 0 || currentStatusFilter.includes(status);
-
+    // 3つの条件が一致でその行を表示。無ければ非表示。
     row.style.display = (dateMatch && priorityMatch && statusMatch) ? '' : 'none';
   });
 }
 
-// 期限フィルター用ユニーク日付取得
+// 期限フィルター用ユニーク日付取得の処理
 function getUniqueDates() {
-  const rows = document.querySelectorAll('#taskTable tbody tr');
-  const years = new Set();
+  const rows = document.querySelectorAll('#taskTable tbody tr');// タスク一覧を取得
+  const years = new Set();//「Set」はJSのデータ構造で重複を自動的に除いてくれる配列のようなもの。同じ年月日が何回出てきても1回のみ登録。
   const months = new Set();
   const days = new Set();
 
   rows.forEach(row => {
-    const deadline = row.cells[4].textContent.trim();  // 期限は5列目（index=4）
-    if (!deadline.match(/^\d{4}-\d{2}-\d{2}$/)) return;
-    const [y, m, d] = deadline.split('-');
+    const deadline = row.cells[4].textContent.trim();// 期限は5列目（index=4）
+    if (!deadline.match(/^\d{4}-\d{2}-\d{2}$/)) return;// yyyy-mm-dd形式でないものはスキップ
+    const [y, m, d] = deadline.split('-');// 文字列を分割して年・月・日に
     years.add(y);
     months.add(m);
     days.add(d);
   });
 
-  return {
+  return {//SetからArrayに変換して（Array.from(...)）小さい順に並び替えて返す（sort()）
     years: Array.from(years).sort(),
     months: Array.from(months).sort(),
     days: Array.from(days).sort(),
   };
 }
 
-// チェックボックスを自動生成
+// チェックボックスを自動生成の処理
 function createCheckboxList(containerId, values, namePrefix) {
   const container = document.getElementById(containerId);
-  container.innerHTML = ''; // クリア
+  container.innerHTML = ''; //前回のチェックボックスの中身を空にしてリセット。
 
-  values.forEach(value => {
-    const id = `${namePrefix}_${value}`;
-    const label = document.createElement('label');
-    label.htmlFor = id;
+  values.forEach(value => {//ループ。(values = ['2024', '2025']なら２回転)
+    const id = `${namePrefix}_${value}`;// 例: year_2024
+    const label = document.createElement('label');// <label> を作成し、クリックしやすくするためにスタイルも設定
+    label.htmlFor = id;// htmlFor にチェックボックスのIDを設定すると、ラベルクリックでチェックが入る
     label.style.marginRight = '10px';
     label.style.cursor = 'pointer';
 
-    const checkbox = document.createElement('input');
+    const checkbox = document.createElement('input');// チェックボックス生成
     checkbox.type = 'checkbox';
     checkbox.id = id;
     checkbox.name = namePrefix;
     checkbox.value = value;
 
-    label.appendChild(checkbox);
-    label.appendChild(document.createTextNode(value));
-    container.appendChild(label);
+    label.appendChild(checkbox);// チェックボックスを追加
+    label.appendChild(document.createTextNode(value));// 「2024」などの文字を追加
+    container.appendChild(label);// すべてを container に追加
   });
 }
 
-// 期限フィルター用ポップアップ表示切替
+// 期限フィルター用ポップアップ表示切替の処理
 document.getElementById('filterDateBtn').addEventListener('click', () => {
   const popup = document.getElementById('dateFilterPopup');
   const btn = document.getElementById('filterDateBtn');
