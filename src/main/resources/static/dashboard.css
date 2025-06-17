@@ -65,6 +65,9 @@ input, select, textarea {
     box-shadow: 0 4px 12px var(--shadow-heavy);
 }
 
+
+
+
 .today-tasklist{
     margin-top: 5vh;
     display: flex;
@@ -159,7 +162,7 @@ textarea {
 .today::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 3px; }
 
 /* 見出し */
-.tasklist h2 { font-size: 1.5rem; color: #2c3e50; margin-bottom: 0.5vh; }
+.tasklist h2 { font-size: 1.3rem; color: #2c3e50; margin-bottom: 0.5vh; }
 
 /*未完了タスク件数*/
 .task-counts {
@@ -248,12 +251,12 @@ textarea {
     margin: 0 auto;
     align-items: center; /* 横方向中央 */
     width: 90vw;
-    padding: 0vh;
+    padding: 0px;
     box-sizing: boder-box;
     border-radius: var(--border-radius);
     background: #fff;
     box-shadow: 0 2px 8px var(--shadow-light);
-    max-height: 80vh;
+    height: 61.35vh;
 }
 .table-title{
     position: sticky;
@@ -265,7 +268,7 @@ textarea {
 .selectbutton{
     position: sticky;
     background: #fff;
-    margin-left: 6vw;
+    margin-left: 5vw;
     margin-top:0;
     align-self: flex-start;
 }
@@ -281,7 +284,28 @@ textarea {
     border: none;               /* 細い罫線を消す */
 }
 .task-table{
-    width:100%;
+    width: 78.5vw;
+}
+.task-checkbutton{
+    width: 5vw;
+}
+.task-name{
+    width: 30vw;
+}
+.task-deadline{
+    width:10vw;
+}
+.task-time{
+    width: auto;
+}
+.task-priority{
+    width:8vw;
+}
+.task-done{
+    width:7vw;
+}
+.task-edit,.task-delete{
+    width: 5vw
 }
 
 .tasklist thead {
@@ -296,29 +320,14 @@ textarea {
     color: #ecf0f1;
     background-color: #34495e;
     text-transform: uppercase;
-}
-
-/* 追加ダイアログ */
-#TodoDialog {
-    display: none;
-    background-color: #FFF;
-    border: 2px double #4D648D;
-    width: 800px;
-    height: auto;
-    position: fixed;
-    top: 50%;                   /* 上から 50% の位置を基準に */
-    left: 50%;                  /* 左から 50% の位置を基準に */
-    transform: translate(-50%, -50%); /* 自要素幅・高さの半分だけずらして真ん中に */
-    padding: 30px;
-    z-index: 9999;
-    box-shadow: 0 4px 4px rgba(0,0,0,0.1);
+    z-index: 10;
 }
 
 .tasklist tbody tr { transition: background .2s ease; }
 .tasklist tbody tr:nth-child(odd) { background: var(--table-row-alt); }
 .tasklist tbody tr:hover { background: #e1e8ed; }
 .tasklist td {
-    padding: 1vh 1vw;
+    /* padding: 1vh 1vw; */
     font-size: .9rem;
     color: #2c3e50;
 }
