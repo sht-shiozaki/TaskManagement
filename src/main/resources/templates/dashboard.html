@@ -53,11 +53,11 @@
                         <div class="task-counts"><!--未完了件数-->
                             <div class="task-counts-row expired">
                                 <h2>今日以前</h2>
-                                <span th:text="${todayIncompleteTasks} + '件'">0件</span>
+                                <span id="todayIncompleteTasks" th:text="${todayIncompleteTasks} + '件'">0件</span>
                             </div>
                             <div class="task-counts-row all-incomplete">
                                 <h2>全件　　</h2>
-                                <span th:text="${allIncompleteTasks} + '件'">0件</span>
+                                <span id="allIncompleteTasks" th:text="${allIncompleteTasks} + '件'">0件</span>
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                             <td class="task-edit">
                             <button
                                 type="button"
-                                class="update-button"
+                                class="update-button icon-button"
                                 th:data-id="${task.id}"
                                 th:data-title="${task.title}"
                                 th:data-detail="${task.detail}"
@@ -117,11 +117,15 @@
                                 th:data-priority="${task.priority}"
                                 th:data-done="${task.done}"
                                 onclick="openUpdateDialog(this)"
-                            >編集</button> 
+                            >
+                                <img src="/img/hensyu1.png" alt="編集">
+                            </button> 
                             </td>
                             <td class="task-delete">
                                 <form action="#" th:action="@{/list/delete}" method="post">
-                                    <button type="submit" id="delete_button">削除</button>
+                                    <button type="submit" id="delete_button" class="icon-button">
+                                        <img src="/img/gomibako1.png" alt="削除">
+                                    </button>
                                     <input type="hidden" name="id" th:value="${task.id}" />
                                 </form>
                             </td>

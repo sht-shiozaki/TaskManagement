@@ -339,6 +339,22 @@ textarea {
     text-transform: uppercase;
     z-index: 10;
 }
+/* 編集と削除のボタン */
+.icon-button{
+    width: 20px;
+    height: 20px;
+    background: #ececec;
+    border: 0.5px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 0 auto;     /* 横中央に配置 */
+}
+.icon-button img{
+     width: 20px; 
+     height: 20px;
+}
 
 .tasklist tbody tr { transition: background .2s ease; }
 .tasklist tbody tr:nth-child(odd) { background: var(--table-row-alt); }
