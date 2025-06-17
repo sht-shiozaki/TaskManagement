@@ -109,7 +109,7 @@
                                     <td width="50px">
                                     <button
                                         type="button"
-                                        class="update-button"
+                                        class="update-button icon-button"
                                         th:data-id="${task.id}"
                                         th:data-title="${task.title}"
                                         th:data-detail="${task.detail}"
@@ -118,11 +118,15 @@
                                         th:data-priority="${task.priority}"
                                         th:data-done="${task.done}"
                                         onclick="openUpdateDialog(this)"
-                                    >編集</button> 
+                                    >
+                                        <img src="/img/hensyu1.png" alt="編集">
+                                    </button> 
                                     </td>
                                     <td width="50px">
                                         <form action="#" th:action="@{/list/delete}" method="post">
-                                            <button type="submit" id="delete_button">削除</button>
+                                            <button type="submit" id="delete_button" class="icon-button">
+                                                <img src="/img/gomibako1.png" alt="削除">
+                                            </button>
                                             <input type="hidden" name="id" th:value="${task.id}" />
                                         </form>
                                     </td>
