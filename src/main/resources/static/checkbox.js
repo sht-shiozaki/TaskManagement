@@ -86,18 +86,18 @@ function switchCheckboxStyle(isBatchMode) {
             //一括選択モードの時
             if(isBatchMode) {
                 label.classList.remove('circle-checkbox');
-                
-                cb.style.appearance = '';
-                cb.style.webkitAppearance = '';
-                cb.style.mozAppearance = '';
+                // cb.style.display = 'none';
+                // cb.style.appearance = 'auto';
+                // cb.style.webkitAppearance = 'auto';
+                // cb.style.mozAppearance = 'auto';
                 return;
                 //通常モード
             }else {
                 label.classList.add('circle-checkbox');
-                
-                cb.style.appearance = 'none';
-                cb.style.webkitAppearance = 'none';
-                cb.style.mozAppearance = 'none';
+                // cb.style.display = '';
+                // cb.style.appearance = 'hidden';
+                // cb.style.webkitAppearance = 'hidden';
+                // cb.style.mozAppearance = 'hidden';
                 return;
             }
         }

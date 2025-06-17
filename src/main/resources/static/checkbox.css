@@ -1,9 +1,10 @@
 /*チェックボックスを非表示*/
 .circle-checkbox input[type="checkbox"]{
-    /* position: absolute; */
+    position: absolute;
     opacity: 0;
     width: 0;
     height: 0;
+    z-index: 1;
 }
 
 /*チェックボックスを丸くする*/
@@ -29,9 +30,28 @@
 label.circle-checkbox {
     display: block;
     cursor: pointer;
-    /* position: relative; */
+    display: flex;
+    /* flex-direction: column;    縦に並べる場合 :*/
+    align-items: center;       /* 水平中央 */
+    justify-content: center;   /* 垂直中央 */
+    position: relative;
 }
-/* チェックボックスの幅調整 */
-tbody > tr:first-child td{
-    width: 50px;
+    
+    /* ———————— 一括選択モード ———————— */
+    /* circle-checkbox がないとき（デフォルト） */
+label:not(.circle-checkbox) .checkmark {
+    display: none;
+}
+label:not(.circle-checkbox) input[type="checkbox"] {
+    /* デフォルトのチェックボックスを表示 */
+    opacity: 1;
+    width: auto;
+    height: auto;
+}
+
+/* circle-checkbox がないときのラベルを flex 中央揃えに */
+label:not(.circle-checkbox) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

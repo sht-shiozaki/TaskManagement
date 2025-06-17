@@ -77,23 +77,24 @@
                         <table border="1" class="task-table" id="taskTable">
                             <thead>
                             <tr>
-                            <th>
+                            <th class="task-checkbutton">
                                 <button id="checkAllButton">全選択</button>
                             </th>
                             <th class="hidden">ID</th>
-                            <th>タスク</th>
-                            <th>期限 <button id="filterDateBtn" class="col-btn">▼</button></th>
-                            <th>時間</th>
-                            <th>優先度 <button id="filterPriorityBtn" class="col-btn">▼</button></th>
-                            <th>状態 <button id="filterDoneBtn" class="col-btn">▼</button></th>
-                            <th></th><th></th>
+                            <th class="task-name">タスク</th>
+                            <th class="task-deadline">期限 <button id="filterDateBtn" class="col-btn">▼</button></th>
+                            <th class="task-time">時間</th>
+                            <th class="task-priority">優先度 <button id="filterPriorityBtn" class="col-btn">▼</button></th>
+                            <th class="task-done">状態 <button id="filterDoneBtn" class="col-btn">▼</button></th>
+                            <th class="task-edit">編集</th>
+                            <th class="task-delete">削除</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="task : ${taskList}" th:attr="data-done=${task.done},data-deadline=${task.deadline}">
                         <td>
                             <label class="circle-checkbox">
-                                <input type="checkbox" name="taskCheckbox" th:value="${task.id}" />
+                                <input type="checkbox" name="taskCheckbox" th:value="${task.id}"  class="checkbox" />
                                 <span class="checkmark"></span>
                             </label>
                         </td>
