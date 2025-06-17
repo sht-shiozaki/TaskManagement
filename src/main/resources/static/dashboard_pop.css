@@ -34,6 +34,11 @@
   justify-content: flex-start;
 }
 
+/* タイトルセルの列だけをホバー効果 */
+#taskTable tbody tr td:nth-child(3):hover {
+  background-color: #ffeaa7; /* 目立つ色 */
+}
+
 #detailTitle {
     font-weight: bold;
 }
@@ -67,7 +72,7 @@
 
 #dateFilterPopup {
   display: none;
-  position: fixed;
+  position: absolute;
   top: 39%;
   left: 20%;
   transform: none;
@@ -80,15 +85,24 @@
 }
 
 .filter-container {
-  max-height: 100px;
+  max-height: 144px;
   overflow-y: auto;
   border: 1px solid #ccc;
   padding: 5px;
 }
+
+/* 期限を横並びに */
+#dateFilterPopup > div {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 20px;
+  min-width: 80px;
+}
+
 /* 優先度フィルター */
 #priorityFilterPopup {
   display: none;
-  position: fixed;
+  position: absolute;
   top: 20%;
   left: 8%;
   transform: none;
@@ -99,6 +113,12 @@
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
   user-select: none;
 }
+
+#priorityFilterContainer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
 /* 完了未完了フィルター */
 .status-filter-popup {
   background-color: white;
@@ -106,6 +126,12 @@
   padding: 10px;
   position: absolute;
   z-index: 1000;
+}
+
+#statusFilterContainer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 #dateFilterPopup,

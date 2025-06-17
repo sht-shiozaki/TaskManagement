@@ -274,9 +274,8 @@ textarea {
 }
 
 .table-wrapper {
-    width: 80vw; 
-    box-sizing: boder-box;
-    overflow-y: auto;
+    width: 80vw;
+    overflow-y: scroll;
     max-height: 50vh;
     box-shadow: 0 2px 8px var(--shadow-light);
     border-radius: var(--border-radius);
@@ -285,36 +284,38 @@ textarea {
 }
 .task-table{
     width: 78.5vw;
+    table-layout: fixed;
 }
 .task-checkbutton{
     width: 5vw;
 }
 .task-name{
-    width: 30vw;
+    width: 22vw;
 }
 .task-deadline{
-    width:10vw;
-}
-.task-time{
-    width: auto;
-}
-.task-priority{
-    width:8vw;
-}
-.task-done{
     width:7vw;
 }
+.task-time{
+    width:5vw;
+}
+.task-priority{
+    width:6vw;
+}
+.task-done{
+    width:6vw;
+}
 .task-edit,.task-delete{
-    width: 5vw
+    width: 4vw
 }
 
 .tasklist thead {
     background: var(--table-header);
 }
 
+
 .tasklist thead th {
     position: sticky; top: 0;
-    padding: 1vh 1vw;
+    padding: 2vh 1vw;
     font-size: .85rem;
     font-weight: 600;
     color: #ecf0f1;
