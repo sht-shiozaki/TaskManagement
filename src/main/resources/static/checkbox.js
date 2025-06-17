@@ -104,12 +104,20 @@ function switchCheckboxStyle(isBatchMode) {
     });
 }
 
-//全選択ボタン（すべてにチェックをつける）一括選択モードのみ
+//全選択・全解除ボタン（すべてにチェックをつける・外す）一括選択モードのみ
+let isAllSelectMode = true;
 checkAllButton.addEventListener('click', function() {
+    isAllSelectMode = !isAllSelectMode;
+    this.textContent = isAllSelectMode ? '全解除' : '全選択';
+
     if(!isBatchMode) return; //通常時は機能しない
     
     document.querySelectorAll('input[name="taskCheckbox"]').forEach(cb => {
-        cb.checked = true;
+        if(isAllSelectMode){
+            cb.checked = true;
+        } else {
+            cb.checked = false;
+        }
     });
 });
 
@@ -154,55 +162,71 @@ deleteBtn.addEventListener('click', function(){
 
 //リストの色付け（初回）
 document.addEventListener('DOMContentLoaded', function(){
-const rows = document.querySelectorAll('table tbody tr');
-rows.forEach(applyRowColor);
+    const rows = document.querySelectorAll('table tbody tr');
+    rows.forEach(applyRowColor);
 
-//チェックボタン押下後即完了処理
-document.querySelectorAll('input[name="taskCheckbox"]').forEach(cb => {
-    cb.addEventListener('change', function() {
-        if(!isBatchMode) {    
-            const isChecked = this.checked;        
-            const taskId = this.value;
-            //完了の時
-            if(isChecked){
-            
-                fetch('/list/complete', {
+    //チェックボタン押下後即完了処理
+    document.querySelectorAll('input[name="taskCheckbox"]').forEach(cb => {
+        cb.addEventListener('change', function() {
+            if(!isBatchMode) {    
+                const checkbox = this;
+                const isChecked = this.checked;        
+                const taskId = this.value;
+                const row = this.closest('tr');
+                const td = row.querySelector('td:nth-child(8)')
+
+                //見た目のみ変更
+                //完了の時
+                if(isChecked){
+                    td.textContent = '完了';
+                    row.setAttribute('data-done', 'true');
+                    row.style.backgroundColor = 'rgb(136, 136, 136)';
+                //未完了時
+                }else{ 
+                    td.textContent = '未完了';
+                    row.setAttribute('data-done', 'false');
+                    applyRowColor(row);
+                }
+
+                updateTodayTaskCounts();
+                updateAllTaskCounts();
+
+                //連打対策（操作出来なくなる）
+                checkbox.disabled = true;
+                
+                fetch(isChecked ? '/list/complete' : '/list/uncomplete', {
                     method: 'POST',
                     headers: { 'Content-Type' : 'application/x-www-form-urlencoded'},
                     body: new URLSearchParams({ id: taskId})
                 })
-                .then(response => { 
-                    if(response.ok) {
-                        const td = this.closest('tr').querySelector('td:nth-child(8)'); // 状態のセル
-                        td.textContent = '完了';
-                        this.closest('tr').setAttribute('data-done', 'true');
-                        this.closest('tr').style.backgroundColor = 'rgb(136, 136, 136)';
-                        updateTodayTaskCounts();
-                        updateAllTaskCounts();
+                .then(response => {
+                    if(!response.ok) {
+                        throw new Error('サーバーエラー');
                     }
-                });
-                //未完了の時
-            }else if(!isChecked){
-                fetch('/list/uncomplete', {
-                    method: 'POST',
-                    headers: { 'Content-Type' : 'application/x-www-form-urlencoded'},
-                    body: new URLSearchParams({ id: taskId})
                 })
-                .then(response => { 
-                    if(response.ok) {
-                        const td = this.closest('tr').querySelector('td:nth-child(8)'); // 状態のセル
-                        td.textContent = '未完了';
-                        this.closest('tr').setAttribute('data-done', 'false');
-                        const row = this.closest('tr');
+                .catch(error => {
+                    console.error('送信失敗', error);
+                    //ロールバック（UI）
+                    checkbox.checked = !isChecked;
+                    row.setAttribute('data-done', isChecked ? 'false' : 'true');
+                    td.textContent = isChecked ? '未完了' : '完了';
+                    if(isChecked) {
                         applyRowColor(row);
-                        updateTodayTaskCounts();
-                        updateAllTaskCounts();
+
+                    } else {
+                        row.style.backgroundColor = 'rgb(136, 136, 136)';
                     }
+
+                    updateTodayTaskCounts();
+                    updateAllTaskCounts();
+                })
+                .finally(() => {
+                    //再度操作可能にする
+                    checkbox.disabled = false;
                 });
             }
-        }
+        });
     });
-});
 });
 
 function updateTodayTaskCounts(){
