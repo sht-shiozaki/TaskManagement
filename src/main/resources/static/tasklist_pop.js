@@ -10,6 +10,7 @@ function openDetailDialogFromTitle(tdElement) {//tdElementはクリックされ�
   document.getElementById('detailDeadline').textContent = deadline;
   document.getElementById('detailContent').textContent = detail;
 
+  document.getElementById('detailModal').style.display = 'flex';
   document.getElementById('detailPopup').style.display = 'block';// popで表示
 }
 
