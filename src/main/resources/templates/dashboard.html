@@ -134,86 +134,96 @@
         </div>
 
         <!-- pop(Todo) -->
-        <div id="TodoDialog">
-            <div class="task_form">
-                <form action="#" th:action="@{/list/add}" method="post">
-                    <input id="add_id" name="id" type="hidden" />
-                    <label>タスク</label>
-                    <input id="add_title" name="title" type="text" minlength="1" maxlength="20" placeholder="1~20文字まで入力可能" required />
-                    <label>説明</label>
-                    <textarea id="add_detail" name="detail" minlength="1" maxlength="400" placeholder="1~400文字まで入力可能" rows="4"></textarea>
-                    <label>期限</label>
-                    <div class="deadline-inputs">
+        <div id="todoModal" class="modal" >
+            <div class="modal-overlay"></div>
+            <div id="TodoDialog">
+                <div class="task_form">
+                    <form action="#" th:action="@{/list/add}" method="post">
+                        <input id="add_id" name="id" type="hidden" />
+                        <label>タスク</label>
+                        <input id="add_title" name="title" type="text" minlength="1" maxlength="20" placeholder="1~20文字まで入力可能" required />
+                        <label>説明</label>
+                        <textarea id="add_detail" name="detail" minlength="1" maxlength="400" placeholder="1~400文字まで入力可能" rows="4"></textarea>
+                        <label>期限</label>
+                        <div class="deadline-inputs">
                         <input id="add_deadline" name="deadline" type="date" />
                         <input id="add_time" name="time" type="time" value="09:00"/>
-                    </div>
-                    <div class="priority-status">
-                        <div class="field">
-                        <label>優先度</label>
-                            <select id="add_priority" name="priority">
-                            <option value="高">高</option>
-                            <option value="中" selected>中</option>
-                            <option value="低">低</option>
-                            </select>
                         </div>
-                    </div>
-                    <div class="add-button">
-                        <button type="submit">登録</button>
-                    <button type="button"onclick="document.getElementById('TodoDialog').style.display='none';">キャンセル</button>
-                    </div>
-                </form>
+                        <div class="priority-status">
+                            <div class="field">
+                            <label>優先度</label>
+                                <select id="add_priority" name="priority">
+                                <option value="高">高</option>
+                                <option value="中" selected>中</option>
+                                <option value="低">低</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="add-button">
+                            <button type="submit">登録</button>
+                        <button type="button" class="js-modal-close">キャンセル</button>
+
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
 
         <!-- pop(update) -->
-        <div id="updateDialog">
-            <div class="task_form">
-                <form action="#" th:action="@{/list/update}" method="post">
-                    <input id="update_id" name="id" type="hidden" />
-                    <label>タスク</label>
-                    <input id="update_title" name="title" type="text" minlength="1" maxlength="20" placeholder="1~20文字まで入力可能" required />
-                    <label>説明</label>
-                    <textarea id="update_detail" name="detail" minlength="1" maxlength="400" placeholder="1~400文字まで入力可能" rows="4" ></textarea>
-                    <label>期限</label>
-                    <div class="deadline-inputs">
-                        <input id="update_deadline" name="deadline" type="date" />
-                        <input id="update_time" name="time" type="time" />
-                    </div>
-                    <div class="priority-status">
-                        <div class="field">
-                            <label>優先度</label>
-                            <select id="update_priority" name="priority">
-                                <option value="高">高</option>
-                                <option value="中" selected>中</option>
-                                <option value="低">低</option>
-                            </select>
+        <div id="updateModal" class="modal">
+            <div class="modal-overlay"></div>
+            <div id="updateDialog">
+                <div class="task_form">
+                    <form action="#" th:action="@{/list/update}" method="post">
+                        <input id="update_id" name="id" type="hidden" />
+                        <label>タスク</label>
+                        <input id="update_title" name="title" type="text" minlength="1" maxlength="20" placeholder="1~20文字まで入力可能" required />
+                        <label>説明</label>
+                        <textarea id="update_detail" name="detail" minlength="1" maxlength="400" placeholder="1~400文字まで入力可能" rows="4" ></textarea>
+                        <label>期限</label>
+                        <div class="deadline-inputs">
+                            <input id="update_deadline" name="deadline" type="date" />
+                            <input id="update_time" name="time" type="time" />
                         </div>
-                        <div class="field">
-                            <label>状態</label>
-                            <select id="update_status" name="done">
-                                <option value="false">未完了</option>
-                                <option value="true">完了</option>
-                            </select>
-                        </div>
+                        <div class="priority-status">
+                            <div class="field">
+                                <label>優先度</label>
+                                    <select id="update_priority" name="priority">
+                                    <option value="高">高</option>
+                                    <option value="中" selected>中</option>
+                                    <option value="低">低</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                <label>状態</label>
+                                <select id="update_status" name="done">
+                                    <option value="false">未完了</option>
+                                    <option value="true">完了</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="update-button">
+                                <button type="submit">更新</button>
+                                <button type="reset" class="js-modal-close">キャンセル</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="update-button">
-                        <button type="submit">編集</button>
-                        <button type="reset"  onclick="document.getElementById('updateDialog').style.display='none';">キャンセル</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-        <!-- </div> -->
         <!--詳細pop-->
-        <div id="detailPopup">
-            <h3>タスク詳細</h3>
-            <p><strong>タイトル：</strong><span id="detailTitle"></span></p>
-            <p><strong>期限：</strong><span id="detailDeadline"></span></p>
-            <div id="detailContentContainer">
-                <p id="detailContent"></p>
+        <div id="detailModal" class="modal">
+            <div class="modal-overlay"></div>
+            <div id="detailPopup">
+                <h3>タスク詳細</h3>
+                <p><strong>タイトル：</strong><span id="detailTitle"></span></p>
+                <p><strong>期限：</strong><span id="detailDeadline"></span></p>
+                <div id="detailContentContainer">
+                    <p id="detailContent"></p>
+                </div>
+                <button class="js-modal-close">閉じる</button>
             </div>
-            <button onclick="document.getElementById('detailPopup').style.display='none';">閉じる</button>
         </div>
         <!-- 期限フィルターポップアップ -->
         <div id="dateFilterPopup" class="date-filter-popup" >

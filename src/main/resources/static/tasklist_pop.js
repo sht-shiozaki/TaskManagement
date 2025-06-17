@@ -10,6 +10,7 @@ function openDetailDialogFromTitle(tdElement) {//tdElementはクリックされ�
   document.getElementById('detailDeadline').textContent = deadline;
   document.getElementById('detailContent').textContent = detail;
 
+  document.getElementById('detailModal').style.display = 'flex';
   document.getElementById('detailPopup').style.display = 'block';// popで表示
 }
 
@@ -108,11 +109,15 @@ document.getElementById('filterDateBtn').addEventListener('click', () => {
     createCheckboxList('dayFilterContainer', days, 'day');
 
     const rect = btn.getBoundingClientRect();
-    popup.style.position = 'absolute';
-    popup.style.top = (rect.bottom + window.scrollY) + 'px';
-    popup.style.left = (rect.left + window.scrollX) + 'px';
 
-    popup.style.display = 'block';
+  popup.style.position = 'fixed';
+  popup.style.top = '14px'; // リス地
+  popup.style.right = '358px';
+  popup.style.left = 'auto'; // 左は解除
+  popup.style.width = '310px';// 幅固定
+  popup.style.height = 'auto'; // 高さは内容に応じて可変
+  popup.style.display = 'block';
+
   } else {
     popup.style.display = 'none';
   }
