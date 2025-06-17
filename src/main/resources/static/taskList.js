@@ -1,5 +1,7 @@
 function openTodoDialog(button) {
+    const modal = document.getElementById('todoModal');
     const dialog = document.getElementById('TodoDialog');
+    modal.style.display = 'flex';
     dialog.style.display = 'block';
 }
 
@@ -21,8 +23,49 @@ function openUpdateDialog(button) {
   document.getElementById('update_priority').value = priority;
   document.getElementById('update_status').selectedIndex = done ? 1 : 0;
 
+  document.getElementById('updateModal').style.display = 'flex';
   document.getElementById('updateDialog').style.display = 'block';
 }
+
+// modal-popup.js
+document.addEventListener('DOMContentLoaded', () => {
+  // 「キャンセル」ボタンを全部取得
+  document.querySelectorAll('.js-modal-close').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // クリックされたボタンから一番近い .modal を探して非表示に
+      const modal = btn.closest('.modal');
+      if (modal) {
+        modal.style.display = 'none';
+        // 背景スクロール禁止をしていれば解除
+        document.body.style.overflow = '';
+      }
+    });
+  });
+
+  // オーバーレイをクリックしたときも閉じる
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', () => {
+      const modal = overlay.closest('.modal');
+      if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    });
+  });
+
+  // ESCキー押下で閉じる
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal').forEach(modal => {
+        if (modal.style.display === 'flex') {
+          modal.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+    }
+  });
+});
+
 
 // 今日の日付を初期値設定
 window.onload = function(){
