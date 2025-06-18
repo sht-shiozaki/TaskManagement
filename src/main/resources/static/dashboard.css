@@ -122,9 +122,11 @@ input, select, textarea {
 }
 
 .today-list{
+    list-style: none;        /* リストマーカー（・）を非表示にする */
+    padding: 0; 
     max-height: 15vh;
     width: 30vw;
-    padding: 0;
+    padding: 5px 5px 0 5px;
     overflow-y: auto;
 }
 
@@ -143,6 +145,7 @@ textarea {
     border-radius: var(--border-radius);
     box-shadow: 0 1px 4px var(--shadow-light);
     transition: transform .2s ease, box-shadow .2s ease;
+    border:1px solid #bcbcbc;/* 枠線追加 */
 }
 .today-item:hover {
     transform: translateY(-2px);
@@ -193,7 +196,7 @@ textarea {
 
 .task-counts-table{
     margin-top: 1vw;
-    padding: 10px;
+    padding: 1vw;
     background: #f5f7fa;
     border-radius: 16px;
     box-shadow: 0 3px 8px rgba(0,0,0,0.07);
@@ -223,18 +226,17 @@ textarea {
 
 .task-counts-row {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     gap: 10px;
     align-items: flex-start;
     margin-bottom: 8px;
     position: relative;
     top: 7px;
 }
-.task-counts-row h2 {
-  font-size: 1.1rem;
-  margin: 0;
-  line-height: 1.2;
+.task-counts-row.task-counts-row.all-incomplete{
+    gap:20px;
 }
+
 
 .task-counts-row span {
   font-size: 1.2rem;

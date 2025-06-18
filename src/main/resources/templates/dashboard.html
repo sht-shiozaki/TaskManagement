@@ -57,7 +57,7 @@
                             <span id="todayIncompleteTasks" th:text="${todayIncompleteTasks} + '件'">0件</span>
                         </div>
                         <div class="task-counts-row all-incomplete">
-                            <span>全件</span>
+                            <span>全　件</span>
                             <span id="allIncompleteTasks" th:text="${allIncompleteTasks} + '件'">0件</span>
                         </div>
                     </div>
@@ -187,8 +187,8 @@
                         <textarea id="update_detail" name="detail" minlength="1" maxlength="400" placeholder="1~400文字まで入力可能" rows="4" ></textarea>
                         <label>期限</label>
                         <div class="deadline-inputs">
-                            <input id="update_deadline" name="deadline" type="date" />
-                            <input id="update_time" name="time" type="time" />
+                            <input id="update_deadline" name="deadline" type="date" required/>
+                            <input id="update_time" name="time" type="time" required/>
                         </div>
                         <div class="priority-status">
                             <div class="field">

@@ -8,8 +8,8 @@
 <body>
 	<h1>タスク管理</h1>
 	<form action="#" th:action="@{/login}" method="post">
-		<span class="input-label">ユーザー名</span>
-	    <input type="text" name="username" minlength="1" maxlength="30" placeholder="ユーザー名" required /><br>
+		<span class="input-label">メールアドレス</span>
+		<input type="email" name="email" minlength="1" maxlength="50" placeholder="メールアドレス" required />
 	    <span class="input-label">パスワード</span>
 		<input type="password" name="password" minlength="1" maxlength="20" placeholder="パスワード" required /><br>
 	    <p class="error" th:text="${error} ?: ''"></p>  <!--高さ確保 -->

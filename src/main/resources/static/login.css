@@ -37,7 +37,8 @@ form {
   font-weight: bold;
 }
 
-input[type="text"],
+
+input[type="email"],
 input[type="password"] {
     padding: 10px 12px;
     margin-bottom: 16px;
