@@ -28,7 +28,7 @@ public class TaskItem {
     private String title;
 
     // カラム名変更（task⇒detail）
-    @Column(nullable = false)
+    @Column(nullable = false, length = 400)
     private String detail;
 
     @Column(nullable = false)
