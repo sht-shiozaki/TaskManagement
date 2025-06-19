@@ -49,8 +49,12 @@ input, select, textarea {
     justify-content: flex-end;
     margin-top: 12px;
 }
-.task_form .priority-status { grid-column: 1 / -1; display: flex; gap: 16px; }
-.task_form .priority-status .field { display: flex; gap: 8px; align-items: center; }
+.task_form textarea{
+    height: calc(1.5em * 10);
+}
+
+.task_form .priority-status { grid-column: 1 / -1; display: flex; gap: 16px; padding-left: 2.3vw;}
+.task_form .priority-status .field { display: flex; gap: 2.25vw; align-items: center; }
 
 #todoModal,#updateModal,#detailModal{
     position: fixed;
@@ -85,7 +89,7 @@ input, select, textarea {
     margin-top: 5vh;
     display: flex;
     flex-direction: column; /* 縦に並べる */
-    gap: 2vh;  
+    gap: 1.9vh;  
 }
 
 /* 今日のタスク */
@@ -95,6 +99,7 @@ input, select, textarea {
     justify-content:flex-start;
     align-items: flex-start;
     width: 90vw;
+    height:155px;
     padding: 0 0 10px 0;
     background: #fff;
     border-radius: var(--border-radius);
@@ -118,13 +123,13 @@ input, select, textarea {
     justify-content: flex-start;
     font-size:1rem; 
     color:#2c3e50;
-    margin-bottom:16px;
+    margin-bottom:10px;
 }
 
 .today-list{
     list-style: none;        /* リストマーカー（・）を非表示にする */
     padding: 0; 
-    max-height: 15vh;
+    max-height: 17.3vh;
     width: 30vw;
     padding: 5px 5px 0 5px;
     overflow-y: auto;
@@ -271,13 +276,14 @@ textarea {
     border-radius: var(--border-radius);
     background: #fff;
     box-shadow: 0 2px 8px var(--shadow-light);
-    height: 65vh;
+    height: 61.8vh;
     overflow-y: auto;
 }
 .table-title{
     position: sticky;
     margin-top: 1vh;
     background: #fff;
+    margin-bottom: 0;
     
 }
 
@@ -341,8 +347,8 @@ textarea {
 }
 /* 編集と削除のボタン */
 .icon-button{
-    width: 20px;
-    height: 20px;
+    width: 100%;
+    height: 100%;
     background: #ececec;
     border: 0.5px solid black;
     display: flex;
