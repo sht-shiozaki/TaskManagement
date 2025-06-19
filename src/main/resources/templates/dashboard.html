@@ -15,7 +15,6 @@
         <!-- headerのフラグメント作成⇒他のHTMLで使用できるようにする -->
         <!-- 新：-->
         <div th:insert="~{header :: Header}"></div>
-    
         <div class="today-tasklist">  
             <div class="today">
                 <div class="list-counts">
@@ -72,6 +71,7 @@
                     <button id="selectList">一括選択モード</button>
                     <button id="completeSelectedButton">完了</button>
                     <button id="deleteTasks">削除</button>
+                    <button id="clearAllFiltersBtn">フィルターリセット</button>
                 </div>
                 <!-- 固定したい見出し -->
                 <div class="table-wrapper">
@@ -155,17 +155,17 @@
                         </div>
                         <div class="priority-status">
                             <div class="field">
-                            <label>優先度</label>
+                                <label>優先度</label>
                                 <select id="add_priority" name="priority">
-                                <option value="高">高</option>
-                                <option value="中" selected>中</option>
-                                <option value="低">低</option>
+                                    <option value="高">高</option>
+                                    <option value="中" selected>中</option>
+                                    <option value="低">低</option>
                                 </select>
                             </div>
                         </div>
                         <div class="add-button">
                             <button type="submit">登録</button>
-                        <button type="button" class="js-modal-close">キャンセル</button>
+                            <button type="button" class="js-modal-close">キャンセル</button>
 
                         </div>
                     </form>

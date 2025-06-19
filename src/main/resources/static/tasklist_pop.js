@@ -74,26 +74,32 @@ function getUniqueDates() {
 }
 
 // チェックボックスを自動生成の処理
-function createCheckboxList(containerId, values, namePrefix) {
+function createCheckboxList(containerId, values, namePrefix, selectedValues = []) {
   const container = document.getElementById(containerId);
-  container.innerHTML = ''; //前回のチェックボックスの中身を空にしてリセット。
+  container.innerHTML = ''; // 前回のチェックボックスの中身を空にしてリセット
 
-  values.forEach(value => {//ループ。(values = ['2024', '2025']なら２回転)
-    const id = `${namePrefix}_${value}`;// 例: year_2024
-    const label = document.createElement('label');// <label> を作成し、クリックしやすくするためにスタイルも設定
-    label.htmlFor = id;// htmlFor にチェックボックスのIDを設定すると、ラベルクリックでチェックが入る
+  values.forEach(value => { // ループ。(values = ['2024', '2025']なら２回転)
+    const id = `${namePrefix}_${value}`; // 例: year_2024
+
+    const label = document.createElement('label'); // <label> を作成
+    label.htmlFor = id; // htmlFor にチェックボックスのIDを設定すると、ラベルクリックでチェックが入る
     label.style.marginRight = '10px';
     label.style.cursor = 'pointer';
 
-    const checkbox = document.createElement('input');// チェックボックス生成
+    const checkbox = document.createElement('input'); // チェックボックス生成
     checkbox.type = 'checkbox';
     checkbox.id = id;
     checkbox.name = namePrefix;
     checkbox.value = value;
 
-    label.appendChild(checkbox);// チェックボックスを追加
-    label.appendChild(document.createTextNode(value));// 「2024」などの文字を追加
-    container.appendChild(label);// すべてを container に追加
+    // 既にチェックされていた値があれば復元する
+    if (selectedValues.includes(value)) {
+      checkbox.checked = true;
+    }
+
+    label.appendChild(checkbox); // チェックボックスを追加
+    label.appendChild(document.createTextNode(value)); // 「2024」などの文字を追加
+    container.appendChild(label); // すべてを container に追加
   });
 }
 
@@ -101,25 +107,23 @@ function createCheckboxList(containerId, values, namePrefix) {
 document.getElementById('filterDateBtn').addEventListener('click', () => {
   const popup = document.getElementById('dateFilterPopup');
   const btn = document.getElementById('filterDateBtn');
-
+  const rect = btn.getBoundingClientRect();
+  // 年、月、日のチェックボックスリストを生成し配置
   if (popup.style.display === 'none' || popup.style.display === '') {
     const { years, months, days } = getUniqueDates();
-    createCheckboxList('yearFilterContainer', years, 'year');
-    createCheckboxList('monthFilterContainer', months, 'month');
-    createCheckboxList('dayFilterContainer', days, 'day');
+    createCheckboxList('yearFilterContainer', years, 'year', currentDateFilter.years);
+    createCheckboxList('monthFilterContainer', months, 'month', currentDateFilter.months);
+    createCheckboxList('dayFilterContainer', days, 'day', currentDateFilter.days);
 
-    const rect = btn.getBoundingClientRect();
 
-  popup.style.position = 'fixed';
-  popup.style.top = '14px'; // リス地
-  popup.style.right = '358px';
-  popup.style.left = 'auto'; // 左は解除
-  popup.style.width = '310px';// 幅固定
-  popup.style.height = 'auto'; // 高さは内容に応じて可変
+  popup.style.position = 'absolute';// 絶対位置に設定
   popup.style.display = 'block';
+  popup.style.left = `${rect.left + window.scrollX}px`;// 左端はボタンの左端に合わせる
+  const popupHeight = popup.offsetHeight;// ポップアップの高さを取得
+  popup.style.top = `${rect.top + window.scrollY - popupHeight}px`;// ボタンの上に出す
 
   } else {
-    popup.style.display = 'none';
+    popup.style.display = 'none';// ポップアップが表示中なら非表示にする
   }
 });
 
@@ -211,17 +215,18 @@ function closePriorityFilterPopup() {
 
 document.getElementById('filterPriorityBtn').addEventListener('click', () => {
   const popup = document.getElementById('priorityFilterPopup');
+  const btn = document.getElementById('filterPriorityBtn');
+  const rect = btn.getBoundingClientRect();// ←ボタンの位置を取得
 
   if (popup.style.display === 'none' || popup.style.display === '') {
-    createCheckboxList('priorityFilterContainer', priorities, 'priority');
+    createCheckboxList('priorityFilterContainer', priorities, 'priority', currentPriorityFilter);
 
-    const btn = document.getElementById('filterPriorityBtn');
-    const rect = btn.getBoundingClientRect();
     popup.style.position = 'absolute';
-    popup.style.top = (rect.bottom + window.scrollY) + 'px';
-    popup.style.left = (rect.left + window.scrollX) + 'px';
-
     popup.style.display = 'block';
+    popup.style.left = `${rect.left + window.scrollX}px`;
+    const popupHeight = popup.offsetHeight;
+    popup.style.top = `${rect.top + window.scrollY - popupHeight}px`; 
+
   } else {
     popup.style.display = 'none';
   }
@@ -249,17 +254,18 @@ function closeStatusFilterPopup() {
 
 document.getElementById('filterDoneBtn').addEventListener('click', () => {
   const popup = document.getElementById('statusFilterPopup');
+  const btn = document.getElementById('filterDoneBtn');
+  const rect = btn.getBoundingClientRect();
 
   if (popup.style.display === 'none' || popup.style.display === '') {
-    createCheckboxList('statusFilterContainer', statuses, 'status');
+    createCheckboxList('statusFilterContainer', statuses, 'status', currentStatusFilter);
 
-    const btn = document.getElementById('filterDoneBtn');
-    const rect = btn.getBoundingClientRect();
     popup.style.position = 'absolute';
-    popup.style.top = (rect.bottom + window.scrollY) + 'px';
-    popup.style.left = (rect.left + window.scrollX) + 'px';
-
     popup.style.display = 'block';
+    popup.style.left = `${rect.left + window.scrollX}px`;
+    const popupHeight = popup.offsetHeight;
+    popup.style.top = `${rect.top + window.scrollY - popupHeight}px`;
+
   } else {
     popup.style.display = 'none';
   }
@@ -273,5 +279,25 @@ document.getElementById('applyStatusFilterBtn').addEventListener('click', () => 
 document.getElementById('clearStatusFilterBtn').addEventListener('click', () => {
   document.querySelectorAll('input[name=status]').forEach(cb => cb.checked = false);
   currentStatusFilter = [];
+  applyFilters();
+});
+
+//フィルターリセット
+document.getElementById('clearAllFiltersBtn').addEventListener('click', () => {
+  // 期限フィルタークリア
+  ['year', 'month', 'day'].forEach(name => {
+    document.querySelectorAll(`input[name=${name}]`).forEach(cb => cb.checked = false);
+  });
+  currentDateFilter = { years: [], months: [], days: [] };
+
+  // 優先度フィルタークリア
+  document.querySelectorAll('input[name=priority]').forEach(cb => cb.checked = false);
+  currentPriorityFilter = [];
+
+  // 状態フィルタークリア
+  document.querySelectorAll('input[name=status]').forEach(cb => cb.checked = false);
+  currentStatusFilter = [];
+
+  // フィルター適用（すべてクリア状態で全表示）
   applyFilters();
 });

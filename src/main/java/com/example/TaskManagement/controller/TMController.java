@@ -35,6 +35,11 @@ public class TMController {
     @GetMapping("/dashboard")
     public String showDashboard(HttpSession session, Model model) { // ここでsessionは既存のセッション or 新規セッションを取得
         String userId = (String) session.getAttribute("userId");
+        // ログイン情報が無ければログイン画面へ
+        if (userId == null) {
+            model.addAttribute("error", "ユーザー情報が見つかりませんでした");
+            return "redirect:/login";
+        }
         // 本日のタスクだけ取得
         List<TaskItem> todayList = TIService.getTodayList(userId);
         model.addAttribute("todayList", todayList);
