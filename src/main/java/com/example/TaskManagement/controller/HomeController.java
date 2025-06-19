@@ -40,9 +40,9 @@ public class HomeController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestParam String username, @RequestParam String password, HttpSession session,
+    public String loginUser(@RequestParam String email, @RequestParam String password, HttpSession session,
             Model model) {
-        Optional<Registry> user = registryService.login(username, password);
+        Optional<Registry> user = registryService.login(email, password);
         if (user.isPresent()) {
             session.setAttribute("userId", user.get().getUserId());
             return "redirect:/list/dashboard"; // user/dashboardの@getへ

@@ -35,7 +35,7 @@
 }
 
 /* タイトルセルの列だけをホバー効果 */
-#taskTable tbody tr td:nth-child(3):hover {
+#taskTable tbody tr:hover td:nth-child(n+3):nth-child(-n+10) {
   background-color: #ffeaa7; /* 目立つ色 */
 }
 

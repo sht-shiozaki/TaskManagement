@@ -21,8 +21,8 @@ public class RegistryService {
     @Autowired
     private InvitationRepository invitationRepository;
 
-    public Optional<Registry> login(String username, String password) {
-        Optional<Registry> user = registryRepository.findByUsername(username);
+    public Optional<Registry> login(String email, String password) {
+        Optional<Registry> user = registryRepository.findByEmail(email);
         if (user.isPresent() && user.get().getPassword().equals(password)) {
             return user; // ログイン成功時ににuser情報を返す
         }

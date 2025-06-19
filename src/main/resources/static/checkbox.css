@@ -47,6 +47,7 @@ label:not(.circle-checkbox) input[type="checkbox"] {
     opacity: 1;
     width: auto;
     height: auto;
+    accent-color: rgb(60, 255, 0);
 }
 
 /* circle-checkbox がないときのラベルを flex 中央揃えに */
