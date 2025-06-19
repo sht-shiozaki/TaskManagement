@@ -16,12 +16,11 @@
     display: none;
 }
 
-/* 詳細部分のコンテナだけスクロール */
+/* 詳細部分のコンテナ */
 #detailContentContainer {
   max-height: 200px;
   overflow-y: auto;
-  padding: 10px;
-  margin-top: 10px;
+  padding: 6px 10px 10px 10px;
   background: #f9f9f9;
   border: 1px solid #ccc;
   white-space: pre-wrap;
@@ -73,9 +72,6 @@
 #dateFilterPopup {
   display: none;
   position: absolute;
-  top: 39%;
-  left: 20%;
-  transform: none;
   background-color: #fff;
   border: 1px solid #aaa;
   padding: 20px;
@@ -102,16 +98,11 @@
 /* 優先度フィルター */
 #priorityFilterPopup {
   display: none;
-  position: absolute;
-  top: 20%;
-  left: 8%;
-  transform: none;
-  background-color: #fff;
-  border: 1px solid #aaa;
-  padding: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  user-select: none;
 }
 
 #priorityFilterContainer {
@@ -145,18 +136,4 @@
     z-index: 1000;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     user-select: none;
-}
-
-/* 特例：dateFilterPopupの位置 */
-#dateFilterPopup {
-    top: 20%;
-    left: 23%;
-    transform: none;
-}
-
-/* 特例：priorityFilterPopupの位置 */
-#priorityFilterPopup {
-    top: 20%;
-    left: 8%;
-    transform: none;
 }
