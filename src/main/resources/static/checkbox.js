@@ -66,6 +66,11 @@ document.getElementById('selectList').addEventListener('click',function() {
     
     //一括選択モードの切り替え（thisはクリックされたbutton）
     this.textContent = isBatchMode ? '選択解除' : '一括選択モード';
+
+    if (isBatchMode) {
+        isAllSelectMode = false;              // フラグを「次は全選択モード」へ
+        checkAllButton.textContent = '全選択'; // ボタンも合わせて「全選択」に
+    }
     
     //モード変更の際にすべてのチェックを外す
     document.querySelectorAll('input[name="taskCheckbox"]').forEach(cb => {
@@ -111,12 +116,19 @@ checkAllButton.addEventListener('click', function() {
     this.textContent = isAllSelectMode ? '全解除' : '全選択';
 
     if(!isBatchMode) return; //通常時は機能しない
-    
-    document.querySelectorAll('input[name="taskCheckbox"]').forEach(cb => {
-        if(isAllSelectMode){
-            cb.checked = true;
-        } else {
-            cb.checked = false;
+
+    //テーブルの非表示タスクを飛ばす処理
+    document.querySelectorAll('tbody tr').forEach(row => {
+        const style = window.getComputedStyle(row);
+        if(style.display === 'none' || style.visibility === 'hidden'){
+            return;
+        }
+
+        //表示中のチェックボックスに適用
+        const cb = row.querySelector('input[name="taskCheckbox"]');
+        //cbがnullではないとき
+        if(cb){
+            cb.checked = isAllSelectMode;
         }
     });
 });
