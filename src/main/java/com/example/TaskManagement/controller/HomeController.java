@@ -48,7 +48,7 @@ public class HomeController {
             return "redirect:/list/dashboard"; // user/dashboardの@getへ
         } else {
             session.invalidate();
-            model.addAttribute("error", "ユーザー名かパスワードが違います");
+            model.addAttribute("error", "メールアドレスかパスワードが違います");
             return "login"; // login.htmlへ
         }
     }
